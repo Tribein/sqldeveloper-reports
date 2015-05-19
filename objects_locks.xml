@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<displays>
+<display id="fcd33149-0144-1000-8002-0a46c51adf5c" type="" style="Table" enable="true">
+	<name><![CDATA[OBJECTS_LOCKS]]></name>
+	<description><![CDATA[]]></description>
+	<tooltip><![CDATA[]]></tooltip>
+	<drillclass><![CDATA[null]]></drillclass>
+	<CustomValues>
+		<TYPE>horizontal</TYPE>
+	</CustomValues>
+	<query>
+		<sql><![CDATA[SELECT f.owner,
+  f.object_name,
+  DECODE(e.lmode,0,'NONE',1,'NULL',2,'ROW-S',3,'ROW-X',4,'SHARE',5,'S/ROW-X',6,'EXCLUSIVE','UKNOWN') lock_mode,
+  DECODE(e.request,0,'NONE',1,'NULL',2,'ROW-S',3,'ROW-X',4,'SHARE',5,'S/ROW-X',6,'EXCLUSIVE','UKNOWN') request_mode,
+  DECODE(e.block,0,'FALSE',1,'TRUE','UNKONW') is_blocking,
+  f.object_type,
+  f.temporary,
+  f.generated,
+  c.*
+FROM gv$lock e
+INNER JOIN dba_objects f
+ON(e.id1=f.object_id)
+INNER JOIN
+  (SELECT a.inst_id,
+    a.sid,
+    a.serial#,
+    a.status,
+    COALESCE(a.username,b.pname,'N/A') username,
+    NVL(b.pname,'N/A') process,
+    NVL(module,'N/A')
+    ||'@'
+    ||NVL(a.machine,'N/A') origin,
+    b.spid "OSPID",
+    a.blocking_instance
+    ||' '
+    ||a.blocking_session blocked_by,
+    TO_CHAR(a.logon_time,'DD.MM.YYYY HH24:MI:SS') logon_time,
+    a.state,
+    ROUND(DECODE(a.state,'WAITED KNOWN TIME',a.time_since_last_wait_micro,'WAITED SHORT TIME',a.time_since_last_wait_micro,a.wait_time_micro)/1000000,3) seconds,
+    DECODE(a.state,'WAITED KNOWN TIME','ON CPU','WAITED SHORT TIME','ON CPU',a.event) "EVENT"
+  FROM gv$session a
+  LEFT JOIN gv$process b
+  ON (a.paddr  =b.addr
+  AND a.inst_id=b.inst_id)
+  ) c ON (e.sid=c.sid
+AND e.inst_id  =c.inst_id)
+ORDER BY is_blocking DESC,
+  e.request DESC,
+  e.lmode DESC,
+  c.status ASC,
+  f.owner,
+  f.object_name]]></sql>
+	</query>
+		<pdf version="VERSION_1_7" compression="CONTENT">
+			<docproperty title="null" author="null" subject="null" keywords="null" />
+			<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+			<column>
+				<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+				<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+				<blob blob="NONE" zip="false" />
+			</column>
+			<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+			<header enable="false" generatedate="false">
+				<data>
+				
+				
+				
+				null																</data>
+			</header>
+			<footer enable="false" generatedate="false">
+				<data value="null" />
+			</footer>
+			<security enable="false" useopenpassword="false" openpassword="null" encryption="EXCLUDE_METADATA">
+				<permission enable="false" permissionpassword="null" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="false" />
+			</security>
+			<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+		</pdf>
+	<display id="null" type="" style="Table" enable="true">
+		<name><![CDATA[Object Cache]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<CustomValues>
+			<TYPE>horizontal</TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[select 
+db_link,
+type,
+sharable_mem,
+loads,
+executions,
+locks,
+pins,
+kept,
+invalidations,
+hash_value,
+lock_mode,
+pin_mode,
+status,
+timestamp,
+locked_total,
+pinned_total 
+from gv$db_object_cache
+where inst_id=:INST_ID and owner=:OWNER and name=:OBJECT_NAME]]></sql>
+			<binds>
+				<bind id="INST_ID">
+					<prompt><![CDATA[INST_ID]]></prompt>
+					<tooltip><![CDATA[INST_ID]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+					<bracket><![CDATA[null]]></bracket>
+				</bind>
+				<bind id="OWNER">
+					<prompt><![CDATA[OWNER]]></prompt>
+					<tooltip><![CDATA[OWNER]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+					<bracket><![CDATA[null]]></bracket>
+				</bind>
+				<bind id="OBJECT_NAME">
+					<prompt><![CDATA[OBJECT_NAME]]></prompt>
+					<tooltip><![CDATA[OBJECT_NAME]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+					<bracket><![CDATA[null]]></bracket>
+				</bind>
+			</binds>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="null" author="null" subject="null" keywords="null" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					null																				</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="null" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="null" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="false" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+	<display id="null" type="" style="Table" enable="true">
+		<name><![CDATA[Subcache]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<CustomValues>
+			<TYPE>horizontal</TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[select type,heap_num,cache_id,cache_cnt,heap_sz,heap_aloc,heap_used 
+from gv$subcache
+where inst_id=:INST_ID and owner_name=:OWNER and name=:OBJECT_NAME
+order by 3]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="null" author="null" subject="null" keywords="null" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					null																				</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="null" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="null" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="false" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+	<display id="null" type="" style="Table" enable="true">
+		<name><![CDATA[Library Cache]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<CustomValues>
+			<TYPE>horizontal</TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[select 
+case
+when a.holding_user_session=a.holding_session then 'ACTIVE'
+when a.holding_session=d.saddr then 'REQUESTING'
+when a.holding_user_session=d.saddr then 'HOLDING'
+end state,
+a.refcount,
+DECODE(mode_held,0,'NO LOCK/PIN',1,'NULL',2,'SHARE',3,'EXCLUSIVE','UKNOWN') held_mode,
+DECODE(mode_requested,0,'NO LOCK/PIN',1,'NULL',2,'SHARE',3,'EXCLUSIVE','UKNOWN') request_mode,
+b.kglnaown ownr,nvl(b.kglnaobj,b.kglfnobj) objct ,b.kglhdnsd nmspc,b.kglobtyd tp,b.kglobts4 ts 
+from gv$libcache_locks a
+left join x$kglob b on (a.object_handle=b.kglhdadr)
+left join gv$session c on (a.inst_id=c.inst_id and (a.holding_user_session=c.saddr or a.holding_session=c.saddr))
+inner join (select inst_id,sid,saddr from gv$session where inst_id=:INST_ID and sid=:SID) d on (a.holding_user_session = d.saddr or a.holding_session = d.saddr)
+order by a.mode_requested desc, a.mode_held desc]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="null" author="null" subject="null" keywords="null" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					null																				</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="null" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="null" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="false" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+</display>
+</displays>

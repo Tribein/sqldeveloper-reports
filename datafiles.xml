@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<displays>
+<display id="b89a15c4-013c-1000-801e-ac1087dd307f" type="" style="Table" enable="true">
+	<name><![CDATA[DATAFILES]]></name>
+	<description><![CDATA[]]></description>
+	<tooltip><![CDATA[]]></tooltip>
+	<drillclass><![CDATA[null]]></drillclass>
+	<CustomValues>
+		<TYPE>horizontal</TYPE>
+	</CustomValues>
+	<query>
+		<sql><![CDATA[select file_id,tablespace_name,file_name,to_char(round(bytes/1024/1024,3),'999G999G999') size_mb,to_char(round(maxbytes/1024/1024,3),'999G999G999') max_size_mb,autoextensible,status,online_status from dba_data_files order by tablespace_name,file_id]]></sql>
+	</query>
+		<pdf version="VERSION_1_7" compression="CONTENT">
+			<docproperty title="" author="" subject="" keywords="" />
+			<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+			<column>
+				<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+				<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+				<blob blob="NONE" zip="false" />
+			</column>
+			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+			<header enable="false" generatedate="false">
+				<data>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				null																																																																																																																																																																																																																																																																																																																																																																																																																																																				</data>
+			</header>
+			<footer enable="false" generatedate="false">
+				<data value="null" />
+			</footer>
+			<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+				<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+			</security>
+			<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+		</pdf>
+	<display id="null" type="" style="Table" enable="true">
+		<name><![CDATA[STATS]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<CustomValues>
+			<TYPE>horizontal</TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT to_char(phyrds,'999G999G999G999') reads,
+  to_char(phyblkrd,'999G999G999G999') block_reads,
+  to_char(singleblkrds,'999G999G999G999') single_block_reads,
+  to_char(phywrts,'999G999G999G999') writes,
+  to_char(phyblkwrt,'999G999G999G999') block_writes,
+  to_char(ROUND(readtim       /100,2),'999G999D999') read_time,
+  to_char(ROUND(singleblkrdtim/100,2),'999G999D999') single_block_time,
+  to_char(ROUND(writetim      /100,2),'999G999D999') write_time,
+  round(lstiotim/100,2) last_io_time,
+  round(avgiotim/100,2) avg_io_time,
+  round(maxiortm/100,2) max_read_time,
+  round(maxiowtm/100,2) max_write_time
+FROM v$filestat
+WHERE file#=:FILE_ID]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+	<display id="null" type="" style="Table" enable="true">
+		<name><![CDATA[SPACE]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<CustomValues>
+			<TYPE>horizontal</TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[select to_char((nvl(c.hwm,1)*b.block_size),'999G999G999G999') "MIN",
+to_char((a.blocks*b.block_size),'999G999G999G999') "CURRENT", to_char(a.blocks*b.block_size - nvl(c.hwm,1)*b.block_size,'999G999G999G999') "SAVE", 
+to_char(d.bytes,'999G999G999G999') "FREE",
+A.AUTOEXTENSIBLE,to_char(a.maxbytes,'999G999G999G999') "MAX",
+'alter database datafile '''||file_name||''' resize '||to_char(round((nvl(c.hwm,1)*b.block_size+b.block_size)/1024/1024)+1)||'M;' "SQL"
+from dba_data_files a
+left join dba_tablespaces b using (tablespace_name)
+left join (select file_id, max(block_id+blocks-1) hwm from dba_extents where file_id=:FILE_ID group by file_id) c using (file_id)
+left join (select file_id,sum(bytes) bytes from dba_free_space where file_id=:FILE_ID group by file_id) d using (file_id)
+where file_id=:FILE_ID;]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+	<display id="null" type="" style="Table" enable="true">
+		<name><![CDATA[EXTENTS MAP]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<CustomValues>
+			<TYPE>horizontal</TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[with a as (
+select owner||'.'||segment_name||decode(partition_name,null,'','.'||partition_name) sgmnt,segment_type type,block_id,blocks blks,
+block_id-lag(block_id+blocks,1,0) over (order by block_id asc) diff--,
+--lag(owner||'.'||segment_name,1,NULL) over (order by block_id asc) sgmntlag,
+--lead(owner||'.'||segment_name,1,NULL) over (order by block_id asc) sgmntlead,
+--DENSE_RANK() OVER (ORDER BY owner||'.'||segment_name asc) "RANK"
+from dba_extents 
+where file_id=:FILE_ID 
+order by block_id asc
+)
+select sgmnt, type, block_id,blks from(
+select sgmnt,type,block_id,blks/*,case when sgmntlag=sgmnt or sgmntlead=sgmnt then 1 else 0 end ll,"RANK"*/ from a
+union all
+select 'FREE','FREE',block_id-diff,diff-1/*,0,(-1)*block_id*/ from a where diff<>0
+order by 3 asc
+)]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+	<display id="null" type="" style="plsql-dbms_output" enable="true">
+		<name><![CDATA[EXTENTS_MAP2]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<query>
+			<sql><![CDATA[DECLARE
+  cnt number :=1;
+TYPE myrecord
+IS
+  RECORD
+  (
+    sgmnt     VARCHAR2(128) := '',
+    sgmnttype VARCHAR2(128) := '',
+    block_id  NUMBER        := 0,
+    blks     NUMBER        := 0,
+    sgmntlag  varchar2(128) := '',
+    sgmntlead varchar2(128) := '');
+TYPE mytable
+IS
+  TABLE OF myrecord INDEX BY BINARY_INTEGER;
+  mydt mytable;
+  myt  myrecord;
+  CURSOR mycur
+  IS
+  WITH a AS
+    (SELECT owner
+      ||'.'
+      ||segment_name sgmnt,
+      segment_type sgmnttype,
+      block_id,
+      blocks blks,
+      block_id-lag(block_id+blocks,1,0) over (order by block_id ASC) diff,
+      lag(owner
+      ||'.'
+      ||segment_name,1,NULL) over (order by block_id ASC) sgmntlag,
+      lag(blocks,1,0) over (order by block_id ASC) lagblocks,
+      lag(block_id,1,0) over (order by block_id ASC) lagblock_id,
+      lead(owner
+      ||'.'
+      ||segment_name,1,NULL) over (order by block_id ASC) sgmntlead
+    FROM dba_extents
+    WHERE file_id=:FILE_ID
+    ORDER BY block_id ASC
+    )
+SELECT sgmnt,
+  sgmnttype,
+  block_id,
+  blks,
+  sgmntlag,
+  sgmntlead
+FROM
+  ( SELECT sgmnt,sgmnttype,block_id,blks,sgmntlag,sgmntlead FROM a
+  UNION ALL
+  SELECT 'FREE',
+    'FREE',
+    block_id-diff,
+    diff    -1,
+    null,
+    null
+  FROM a
+  WHERE diff<>0
+  ORDER BY 3 ASC
+  );
+BEGIN
+  --if mycur %ISOPEN THEN  close mycur; end if;
+  --OPEN mycur;
+  --
+  DBMS_SESSION.FREE_UNUSED_USER_MEMORY;
+  DBMS_OUTPUT.ENABLE (buffer_size => 9600000);
+  dbms_output.put_line('<PRE>');
+    dbms_output.put_line(
+    rpad('Segment type',32)||
+    rpad('Segment',96)||
+    rpad('Block Id',15)||
+    rpad('Blocks',15));
+    --dbms_output.new_line;
+  for dt in mycur loop
+  if dt.sgmntlag is null or (dt.sgmntlag<>dt.sgmnt) then
+    myt.sgmnt := dt.sgmnt; myt.sgmnttype := dt.sgmnttype; myt.block_id := dt.block_id; myt.blks := dt.blks;
+  else
+    myt.blks := myt.blks + dt.blks;
+  end if;
+  if dt.sgmntlead is null or dt.sgmnt<>dt.sgmntlead then
+    mydt(cnt) := myt;
+    dbms_output.put_line(
+    rpad(mydt(cnt).sgmnttype,32)||
+    rpad(mydt(cnt).sgmnt,96)||
+    rpad(mydt(cnt).block_id,15)||
+    rpad(mydt(cnt).blks,15));
+    --dbms_output.new_line;
+    cnt := cnt+1;
+  end if;
+  end loop;
+  dbms_output.put_line('</PRE>');
+  DBMS_SESSION.FREE_UNUSED_USER_MEMORY;
+  --
+  --CLOSE mycur;
+END;]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																									</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+	<display id="null" type="" style="Table" enable="true">
+		<name><![CDATA[EXTENTS_MAP3]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<CustomValues>
+			<TYPE>horizontal</TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[with a as (
+select ROW_NUMBER () over (order by block_id asc) rn,owner||'.'||segment_name||decode(partition_name,null,'','.'||partition_name) sgmnt,segment_type type,block_id,blocks blks,
+block_id-lag(block_id+blocks,1,0) over (order by block_id asc) diff
+from dba_extents 
+where file_id=:FILE_ID
+order by block_id asc
+)
+select sgmnt, type, blk_id,blks from(
+select sgmnt,type,blk_id,sum(blks) blks from (
+select sgmnt,type,blks,
+(select nvl(block_id,(select block_id from a d where d.rn=b.rn)) block_id  from a c 
+where rn=(select nvl(max(rn),b.rn-1) from a c where c.block_id<b.block_id and c.sgmnt<>b.sgmnt)+1) blk_id
+from a b) group by sgmnt,type,blk_id
+union all
+select 'FREE','FREE',block_id-diff,diff-1 from a where diff<>0
+order by 3 asc
+)]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																		</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="null" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="null" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="false" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+</display>
+</displays>

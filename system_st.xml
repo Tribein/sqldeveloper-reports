@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<displays>
+<display id="66812f76-013c-1000-800b-ac1087dd036a" type="" style="plsql-dbms_output" enable="true">
+	<name><![CDATA[SYSTEM_STATISTIC]]></name>
+	<description><![CDATA[]]></description>
+	<tooltip><![CDATA[]]></tooltip>
+	<drillclass><![CDATA[null]]></drillclass>
+	<CustomValues>
+	</CustomValues>
+	<query>
+		<sql><![CDATA[declare 
+type statrec is record (statid v$sysstat.statistic#%type,name v$sysstat.name%type,value v$sysstat.value%type); 
+type stattab is table of statrec;
+tempstattab stattab;
+mystattab stattab;
+type idxtab is table of pls_integer;
+myidxtab idxtab := idxtab();
+tmprec statrec;
+begin
+--dbms_output.enable(1000000);
+DBMS_SESSION.FREE_UNUSED_USER_MEMORY;
+dbms_output.put_line('<PRE>');
+select statistic#,name,nvl(value,0) bulk collect into mystattab from v$sysstat order by statistic#;
+dbms_lock.sleep(nvl(:SECONDS_TO_WAIT,5));
+select statistic#,name,value bulk collect into tempstattab from v$sysstat order by statistic#;
+for i in tempstattab.first..tempstattab.last loop
+if mystattab(i).statid = tempstattab(i).statid and tempstattab(i).value<>0 and tempstattab(i).value<>mystattab(i).value then
+mystattab(i).value :=  tempstattab(i).value - mystattab(i).value;
+myidxtab.extend;
+myidxtab(myidxtab.last):=i;
+else mystattab.delete(i);
+end if;
+end loop;
+
+--sorting mystattab
+for j in myidxtab.first..myidxtab.last loop
+for h in myidxtab.first..myidxtab.last loop
+if h>myidxtab.first and mystattab(myidxtab(h)).value > mystattab(myidxtab(myidxtab.prior(h))).value 
+then
+tmprec := mystattab(myidxtab(h));
+mystattab(myidxtab(h)):=mystattab(myidxtab(myidxtab.prior(h)));
+mystattab(myidxtab(myidxtab.prior(h))) := tmprec;
+end if;
+end loop;
+end loop;
+--done sorting
+for k in myidxtab.first..myidxtab.last loop
+dbms_output.put_line(rpad(mystattab(myidxtab(k)).name,64,'.')||mystattab(myidxtab(k)).value);
+end loop;
+dbms_output.put_line('</PRE>');
+DBMS_SESSION.FREE_UNUSED_USER_MEMORY;
+end;]]></sql>
+		<binds>
+			<bind id="SECONDS_TO_WAIT">
+				<prompt><![CDATA[SECONDS_TO_WAIT]]></prompt>
+				<tooltip><![CDATA[SECONDS_TO_WAIT]]></tooltip>
+				<value><![CDATA[NULL_VALUE]]></value>
+				<bracket><![CDATA[null]]></bracket>
+			</bind>
+		</binds>
+	</query>
+		<pdf version="VERSION_1_7" compression="CONTENT">
+			<docproperty title="" author="" subject="" keywords="" />
+			<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+			<column>
+				<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+				<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+				<blob blob="NONE" zip="false" />
+			</column>
+			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+			<header enable="false" generatedate="false">
+				<data>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				null																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
+			</header>
+			<footer enable="false" generatedate="false">
+				<data value="null" />
+			</footer>
+			<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+				<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+			</security>
+			<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+		</pdf>
+</display>
+</displays>

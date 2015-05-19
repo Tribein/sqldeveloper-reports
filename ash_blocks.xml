@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<displays>
+<display id="7c74bb43-013d-1000-800c-ac1087ddd75a" type="" style="Chart" enable="true">
+	<name><![CDATA[ASH_BLOCKS]]></name>
+	<description><![CDATA[]]></description>
+	<tooltip><![CDATA[]]></tooltip>
+	<drillclass><![CDATA[null]]></drillclass>
+	<CustomValues>
+		<LEGEND>false</LEGEND>
+		<STYLE>Default</STYLE>
+		<THREED>true</THREED>
+		<GRID>true</GRID>
+		<GRADIENT>true</GRADIENT>
+		<TYPE>BAR_VERT_STACK</TYPE>
+	</CustomValues>
+	<query>
+		<sql><![CDATA[select to_char(sample_time,'HH24:MI:SS') ts,
+blocking_inst_id||' '||blocking_session||','||blocking_session_serial# blocker,
+count(1) sessions_blocked 
+from gv$active_session_history 
+where blocking_session is not null 
+and sample_time between decode(:MINUTES,null,trunc(sysdate),sysdate-(:MINUTES/(24*60))) and sysdate
+group by to_char(sample_time,'HH24:MI:SS'),blocking_inst_id,blocking_session,blocking_session_serial#
+order by 1 asc]]></sql>
+		<binds>
+			<bind id="MINUTES">
+				<prompt><![CDATA[MINUTES]]></prompt>
+				<tooltip><![CDATA[MINUTES]]></tooltip>
+				<value><![CDATA[120]]></value>
+			</bind>
+		</binds>
+	</query>
+		<pdf version="VERSION_1_7" compression="CONTENT">
+			<docproperty title="" author="" subject="" keywords="" />
+			<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+			<column>
+				<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+				<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+				<blob blob="NONE" zip="false" />
+			</column>
+			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+			<header enable="false" generatedate="false">
+				<data>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				null																																								</data>
+			</header>
+			<footer enable="false" generatedate="false">
+				<data value="null" />
+			</footer>
+			<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+				<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+			</security>
+			<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+		</pdf>
+	<display id="null" type="" style="Table" enable="true">
+		<name><![CDATA[BLOCKING TREE]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<CustomValues>
+			<TYPE>horizontal</TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[with a as (
+select sample_time,INST_ID,session_id,session_SERIAL#,blocking_inst_id,blocking_session,blocking_session_serial#,
+username,MODULE,program,MACHINE,session_state,time_waited,event,seq#,p1text,p1,p2text,p2,p3text,p3 from gv$active_session_history
+left join (select user_id,username from dba_users) using (user_id)
+where sample_time between trunc(sysdate) and sysdate and to_char(sample_time,'HH24:MI:SS')=:TS
+)
+select to_char(sample_time,'YYYYMMDD HH24:MI:SS') ts,INST_ID,RPAD('  ',4*level,'  ')||session_id sid,session_SERIAL#,
+username,nvl(MODULE,program) progrm,MACHINE,
+session_state,round(time_waited/1000) time_waited_milli,nvl(event,'on cpu') evnt,seq#,
+p1text,p1,p2text,p2,p3text,p3
+from a
+start with inst_id||' '||session_id||','||session_serial#=:BLOCKER
+connect by nocycle prior trim(inst_id||' '||session_id||','||session_serial#)=trim(blocking_inst_id||' '||blocking_session||','||blocking_session_serial#)]]></sql>
+			<binds>
+				<bind id="TS">
+					<prompt><![CDATA[TS]]></prompt>
+					<tooltip><![CDATA[TS]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+				</bind>
+				<bind id="BLOCKER">
+					<prompt><![CDATA[BLOCKER]]></prompt>
+					<tooltip><![CDATA[BLOCKER]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+				</bind>
+			</binds>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																		</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+</display>
+</displays>

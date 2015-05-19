@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<displays>
+<display id="7b8139fb-0139-1000-8018-ac1084dad447" type="" style="Chart" enable="true">
+	<name><![CDATA[SESSIONS_WAIT_EVENT]]></name>
+	<description><![CDATA[]]></description>
+	<tooltip><![CDATA[]]></tooltip>
+	<drillclass><![CDATA[null]]></drillclass>
+	<CustomValues>
+		<LEGEND>true</LEGEND>
+		<STYLE>Default</STYLE>
+		<THREED>true</THREED>
+		<GRID>true</GRID>
+		<GRADIENT>true</GRADIENT>
+		<TYPE>BAR_VERT_STACK</TYPE>
+	</CustomValues>
+	<query>
+		<sql><![CDATA[SELECT sid,
+  DECODE(state,'WAITED SHORT TIME','CPU+WAIT','WAITED KNOWN TIME','CPU+WAIT',NVL(EVENT,'CPU+WAIT')),
+  ROUND(DECODE(state,'WAITED SHORT TIME',time_since_last_wait_micro,'WAITED KNOWN TIME',time_since_last_wait_micro,wait_time_micro)/1000000,6)
+FROM V$SESSION
+WHERE NOT (wait_class#=6
+AND state             ='WAITING')
+order by 3 desc]]></sql>
+	</query>
+		<pdf version="VERSION_1_7" compression="CONTENT">
+			<docproperty title="" author="" subject="" keywords="" />
+			<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+			<column>
+				<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+				<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+				<blob blob="NONE" zip="false" />
+			</column>
+			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+			<header enable="false" generatedate="false">
+				<data>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				null																																																																																																																																																																																																																																																												</data>
+			</header>
+			<footer enable="false" generatedate="false">
+				<data value="null" />
+			</footer>
+			<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+				<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+			</security>
+			<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+		</pdf>
+</display>
+</displays>
