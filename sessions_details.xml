@@ -132,32 +132,6 @@ FROM
 			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 			<header enable="false" generatedate="false">
 				<data>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																</data>
 			</header>
 			<footer enable="false" generatedate="false">
@@ -231,32 +205,6 @@ and inst_id = :INST_ID
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -301,32 +249,6 @@ order by time_waited_micro desc, total_timeouts desc]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -373,32 +295,6 @@ order by 2 desc]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -738,32 +634,6 @@ and a.inst_id = :INST_ID]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -810,32 +680,6 @@ order by 3 desc,1,2]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -882,32 +726,6 @@ order by 3 desc]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -953,32 +771,6 @@ order by sofar/totalwork asc]]></sql>
 				<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1020,32 +812,6 @@ and rownum    =1]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1085,32 +851,6 @@ AND rownum        =1]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1183,32 +923,6 @@ order by sp.plan_hash_value,
 				<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1270,32 +984,6 @@ where a.sid=:SID and inst_id=:INST_ID]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																					</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1335,32 +1023,6 @@ from dual]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																	</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1407,32 +1069,6 @@ order by gv$sql_bind_capture.sql_id,last_captured,
 				<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1492,32 +1128,6 @@ WHERE kgllkuse=
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1580,32 +1190,6 @@ WHERE kgllkhdl=
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1653,32 +1237,6 @@ where ses_addr =
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1743,32 +1301,6 @@ order by block, ctime desc, request]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1810,21 +1342,6 @@ AND sid      =:SID]]></sql>
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1864,21 +1381,6 @@ order by 2 desc]]></sql>
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1922,19 +1424,6 @@ where sid=:SID and serial#=:SERIAL]]></sql>
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																						</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -1977,18 +1466,6 @@ WHERE kgllkuse=
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																	</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -2071,7 +1548,6 @@ ORDER BY
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
 					null										</data>
 				</header>
 				<footer enable="false" generatedate="false">

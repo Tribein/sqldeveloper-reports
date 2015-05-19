@@ -63,9 +63,6 @@ ORDER BY is_blocking DESC,
 			<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 			<header enable="false" generatedate="false">
 				<data>
-				
-				
-				
 				null																</data>
 			</header>
 			<footer enable="false" generatedate="false">
@@ -136,9 +133,6 @@ where inst_id=:INST_ID and owner=:OWNER and name=:OBJECT_NAME]]></sql>
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
 					null																				</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -175,9 +169,6 @@ order by 3]]></sql>
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
 					null																				</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -225,9 +216,6 @@ order by a.mode_requested desc, a.mode_held desc]]></sql>
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
 					null																				</data>
 				</header>
 				<footer enable="false" generatedate="false">

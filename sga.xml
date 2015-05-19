@@ -18,9 +18,7 @@
 from v$sgastat 
 where pool is not null and name<>'KGH: NO ACCESS'
 group by 'SGA',pool
- 
 union all 
-
 select 'SGA',name,sum(bytes)/1024/1024 "SIZE_MB" 
 from v$sgastat
 where pool is null
@@ -37,24 +35,6 @@ group by 'SGA',name]]></sql>
 			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 			<header enable="false" generatedate="false">
 				<data>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				null																																																																												</data>
 			</header>
 			<footer enable="false" generatedate="false">
@@ -92,24 +72,6 @@ group by 'SGA',name]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																															</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -151,24 +113,6 @@ decode(status,'free','FREE','xcur','EXCLUSIVE','scur','SHARED','cr','CONSISTENT 
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																															</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -227,24 +171,6 @@ case when dirty='Y' then 'DIRTY' when temp='Y' then 'TEMP' when ping='Y' then 'P
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																															</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -285,24 +211,6 @@ left join v$datafile b using(file#)]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																															</data>
 				</header>
 				<footer enable="false" generatedate="false">
@@ -341,24 +249,6 @@ left join v$datafile b using(file#)]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					null																																																																																															</data>
 				</header>
 				<footer enable="false" generatedate="false">
