@@ -26,11 +26,11 @@
   physical_write_bytes,
   round(application_wait_time/1000) application_ms,
   round(concurrency_wait_time/1000) concurrency_ms,
-  round(user_io_wait_time    /1000) user_io_ms,
-  round(plsql_exec_time      /1000) plsql_ms,
-  round(java_exec_time       /1000) java_ms,
-  round(cpu_time             /1000) cpu_ms,
-  round(elapsed_time         /1000) ela,
+  round(user_io_wait_time/1000) user_io_ms,
+  round(plsql_exec_time  /1000) plsql_ms,
+  round(java_exec_time   /1000) java_ms,
+  round(cpu_time /1000) cpu_ms,
+  round(elapsed_time /1000) ela,
   rows_processed
   last_active_time
 from GV$SQLSTATS
@@ -38,8 +38,7 @@ where sql_id = :SQL_ID]]></sql>
 		<binds>
 			<bind id="SQL_ID">
 				<prompt><![CDATA[SQLID]]></prompt>
-				<value><![CDATA[4m7m0t6fjcs5x]]></value>
-				<bracket><![CDATA[null]]></bracket>
+				<value><![CDATA[5jgdrpj28m1zv]]></value>
 			</bind>
 		</binds>
 	</query>
@@ -53,8 +52,7 @@ where sql_id = :SQL_ID]]></sql>
 			</column>
 			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 			<header enable="false" generatedate="false">
-				<data>
-				null																																																																																																																																																																																																																																																																																																																																																</data>
+				<data>null</data>
 			</header>
 			<footer enable="false" generatedate="false">
 				<data value="null" />
@@ -99,11 +97,11 @@ where sql_id = :SQL_ID]]></sql>
   optimized_phy_read_requests,
   round(application_wait_time/1000) application_ms,
   round(concurrency_wait_time/1000) concurrency_ms,
-  round(user_io_wait_time    /1000) user_io_ms,
-  round(plsql_exec_time      /1000) plsql_ms,
-  round(java_exec_time       /1000) java_ms,
-  round(cpu_time             /1000) cpu_ms,
-  round(elapsed_time         /1000) ela,
+  round(user_io_wait_time/1000) user_io_ms,
+  round(plsql_exec_time  /1000) plsql_ms,
+  round(java_exec_time   /1000) java_ms,
+  round(cpu_time /1000) cpu_ms,
+  round(elapsed_time /1000) ela,
   rows_processed,
   object_status,
   is_obsolete,
@@ -125,7 +123,6 @@ order by child_number,inst_id]]></sql>
 					<prompt><![CDATA[SQL_ID]]></prompt>
 					<tooltip><![CDATA[SQL_ID]]></tooltip>
 					<value><![CDATA[NULL_VALUE]]></value>
-					<bracket><![CDATA[null]]></bracket>
 				</bind>
 			</binds>
 		</query>
@@ -139,8 +136,7 @@ order by child_number,inst_id]]></sql>
 				</column>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
-					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																				</data>
+					<data>null</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -172,19 +168,19 @@ order by child_number,inst_id]]></sql>
   ||position) "Query Plan",
   lpad(
   CASE
-    WHEN cardinality > 1000000
-    THEN TO_CHAR(TRUNC(cardinality/1000000))
-      || 'M'
-    WHEN cardinality > 1000
-    THEN TO_CHAR(TRUNC(cardinality/1000))
-      || 'K'
-    ELSE cardinality
-      || ' '
+WHEN cardinality > 1000000
+THEN TO_CHAR(TRUNC(cardinality/1000000))
+  || 'M'
+WHEN cardinality > 1000
+THEN TO_CHAR(TRUNC(cardinality/1000))
+  || 'K'
+ELSE cardinality
+  || ' '
   END , 6 , ' ' ) AS "Rows",
   NVL(cpu_cost,0) "CPU_COST",
   NVL(io_cost,0) "I/O_COST",
   NVL(ROUND(temp_space/1024/1024,3),0) "TEMP",
-  NVL(ROUND(bytes     /1024/1024,3),0) "MB"
+  NVL(ROUND(bytes /1024/1024,3),0) "MB"
 FROM gv$sql_plan 
 WHERE sql_id = :SQL_ID
 ORDER BY plan_hash_value,
@@ -201,8 +197,7 @@ ORDER BY plan_hash_value,
 				</column>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
-					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																				</data>
+					<data>null</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -232,7 +227,7 @@ ORDER BY plan_hash_value,
   TO_CHAR(last_captured,'YYYY-MM-DD HH24:MI:SS') time_captured
 FROM gv$sql_bind_capture
 WHERE last_captured IS NOT NULL
-AND sql_id           =:SQL_ID
+AND sql_id   =:SQL_ID
 ORDER BY last_captured desc,
   position asc]]></sql>
 		</query>
@@ -246,8 +241,7 @@ ORDER BY last_captured desc,
 				</column>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
-					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																				</data>
+					<data>null</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -259,7 +253,7 @@ ORDER BY last_captured desc,
 			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-		<name><![CDATA[SESSIONS]]></name>
+		<name><![CDATA[SESSIONS_OPEN]]></name>
 		<description><![CDATA[]]></description>
 		<tooltip><![CDATA[]]></tooltip>
 		<drillclass><![CDATA[null]]></drillclass>
@@ -293,7 +287,7 @@ on (a.paddr  =b.addr
 and a.inst_id=b.inst_id)
 left join
   (select blocking_session,
-    count(sid) blocked
+count(sid) blocked
   from gv$session
   where blocking_session is not null
   group by blocking_session
@@ -303,6 +297,13 @@ inner join
   (select distinct sid,inst_id from gv$open_cursor where sql_id=:SQL_ID
   ) d
 on (a.sid=d.sid and a.inst_id=b.inst_id)]]></sql>
+			<binds>
+				<bind id="SQL_ID">
+					<prompt><![CDATA[SQL_ID]]></prompt>
+					<tooltip><![CDATA[SQL_ID]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+				</bind>
+			</binds>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
 				<docproperty title="" author="" subject="" keywords="" />
@@ -314,8 +315,7 @@ on (a.sid=d.sid and a.inst_id=b.inst_id)]]></sql>
 				</column>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
-					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																				</data>
+					<data>null</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -339,146 +339,146 @@ on (a.sid=d.sid and a.inst_id=b.inst_id)]]></sql>
   *
 FROM
   (
-    SELECT
-      SUM(UNBOUND_CURSOR) UNBOUND_CURSOR,
-      SUM(SQL_TYPE_MISMATCH) SQL_TYPE_MISMATCH,
-      SUM(OPTIMIZER_MISMATCH) OPTIMIZER_MISMATCH,
-      SUM(OUTLINE_MISMATCH) OUTLINE_MISMATCH,
-      SUM(STATS_ROW_MISMATCH) STATS_ROW_MISMATCH,
-      SUM(LITERAL_MISMATCH) LITERAL_MISMATCH,
-      SUM(FORCE_HARD_PARSE) FORCE_HARD_PARSE,
-      SUM(EXPLAIN_PLAN_CURSOR) EXPLAIN_PLAN_CURSOR,
-      SUM(BUFFERED_DML_MISMATCH) BUFFERED_DML_MISMATCH,
-      SUM(PDML_ENV_MISMATCH) PDML_ENV_MISMATCH,
-      SUM(INST_DRTLD_MISMATCH) INST_DRTLD_MISMATCH,
-      SUM(SLAVE_QC_MISMATCH) SLAVE_QC_MISMATCH,
-      SUM(TYPECHECK_MISMATCH) TYPECHECK_MISMATCH,
-      SUM(AUTH_CHECK_MISMATCH) AUTH_CHECK_MISMATCH,
-      SUM(BIND_MISMATCH) BIND_MISMATCH,
-      SUM(DESCRIBE_MISMATCH) DESCRIBE_MISMATCH,
-      SUM(LANGUAGE_MISMATCH) LANGUAGE_MISMATCH,
-      SUM(TRANSLATION_MISMATCH) TRANSLATION_MISMATCH,
-      SUM(BIND_EQUIV_FAILURE) BIND_EQUIV_FAILURE,
-      SUM(INSUFF_PRIVS) INSUFF_PRIVS,
-      SUM(INSUFF_PRIVS_REM) INSUFF_PRIVS_REM,
-      SUM(REMOTE_TRANS_MISMATCH) REMOTE_TRANS_MISMATCH,
-      SUM(LOGMINER_SESSION_MISMATCH) LOGMINER_SESSION_MISMATCH,
-      SUM(INCOMP_LTRL_MISMATCH) INCOMP_LTRL_MISMATCH,
-      SUM(OVERLAP_TIME_MISMATCH) OVERLAP_TIME_MISMATCH,
-      SUM(EDITION_MISMATCH) EDITION_MISMATCH,
-      SUM(MV_QUERY_GEN_MISMATCH) MV_QUERY_GEN_MISMATCH,
-      SUM(USER_BIND_PEEK_MISMATCH) USER_BIND_PEEK_MISMATCH,
-      SUM(TYPCHK_DEP_MISMATCH) TYPCHK_DEP_MISMATCH,
-      SUM(NO_TRIGGER_MISMATCH) NO_TRIGGER_MISMATCH,
-      SUM(FLASHBACK_CURSOR) FLASHBACK_CURSOR,
-      SUM(ANYDATA_TRANSFORMATION) ANYDATA_TRANSFORMATION,
-      SUM(PDDL_ENV_MISMATCH) PDDL_ENV_MISMATCH,
-      SUM(TOP_LEVEL_RPI_CURSOR) TOP_LEVEL_RPI_CURSOR,
-      SUM(DIFFERENT_LONG_LENGTH) DIFFERENT_LONG_LENGTH,
-      SUM(LOGICAL_STANDBY_APPLY) LOGICAL_STANDBY_APPLY,
-      SUM(DIFF_CALL_DURN) DIFF_CALL_DURN,
-      SUM(BIND_UACS_DIFF) BIND_UACS_DIFF,
-      SUM(PLSQL_CMP_SWITCHS_DIFF) PLSQL_CMP_SWITCHS_DIFF,
-      SUM(CURSOR_PARTS_MISMATCH) CURSOR_PARTS_MISMATCH,
-      SUM(STB_OBJECT_MISMATCH) STB_OBJECT_MISMATCH,
-      SUM(CROSSEDITION_TRIGGER_MISMATCH) CROSSEDITION_TRIGGER_MISMATCH,
-      SUM(PQ_SLAVE_MISMATCH) PQ_SLAVE_MISMATCH,
-      SUM(TOP_LEVEL_DDL_MISMATCH) TOP_LEVEL_DDL_MISMATCH,
-      SUM(MULTI_PX_MISMATCH) MULTI_PX_MISMATCH,
-      SUM(BIND_PEEKED_PQ_MISMATCH) BIND_PEEKED_PQ_MISMATCH,
-      SUM(MV_REWRITE_MISMATCH) MV_REWRITE_MISMATCH,
-      SUM(ROLL_INVALID_MISMATCH) ROLL_INVALID_MISMATCH,
-      SUM(OPTIMIZER_MODE_MISMATCH) OPTIMIZER_MODE_MISMATCH,
-      SUM(PX_MISMATCH) PX_MISMATCH,
-      SUM(MV_STALEOBJ_MISMATCH) MV_STALEOBJ_MISMATCH,
-      SUM(FLASHBACK_TABLE_MISMATCH) FLASHBACK_TABLE_MISMATCH,
-      SUM(LITREP_COMP_MISMATCH) LITREP_COMP_MISMATCH,
-      SUM(PLSQL_DEBUG) PLSQL_DEBUG,
-      SUM(LOAD_OPTIMIZER_STATS) LOAD_OPTIMIZER_STATS,
-      SUM(ACL_MISMATCH) ACL_MISMATCH,
-      SUM(FLASHBACK_ARCHIVE_MISMATCH) FLASHBACK_ARCHIVE_MISMATCH,
-      SUM(LOCK_USER_SCHEMA_FAILED) LOCK_USER_SCHEMA_FAILED,
-      SUM(REMOTE_MAPPING_MISMATCH) REMOTE_MAPPING_MISMATCH,
-      SUM(LOAD_RUNTIME_HEAP_FAILED) LOAD_RUNTIME_HEAP_FAILED,
-      SUM(HASH_MATCH_FAILED) HASH_MATCH_FAILED,
-      SUM(PURGED_CURSOR) PURGED_CURSOR,
-      SUM(BIND_LENGTH_UPGRADEABLE) BIND_LENGTH_UPGRADEABLE,
-      SUM(USE_FEEDBACK_STATS) USE_FEEDBACK_STATS
-    FROM
-      (
-        SELECT
-          DECODE(UNBOUND_CURSOR, 'Y',1, 0 ) UNBOUND_CURSOR,
-          DECODE(SQL_TYPE_MISMATCH, 'Y',1, 0 ) SQL_TYPE_MISMATCH,
-          DECODE(OPTIMIZER_MISMATCH, 'Y',1, 0 ) OPTIMIZER_MISMATCH,
-          DECODE(OUTLINE_MISMATCH, 'Y',1, 0 ) OUTLINE_MISMATCH,
-          DECODE(STATS_ROW_MISMATCH, 'Y',1, 0 ) STATS_ROW_MISMATCH,
-          DECODE(LITERAL_MISMATCH, 'Y',1, 0 ) LITERAL_MISMATCH,
-          DECODE(FORCE_HARD_PARSE, 'Y',1, 0 ) FORCE_HARD_PARSE,
-          DECODE(EXPLAIN_PLAN_CURSOR, 'Y',1, 0 ) EXPLAIN_PLAN_CURSOR,
-          DECODE(BUFFERED_DML_MISMATCH, 'Y',1, 0 ) BUFFERED_DML_MISMATCH,
-          DECODE(PDML_ENV_MISMATCH, 'Y',1, 0 ) PDML_ENV_MISMATCH,
-          DECODE(INST_DRTLD_MISMATCH, 'Y',1, 0 ) INST_DRTLD_MISMATCH,
-          DECODE(SLAVE_QC_MISMATCH, 'Y',1, 0 ) SLAVE_QC_MISMATCH,
-          DECODE(TYPECHECK_MISMATCH, 'Y',1, 0 ) TYPECHECK_MISMATCH,
-          DECODE(AUTH_CHECK_MISMATCH, 'Y',1, 0 ) AUTH_CHECK_MISMATCH,
-          DECODE(BIND_MISMATCH, 'Y',1, 0 ) BIND_MISMATCH,
-          DECODE(DESCRIBE_MISMATCH, 'Y',1, 0 ) DESCRIBE_MISMATCH,
-          DECODE(LANGUAGE_MISMATCH, 'Y',1, 0 ) LANGUAGE_MISMATCH,
-          DECODE(TRANSLATION_MISMATCH, 'Y',1, 0 ) TRANSLATION_MISMATCH,
-          DECODE(BIND_EQUIV_FAILURE, 'Y',1, 0 ) BIND_EQUIV_FAILURE,
-          DECODE(INSUFF_PRIVS, 'Y',1, 0 ) INSUFF_PRIVS,
-          DECODE(INSUFF_PRIVS_REM, 'Y',1, 0 ) INSUFF_PRIVS_REM,
-          DECODE(REMOTE_TRANS_MISMATCH, 'Y',1, 0 ) REMOTE_TRANS_MISMATCH,
-          DECODE(LOGMINER_SESSION_MISMATCH, 'Y',1, 0 )
-          LOGMINER_SESSION_MISMATCH,
-          DECODE(INCOMP_LTRL_MISMATCH, 'Y',1, 0 ) INCOMP_LTRL_MISMATCH,
-          DECODE(OVERLAP_TIME_MISMATCH, 'Y',1, 0 ) OVERLAP_TIME_MISMATCH,
-          DECODE(EDITION_MISMATCH, 'Y',1, 0 ) EDITION_MISMATCH,
-          DECODE(MV_QUERY_GEN_MISMATCH, 'Y',1, 0 ) MV_QUERY_GEN_MISMATCH,
-          DECODE(USER_BIND_PEEK_MISMATCH, 'Y',1, 0 ) USER_BIND_PEEK_MISMATCH,
-          DECODE(TYPCHK_DEP_MISMATCH, 'Y',1, 0 ) TYPCHK_DEP_MISMATCH,
-          DECODE(NO_TRIGGER_MISMATCH, 'Y',1, 0 ) NO_TRIGGER_MISMATCH,
-          DECODE(FLASHBACK_CURSOR, 'Y',1, 0 ) FLASHBACK_CURSOR,
-          DECODE(ANYDATA_TRANSFORMATION, 'Y',1, 0 ) ANYDATA_TRANSFORMATION,
-          DECODE(PDDL_ENV_MISMATCH, 'Y',1, 0 ) PDDL_ENV_MISMATCH,
-          DECODE(TOP_LEVEL_RPI_CURSOR, 'Y',1, 0 ) TOP_LEVEL_RPI_CURSOR,
-          DECODE(DIFFERENT_LONG_LENGTH, 'Y',1, 0 ) DIFFERENT_LONG_LENGTH,
-          DECODE(LOGICAL_STANDBY_APPLY, 'Y',1, 0 ) LOGICAL_STANDBY_APPLY,
-          DECODE(DIFF_CALL_DURN, 'Y',1, 0 ) DIFF_CALL_DURN,
-          DECODE(BIND_UACS_DIFF, 'Y',1, 0 ) BIND_UACS_DIFF,
-          DECODE(PLSQL_CMP_SWITCHS_DIFF, 'Y',1, 0 ) PLSQL_CMP_SWITCHS_DIFF,
-          DECODE(CURSOR_PARTS_MISMATCH, 'Y',1, 0 ) CURSOR_PARTS_MISMATCH,
-          DECODE(STB_OBJECT_MISMATCH, 'Y',1, 0 ) STB_OBJECT_MISMATCH,
-          DECODE(CROSSEDITION_TRIGGER_MISMATCH, 'Y',1, 0 )
-          CROSSEDITION_TRIGGER_MISMATCH,
-          DECODE(PQ_SLAVE_MISMATCH, 'Y',1, 0 ) PQ_SLAVE_MISMATCH,
-          DECODE(TOP_LEVEL_DDL_MISMATCH, 'Y',1, 0 ) TOP_LEVEL_DDL_MISMATCH,
-          DECODE(MULTI_PX_MISMATCH, 'Y',1, 0 ) MULTI_PX_MISMATCH,
-          DECODE(BIND_PEEKED_PQ_MISMATCH, 'Y',1, 0 ) BIND_PEEKED_PQ_MISMATCH,
-          DECODE(MV_REWRITE_MISMATCH, 'Y',1, 0 ) MV_REWRITE_MISMATCH,
-          DECODE(ROLL_INVALID_MISMATCH, 'Y',1, 0 ) ROLL_INVALID_MISMATCH,
-          DECODE(OPTIMIZER_MODE_MISMATCH, 'Y',1, 0 ) OPTIMIZER_MODE_MISMATCH,
-          DECODE(PX_MISMATCH, 'Y',1, 0 ) PX_MISMATCH,
-          DECODE(MV_STALEOBJ_MISMATCH, 'Y',1, 0 ) MV_STALEOBJ_MISMATCH,
-          DECODE(FLASHBACK_TABLE_MISMATCH, 'Y',1, 0 ) FLASHBACK_TABLE_MISMATCH,
-          DECODE(LITREP_COMP_MISMATCH, 'Y',1, 0 ) LITREP_COMP_MISMATCH,
-          DECODE(PLSQL_DEBUG, 'Y',1, 0 ) PLSQL_DEBUG,
-          DECODE(LOAD_OPTIMIZER_STATS, 'Y',1, 0 ) LOAD_OPTIMIZER_STATS,
-          DECODE(ACL_MISMATCH, 'Y',1, 0 ) ACL_MISMATCH,
-          DECODE(FLASHBACK_ARCHIVE_MISMATCH, 'Y',1, 0 )
-          FLASHBACK_ARCHIVE_MISMATCH,
-          DECODE(LOCK_USER_SCHEMA_FAILED, 'Y',1, 0 ) LOCK_USER_SCHEMA_FAILED,
-          DECODE(REMOTE_MAPPING_MISMATCH, 'Y',1, 0 ) REMOTE_MAPPING_MISMATCH,
-          DECODE(LOAD_RUNTIME_HEAP_FAILED, 'Y',1, 0 ) LOAD_RUNTIME_HEAP_FAILED,
-          DECODE(HASH_MATCH_FAILED, 'Y',1, 0 ) HASH_MATCH_FAILED,
-          DECODE(PURGED_CURSOR, 'Y',1, 0 ) PURGED_CURSOR,
-          DECODE(BIND_LENGTH_UPGRADEABLE, 'Y',1, 0 ) BIND_LENGTH_UPGRADEABLE,
-          DECODE(USE_FEEDBACK_STATS, 'Y',1, 0 ) USE_FEEDBACK_STATS
-        FROM
-          V$SQL_SHARED_CURSOR
-        WHERE
-          SQL_ID = :SQL_ID
-      )
+SELECT
+  SUM(UNBOUND_CURSOR) UNBOUND_CURSOR,
+  SUM(SQL_TYPE_MISMATCH) SQL_TYPE_MISMATCH,
+  SUM(OPTIMIZER_MISMATCH) OPTIMIZER_MISMATCH,
+  SUM(OUTLINE_MISMATCH) OUTLINE_MISMATCH,
+  SUM(STATS_ROW_MISMATCH) STATS_ROW_MISMATCH,
+  SUM(LITERAL_MISMATCH) LITERAL_MISMATCH,
+  SUM(FORCE_HARD_PARSE) FORCE_HARD_PARSE,
+  SUM(EXPLAIN_PLAN_CURSOR) EXPLAIN_PLAN_CURSOR,
+  SUM(BUFFERED_DML_MISMATCH) BUFFERED_DML_MISMATCH,
+  SUM(PDML_ENV_MISMATCH) PDML_ENV_MISMATCH,
+  SUM(INST_DRTLD_MISMATCH) INST_DRTLD_MISMATCH,
+  SUM(SLAVE_QC_MISMATCH) SLAVE_QC_MISMATCH,
+  SUM(TYPECHECK_MISMATCH) TYPECHECK_MISMATCH,
+  SUM(AUTH_CHECK_MISMATCH) AUTH_CHECK_MISMATCH,
+  SUM(BIND_MISMATCH) BIND_MISMATCH,
+  SUM(DESCRIBE_MISMATCH) DESCRIBE_MISMATCH,
+  SUM(LANGUAGE_MISMATCH) LANGUAGE_MISMATCH,
+  SUM(TRANSLATION_MISMATCH) TRANSLATION_MISMATCH,
+  SUM(BIND_EQUIV_FAILURE) BIND_EQUIV_FAILURE,
+  SUM(INSUFF_PRIVS) INSUFF_PRIVS,
+  SUM(INSUFF_PRIVS_REM) INSUFF_PRIVS_REM,
+  SUM(REMOTE_TRANS_MISMATCH) REMOTE_TRANS_MISMATCH,
+  SUM(LOGMINER_SESSION_MISMATCH) LOGMINER_SESSION_MISMATCH,
+  SUM(INCOMP_LTRL_MISMATCH) INCOMP_LTRL_MISMATCH,
+  SUM(OVERLAP_TIME_MISMATCH) OVERLAP_TIME_MISMATCH,
+  SUM(EDITION_MISMATCH) EDITION_MISMATCH,
+  SUM(MV_QUERY_GEN_MISMATCH) MV_QUERY_GEN_MISMATCH,
+  SUM(USER_BIND_PEEK_MISMATCH) USER_BIND_PEEK_MISMATCH,
+  SUM(TYPCHK_DEP_MISMATCH) TYPCHK_DEP_MISMATCH,
+  SUM(NO_TRIGGER_MISMATCH) NO_TRIGGER_MISMATCH,
+  SUM(FLASHBACK_CURSOR) FLASHBACK_CURSOR,
+  SUM(ANYDATA_TRANSFORMATION) ANYDATA_TRANSFORMATION,
+  SUM(PDDL_ENV_MISMATCH) PDDL_ENV_MISMATCH,
+  SUM(TOP_LEVEL_RPI_CURSOR) TOP_LEVEL_RPI_CURSOR,
+  SUM(DIFFERENT_LONG_LENGTH) DIFFERENT_LONG_LENGTH,
+  SUM(LOGICAL_STANDBY_APPLY) LOGICAL_STANDBY_APPLY,
+  SUM(DIFF_CALL_DURN) DIFF_CALL_DURN,
+  SUM(BIND_UACS_DIFF) BIND_UACS_DIFF,
+  SUM(PLSQL_CMP_SWITCHS_DIFF) PLSQL_CMP_SWITCHS_DIFF,
+  SUM(CURSOR_PARTS_MISMATCH) CURSOR_PARTS_MISMATCH,
+  SUM(STB_OBJECT_MISMATCH) STB_OBJECT_MISMATCH,
+  SUM(CROSSEDITION_TRIGGER_MISMATCH) CROSSEDITION_TRIGGER_MISMATCH,
+  SUM(PQ_SLAVE_MISMATCH) PQ_SLAVE_MISMATCH,
+  SUM(TOP_LEVEL_DDL_MISMATCH) TOP_LEVEL_DDL_MISMATCH,
+  SUM(MULTI_PX_MISMATCH) MULTI_PX_MISMATCH,
+  SUM(BIND_PEEKED_PQ_MISMATCH) BIND_PEEKED_PQ_MISMATCH,
+  SUM(MV_REWRITE_MISMATCH) MV_REWRITE_MISMATCH,
+  SUM(ROLL_INVALID_MISMATCH) ROLL_INVALID_MISMATCH,
+  SUM(OPTIMIZER_MODE_MISMATCH) OPTIMIZER_MODE_MISMATCH,
+  SUM(PX_MISMATCH) PX_MISMATCH,
+  SUM(MV_STALEOBJ_MISMATCH) MV_STALEOBJ_MISMATCH,
+  SUM(FLASHBACK_TABLE_MISMATCH) FLASHBACK_TABLE_MISMATCH,
+  SUM(LITREP_COMP_MISMATCH) LITREP_COMP_MISMATCH,
+  SUM(PLSQL_DEBUG) PLSQL_DEBUG,
+  SUM(LOAD_OPTIMIZER_STATS) LOAD_OPTIMIZER_STATS,
+  SUM(ACL_MISMATCH) ACL_MISMATCH,
+  SUM(FLASHBACK_ARCHIVE_MISMATCH) FLASHBACK_ARCHIVE_MISMATCH,
+  SUM(LOCK_USER_SCHEMA_FAILED) LOCK_USER_SCHEMA_FAILED,
+  SUM(REMOTE_MAPPING_MISMATCH) REMOTE_MAPPING_MISMATCH,
+  SUM(LOAD_RUNTIME_HEAP_FAILED) LOAD_RUNTIME_HEAP_FAILED,
+  SUM(HASH_MATCH_FAILED) HASH_MATCH_FAILED,
+  SUM(PURGED_CURSOR) PURGED_CURSOR,
+  SUM(BIND_LENGTH_UPGRADEABLE) BIND_LENGTH_UPGRADEABLE,
+  SUM(USE_FEEDBACK_STATS) USE_FEEDBACK_STATS
+FROM
+  (
+SELECT
+  DECODE(UNBOUND_CURSOR, 'Y',1, 0 ) UNBOUND_CURSOR,
+  DECODE(SQL_TYPE_MISMATCH, 'Y',1, 0 ) SQL_TYPE_MISMATCH,
+  DECODE(OPTIMIZER_MISMATCH, 'Y',1, 0 ) OPTIMIZER_MISMATCH,
+  DECODE(OUTLINE_MISMATCH, 'Y',1, 0 ) OUTLINE_MISMATCH,
+  DECODE(STATS_ROW_MISMATCH, 'Y',1, 0 ) STATS_ROW_MISMATCH,
+  DECODE(LITERAL_MISMATCH, 'Y',1, 0 ) LITERAL_MISMATCH,
+  DECODE(FORCE_HARD_PARSE, 'Y',1, 0 ) FORCE_HARD_PARSE,
+  DECODE(EXPLAIN_PLAN_CURSOR, 'Y',1, 0 ) EXPLAIN_PLAN_CURSOR,
+  DECODE(BUFFERED_DML_MISMATCH, 'Y',1, 0 ) BUFFERED_DML_MISMATCH,
+  DECODE(PDML_ENV_MISMATCH, 'Y',1, 0 ) PDML_ENV_MISMATCH,
+  DECODE(INST_DRTLD_MISMATCH, 'Y',1, 0 ) INST_DRTLD_MISMATCH,
+  DECODE(SLAVE_QC_MISMATCH, 'Y',1, 0 ) SLAVE_QC_MISMATCH,
+  DECODE(TYPECHECK_MISMATCH, 'Y',1, 0 ) TYPECHECK_MISMATCH,
+  DECODE(AUTH_CHECK_MISMATCH, 'Y',1, 0 ) AUTH_CHECK_MISMATCH,
+  DECODE(BIND_MISMATCH, 'Y',1, 0 ) BIND_MISMATCH,
+  DECODE(DESCRIBE_MISMATCH, 'Y',1, 0 ) DESCRIBE_MISMATCH,
+  DECODE(LANGUAGE_MISMATCH, 'Y',1, 0 ) LANGUAGE_MISMATCH,
+  DECODE(TRANSLATION_MISMATCH, 'Y',1, 0 ) TRANSLATION_MISMATCH,
+  DECODE(BIND_EQUIV_FAILURE, 'Y',1, 0 ) BIND_EQUIV_FAILURE,
+  DECODE(INSUFF_PRIVS, 'Y',1, 0 ) INSUFF_PRIVS,
+  DECODE(INSUFF_PRIVS_REM, 'Y',1, 0 ) INSUFF_PRIVS_REM,
+  DECODE(REMOTE_TRANS_MISMATCH, 'Y',1, 0 ) REMOTE_TRANS_MISMATCH,
+  DECODE(LOGMINER_SESSION_MISMATCH, 'Y',1, 0 )
+  LOGMINER_SESSION_MISMATCH,
+  DECODE(INCOMP_LTRL_MISMATCH, 'Y',1, 0 ) INCOMP_LTRL_MISMATCH,
+  DECODE(OVERLAP_TIME_MISMATCH, 'Y',1, 0 ) OVERLAP_TIME_MISMATCH,
+  DECODE(EDITION_MISMATCH, 'Y',1, 0 ) EDITION_MISMATCH,
+  DECODE(MV_QUERY_GEN_MISMATCH, 'Y',1, 0 ) MV_QUERY_GEN_MISMATCH,
+  DECODE(USER_BIND_PEEK_MISMATCH, 'Y',1, 0 ) USER_BIND_PEEK_MISMATCH,
+  DECODE(TYPCHK_DEP_MISMATCH, 'Y',1, 0 ) TYPCHK_DEP_MISMATCH,
+  DECODE(NO_TRIGGER_MISMATCH, 'Y',1, 0 ) NO_TRIGGER_MISMATCH,
+  DECODE(FLASHBACK_CURSOR, 'Y',1, 0 ) FLASHBACK_CURSOR,
+  DECODE(ANYDATA_TRANSFORMATION, 'Y',1, 0 ) ANYDATA_TRANSFORMATION,
+  DECODE(PDDL_ENV_MISMATCH, 'Y',1, 0 ) PDDL_ENV_MISMATCH,
+  DECODE(TOP_LEVEL_RPI_CURSOR, 'Y',1, 0 ) TOP_LEVEL_RPI_CURSOR,
+  DECODE(DIFFERENT_LONG_LENGTH, 'Y',1, 0 ) DIFFERENT_LONG_LENGTH,
+  DECODE(LOGICAL_STANDBY_APPLY, 'Y',1, 0 ) LOGICAL_STANDBY_APPLY,
+  DECODE(DIFF_CALL_DURN, 'Y',1, 0 ) DIFF_CALL_DURN,
+  DECODE(BIND_UACS_DIFF, 'Y',1, 0 ) BIND_UACS_DIFF,
+  DECODE(PLSQL_CMP_SWITCHS_DIFF, 'Y',1, 0 ) PLSQL_CMP_SWITCHS_DIFF,
+  DECODE(CURSOR_PARTS_MISMATCH, 'Y',1, 0 ) CURSOR_PARTS_MISMATCH,
+  DECODE(STB_OBJECT_MISMATCH, 'Y',1, 0 ) STB_OBJECT_MISMATCH,
+  DECODE(CROSSEDITION_TRIGGER_MISMATCH, 'Y',1, 0 )
+  CROSSEDITION_TRIGGER_MISMATCH,
+  DECODE(PQ_SLAVE_MISMATCH, 'Y',1, 0 ) PQ_SLAVE_MISMATCH,
+  DECODE(TOP_LEVEL_DDL_MISMATCH, 'Y',1, 0 ) TOP_LEVEL_DDL_MISMATCH,
+  DECODE(MULTI_PX_MISMATCH, 'Y',1, 0 ) MULTI_PX_MISMATCH,
+  DECODE(BIND_PEEKED_PQ_MISMATCH, 'Y',1, 0 ) BIND_PEEKED_PQ_MISMATCH,
+  DECODE(MV_REWRITE_MISMATCH, 'Y',1, 0 ) MV_REWRITE_MISMATCH,
+  DECODE(ROLL_INVALID_MISMATCH, 'Y',1, 0 ) ROLL_INVALID_MISMATCH,
+  DECODE(OPTIMIZER_MODE_MISMATCH, 'Y',1, 0 ) OPTIMIZER_MODE_MISMATCH,
+  DECODE(PX_MISMATCH, 'Y',1, 0 ) PX_MISMATCH,
+  DECODE(MV_STALEOBJ_MISMATCH, 'Y',1, 0 ) MV_STALEOBJ_MISMATCH,
+  DECODE(FLASHBACK_TABLE_MISMATCH, 'Y',1, 0 ) FLASHBACK_TABLE_MISMATCH,
+  DECODE(LITREP_COMP_MISMATCH, 'Y',1, 0 ) LITREP_COMP_MISMATCH,
+  DECODE(PLSQL_DEBUG, 'Y',1, 0 ) PLSQL_DEBUG,
+  DECODE(LOAD_OPTIMIZER_STATS, 'Y',1, 0 ) LOAD_OPTIMIZER_STATS,
+  DECODE(ACL_MISMATCH, 'Y',1, 0 ) ACL_MISMATCH,
+  DECODE(FLASHBACK_ARCHIVE_MISMATCH, 'Y',1, 0 )
+  FLASHBACK_ARCHIVE_MISMATCH,
+  DECODE(LOCK_USER_SCHEMA_FAILED, 'Y',1, 0 ) LOCK_USER_SCHEMA_FAILED,
+  DECODE(REMOTE_MAPPING_MISMATCH, 'Y',1, 0 ) REMOTE_MAPPING_MISMATCH,
+  DECODE(LOAD_RUNTIME_HEAP_FAILED, 'Y',1, 0 ) LOAD_RUNTIME_HEAP_FAILED,
+  DECODE(HASH_MATCH_FAILED, 'Y',1, 0 ) HASH_MATCH_FAILED,
+  DECODE(PURGED_CURSOR, 'Y',1, 0 ) PURGED_CURSOR,
+  DECODE(BIND_LENGTH_UPGRADEABLE, 'Y',1, 0 ) BIND_LENGTH_UPGRADEABLE,
+  DECODE(USE_FEEDBACK_STATS, 'Y',1, 0 ) USE_FEEDBACK_STATS
+FROM
+  V$SQL_SHARED_CURSOR
+WHERE
+  SQL_ID = :SQL_ID
+  )
   )
   UNPIVOT (TIMES_NOT_SHARED FOR REASON IN (UNBOUND_CURSOR,SQL_TYPE_MISMATCH,
   OPTIMIZER_MISMATCH,OUTLINE_MISMATCH,STATS_ROW_MISMATCH,LITERAL_MISMATCH,
@@ -501,25 +501,160 @@ FROM
   HASH_MATCH_FAILED,PURGED_CURSOR,BIND_LENGTH_UPGRADEABLE,USE_FEEDBACK_STATS))
 WHERE
   TIMES_NOT_SHARED > 0]]></sql>
+			<binds>
+				<bind id="SQL_ID">
+					<prompt><![CDATA[SQL_ID]]></prompt>
+					<tooltip><![CDATA[SQL_ID]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+				</bind>
+			</binds>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
 				<docproperty title="" author="" subject="" keywords="" />
 				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
 				<column>
-					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<heading font="Algerian" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Algerian" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
 					<blob blob="NONE" zip="false" />
 				</column>
-				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<table font="Algerian" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
-					<data>
-					null					</data>
+					<data>null</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
 				</footer>
 				<security enable="false" useopenpassword="false" openpassword="null" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="null" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="false" />
+					<permission enable="false" permissionpassword="null" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+	<display id="null" type="" style="Chart" enable="true">
+		<name><![CDATA[ACTIVITY]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<CustomValues>
+			<LEGEND>false</LEGEND>
+			<STYLE>Default</STYLE>
+			<THREED>true</THREED>
+			<GRID>true</GRID>
+			<GRADIENT>true</GRADIENT>
+			<TYPE>BAR_VERT_STACK</TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+  TO_CHAR(sample_time,'HH24MISS') "TIME",
+  event,
+  COUNT(1) cntr
+FROM
+  gv$active_session_history
+WHERE
+sql_id   =:SQL_ID
+AND event IS NOT NULL
+AND SAMPLE_TIME between sysdate-10/(24*60) and sysdate
+GROUP BY
+  TO_CHAR(SAMPLE_TIME,'HH24MISS'),
+  EVENT
+ORDER BY
+  1 ASC]]></sql>
+			<binds>
+				<bind id="SQL_ID">
+					<prompt><![CDATA[SQL_ID]]></prompt>
+					<tooltip><![CDATA[SQL_ID]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+				</bind>
+			</binds>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>null</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+	<display id="null" type="" style="Table" enable="true">
+		<name><![CDATA[SESSIONS_EXECUTING]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<CustomValues>
+			<TYPE>horizontal</TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[select a.inst_id,
+  a.sid,
+  a.serial# serial,
+  a.status,
+  coalesce(a.username,b.pname,'N/A') username,
+  nvl(b.pname,'N/A') process,
+  nvl(module,'') module,
+  nvl(a.machine,'N/A') machine,
+  b.spid "OSPID",
+  a.server,
+  a.blocking_session,
+  nvl(c.blocked,0) sessions_blocked,
+  round(b.pga_used_mem /1024/1024,3) pga_used_mb,
+  round(b.pga_alloc_mem/1024/1024,3) pga_alloc_mb,
+  round(b.pga_max_mem  /1024/1024,3) pga_max_mb,
+  to_char(a.logon_time,'DD.MM.YYYY HH24:MI:SS') logon_time,
+  a.state,
+  a.event,
+  a.type,
+  a.service_name
+from gv$session a
+left join gv$process b
+on (a.paddr  =b.addr
+and a.inst_id=b.inst_id)
+left join
+  (select blocking_session,
+count(sid) blocked
+  from gv$session
+  where blocking_session is not null
+  group by blocking_session
+  ) c
+on (a.sid=c.blocking_session)
+where a.sql_id = :SQL_ID]]></sql>
+			<binds>
+				<bind id="SQL_ID">
+					<prompt><![CDATA[SQL_ID]]></prompt>
+					<tooltip><![CDATA[SQL_ID]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+				</bind>
+			</binds>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>null</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
 				</security>
 				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
 			</pdf>
