@@ -546,13 +546,12 @@ WHERE
 		<query>
 			<sql><![CDATA[SELECT
   TO_CHAR(sample_time,'HH24MISS') "TIME",
-  event,
+  nvl(event,'CPU'),
   COUNT(1) cntr
 FROM
   gv$active_session_history
 WHERE
 sql_id   =:SQL_ID
-AND event IS NOT NULL
 AND SAMPLE_TIME between sysdate-10/(24*60) and sysdate
 GROUP BY
   TO_CHAR(SAMPLE_TIME,'HH24MISS'),
