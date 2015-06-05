@@ -33,7 +33,7 @@
     ROUND(b.pga_used_mem /1024/1024,3) pga_used_mb,
     ROUND(b.pga_alloc_mem/1024/1024,3) pga_alloc_mb,
     ROUND(b.pga_max_mem  /1024/1024,3) pga_max_mb,
-    TO_CHAR(a.logon_time,'DD.MM.YYYY HH24:MI:SS') logon_time,
+    TO_CHAR(a.logon_time,'YYYY-MM-DD HH24:MI:SS') logon_time,
     a.state,
     ROUND(DECODE(a.state,'WAITED KNOWN TIME',a.time_since_last_wait_micro,'WAITED SHORT TIME',a.time_since_last_wait_micro,a.wait_time_micro)/1000000,3) seconds,
     DECODE(a.state,'WAITED KNOWN TIME','ON CPU','WAITED SHORT TIME','ON CPU',a.event) "EVENT",
