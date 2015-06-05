@@ -22,9 +22,9 @@ group by TO_CHAR(SAMPLE_TIME,'HH24:MI:SS'),NVL(EVENT,'CPU+WAIT')
 order by 1 asc, 2 asc]]></sql>
 		<binds>
 			<bind id="MINUTES">
-				<prompt><![CDATA[MINUTES]]></prompt>
-				<tooltip><![CDATA[MINUTES]]></tooltip>
-				<value><![CDATA[NULL_VALUE]]></value>
+<prompt><![CDATA[MINUTES]]></prompt>
+<tooltip><![CDATA[MINUTES]]></tooltip>
+<value><![CDATA[NULL_VALUE]]></value>
 			</bind>
 		</binds>
 	</query>
@@ -32,20 +32,20 @@ order by 1 asc, 2 asc]]></sql>
 			<docproperty title="" author="" subject="" keywords="" />
 			<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
 			<column>
-				<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-				<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-				<blob blob="NONE" zip="false" />
+<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+<blob blob="NONE" zip="false" />
 			</column>
 			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 			<header enable="false" generatedate="false">
-				<data>
-				null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
+<data>
+null</data>
 			</header>
 			<footer enable="false" generatedate="false">
-				<data value="null" />
+<data value="null" />
 			</footer>
 			<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-				<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
 			</security>
 			<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
 		</pdf>
@@ -63,32 +63,32 @@ order by 1 asc, 2 asc]]></sql>
 			<TYPE>BAR_VERT_STACK</TYPE>
 		</CustomValues>
 		<query>
-			<sql><![CDATA[select SESSION_ID,NVL(EVENT,'CPU+WAIT')"WAIT",round(100*COUNT(SESSION_ID)/(86400/(24*12)),3) "%" 
+			<sql><![CDATA[select SESSION_ID,NVL(EVENT,'CPU+WAIT')"WAIT",round(100*COUNT(SESSION_ID)/(86400/24),3) "%" 
 from V$ACTIVE_SESSION_HISTORY
-where SAMPLE_TIME between sysdate-1/(24*12) and sysdate
+where SAMPLE_TIME between sysdate-1/24 and sysdate
 and NVL(EVENT,'CPU+WAIT')=:EVENT
 group by session_id,NVL(EVENT,'CPU+WAIT') order by 3 desc]]></sql>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+<docproperty title="" author="" subject="" keywords="" />
+<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+<column>
+	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+	<blob blob="NONE" zip="false" />
+</column>
+<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+<header enable="false" generatedate="false">
+	<data>
+	null		</data>
+</header>
+<footer enable="false" generatedate="false">
+	<data value="null" />
+</footer>
+<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+	<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+</security>
+<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
 			</pdf>
 	</display>
 	<display id="null" type="" style="Chart" enable="true">
@@ -105,32 +105,32 @@ group by session_id,NVL(EVENT,'CPU+WAIT') order by 3 desc]]></sql>
 			<TYPE>BAR_VERT_STACK</TYPE>
 		</CustomValues>
 		<query>
-			<sql><![CDATA[select nvl(MODULE,PROGRAM) MODULE,NVL(EVENT,'CPU+WAIT')"WAIT",round(100*COUNT(SESSION_ID)/(86400/(24*12)),3) "%" 
+			<sql><![CDATA[select nvl(MODULE,PROGRAM) MODULE,NVL(EVENT,'CPU+WAIT')"WAIT",round(100*COUNT(SESSION_ID)/(86400/24),3) "%" 
 from V$ACTIVE_SESSION_HISTORY
-where SAMPLE_TIME between sysdate-1/(24*12) and sysdate
+where SAMPLE_TIME between sysdate-1/24 and sysdate
 and NVL(EVENT,'CPU+WAIT')=:EVENT
 group by nvl(MODULE,PROGRAM),NVL(EVENT,'CPU+WAIT') order by 3 desc]]></sql>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+<docproperty title="" author="" subject="" keywords="" />
+<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+<column>
+	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+	<blob blob="NONE" zip="false" />
+</column>
+<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+<header enable="false" generatedate="false">
+	<data>
+	null			</data>
+</header>
+<footer enable="false" generatedate="false">
+	<data value="null" />
+</footer>
+<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+	<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+</security>
+<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
 			</pdf>
 	</display>
 	<display id="null" type="" style="Chart" enable="true">
@@ -147,32 +147,32 @@ group by nvl(MODULE,PROGRAM),NVL(EVENT,'CPU+WAIT') order by 3 desc]]></sql>
 			<TYPE>BAR_VERT_STACK</TYPE>
 		</CustomValues>
 		<query>
-			<sql><![CDATA[select MACHINE,NVL(EVENT,'CPU+WAIT')"WAIT",round(100*COUNT(SESSION_ID)/(86400/(24*12)),3) "%" 
+			<sql><![CDATA[select MACHINE,NVL(EVENT,'CPU+WAIT')"WAIT",round(100*COUNT(SESSION_ID)/(86400/24),3) "%" 
 from V$ACTIVE_SESSION_HISTORY
-where SAMPLE_TIME between sysdate-1/(24*12) and sysdate
+where SAMPLE_TIME between sysdate-1/24 and sysdate
 and NVL(EVENT,'CPU+WAIT')=:EVENT
 group by MACHINE,NVL(EVENT,'CPU+WAIT') order by 3 desc]]></sql>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+<docproperty title="" author="" subject="" keywords="" />
+<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+<column>
+	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+	<blob blob="NONE" zip="false" />
+</column>
+<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+<header enable="false" generatedate="false">
+	<data>
+	null</data>
+</header>
+<footer enable="false" generatedate="false">
+	<data value="null" />
+</footer>
+<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+	<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+</security>
+<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
 			</pdf>
 	</display>
 	<display id="null" type="" style="Chart" enable="true">
@@ -195,37 +195,37 @@ group by MACHINE,NVL(EVENT,'CPU+WAIT') order by 3 desc]]></sql>
 FROM gv$active_session_history a
 LEFT JOIN
   (SELECT inst_id,
-    sql_id,
-    plan_hash_value,
-    id,
-    sql_id
-    ||' ('
-    ||plan_hash_value
-    ||') '
-    ||operation
-    ||' '
-    ||OPTIONS
-    ||' '
-    ||object_node
-    ||' '
-    ||' '
-    ||object_owner
-    ||'.'
-    ||object_name
-    ||' ('
-    ||object_type
-    ||' '
-    ||object_alias
-    ||') '
-    ||optimizer txt
+sql_id,
+plan_hash_value,
+id,
+sql_id
+||' ('
+||plan_hash_value
+||') '
+||operation
+||' '
+||OPTIONS
+||' '
+||object_node
+||' '
+||' '
+||object_owner
+||'.'
+||object_name
+||' ('
+||object_type
+||' '
+||object_alias
+||') '
+||optimizer txt
   FROM gv$sql_plan
   ) b
-ON (a.sql_id             =b.sql_id
+ON (a.sql_id =b.sql_id
 AND a.sql_plan_hash_value=b.plan_hash_value
-AND a.inst_id            =b.inst_id
+AND a.inst_id=b.inst_id
 AND a.sql_plan_line_id   =b.id)
-WHERE SAMPLE_TIME BETWEEN sysdate-1/(24*12) AND sysdate
-AND is_sqlid_current          ='Y'
+WHERE SAMPLE_TIME BETWEEN sysdate-1/24 AND sysdate
+AND is_sqlid_current  ='Y'
 AND NVL(EVENT,'CPU+WAIT')=:EVENT
 GROUP BY TO_CHAR(SAMPLE_TIME,'HH24:MI:SS'),
   txt
@@ -234,25 +234,25 @@ ORDER BY 1 ASC,
   3 DESC]]></sql>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+<docproperty title="" author="" subject="" keywords="" />
+<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+<column>
+	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+	<blob blob="NONE" zip="false" />
+</column>
+<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+<header enable="false" generatedate="false">
+	<data>
+	null	</data>
+</header>
+<footer enable="false" generatedate="false">
+	<data value="null" />
+</footer>
+<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+	<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+</security>
+<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
 			</pdf>
 	</display>
 </display>
