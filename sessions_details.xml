@@ -120,7 +120,7 @@ FROM
 			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 			<header enable="false" generatedate="false">
 				<data>
-				null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																</data>
+				null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
 			</header>
 			<footer enable="false" generatedate="false">
 				<data value="null" />
@@ -193,7 +193,7 @@ and inst_id = :INST_ID
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -237,7 +237,7 @@ order by time_waited_micro desc, total_timeouts desc]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -283,7 +283,7 @@ order by 2 desc]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -311,10 +311,10 @@ order by 2 desc]]></sql>
   nvl(a.process,'N/A') RMPID,
   a.resource_consumer_group,
   a.action,
-  decode(a.plsql_entry_object_id,NULL,'SQL',(select object_type||' '||owner||'.'||object_name from dba_objects where object_id=a.plsql_entry_object_id)) plsql_entry_object,
-  decode(a.plsql_object_id,NULL,'SQL',(select object_type||' '||owner||'.'||object_name from dba_objects where object_id=a.plsql_object_id)) plsql_object,
-  a.plsql_entry_subprogram_id,
-  a.plsql_subprogram_id,  
+  decode(a.plsql_entry_object_id,NULL,'SQL',(select object_type||' '||owner||'.'||object_name||decode(procedure_name,null,'','.'||procedure_name) from dba_procedures where object_id=a.plsql_entry_object_id and rownum<2)) plsql_entry_object,
+  decode(a.plsql_object_id,NULL,'SQL',(select object_type||' '||owner||'.'||object_name||decode(procedure_name,null,'','.'||procedure_name) from dba_procedures where object_id=a.plsql_object_id and rownum <2)) plsql_object,
+  (select object_type||' '||owner||'.'||object_name||decode(procedure_name,null,'','.'||procedure_name) from dba_procedures where object_id=a.plsql_entry_object_id and subprogram_id=a.plsql_entry_subprogram_id) plsql_entry_subprogram_id,
+  (select object_type||' '||owner||'.'||object_name||decode(procedure_name,null,'','.'||procedure_name) from dba_procedures where object_id=a.plsql_object_id and subprogram_id=a.plsql_subprogram_id) plsql_subprogram_id,
   a.sql_trace,
   a.sql_trace_waits,
   a.sql_trace_binds,
@@ -340,7 +340,7 @@ and a.inst_id = :INST_ID]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -386,7 +386,7 @@ order by 3 desc,1,2]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -432,7 +432,7 @@ order by 3 desc]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -479,7 +479,7 @@ where ses_addr =
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -489,7 +489,7 @@ where ses_addr =
 				</security>
 				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
 			</pdf>
-	</display>	
+	</display>
 	<display id="null" type="" style="Table" enable="true">
 		<name><![CDATA[LongOps]]></name>
 		<description><![CDATA[]]></description>
@@ -524,7 +524,7 @@ order by sofar/totalwork asc]]></sql>
 				<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -565,7 +565,7 @@ and rownum    =1]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -604,7 +604,7 @@ AND rownum        =1]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -676,7 +676,7 @@ order by sp.plan_hash_value,
 				<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -737,7 +737,7 @@ where a.sid=:SID and inst_id=:INST_ID]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																					</data>
+					null																																																																																																																																																																																																																																																																																																																																																																			</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -776,7 +776,7 @@ from dual]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																	</data>
+					null																																																																																																																																																																																																																																																																																																																																															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -822,7 +822,7 @@ order by gv$sql_bind_capture.sql_id,last_captured,
 				<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -874,7 +874,7 @@ WHERE kgllkuse=(SELECT saddr FROM gv$session WHERE sid=:SID AND inst_id=:INST_ID
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -885,7 +885,6 @@ WHERE kgllkuse=(SELECT saddr FROM gv$session WHERE sid=:SID AND inst_id=:INST_ID
 				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
 			</pdf>
 	</display>
-
 	<display id="null" type="" style="Table" enable="true">
 		<name><![CDATA[Locks]]></name>
 		<description><![CDATA[]]></description>
@@ -939,7 +938,7 @@ order by block, ctime desc, request]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		</data>
+					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -980,7 +979,7 @@ AND sid      =:SID]]></sql>
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																</data>
+					null																																																																																																														</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1019,7 +1018,7 @@ order by 2 desc]]></sql>
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																</data>
+					null																																																																																																														</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1062,7 +1061,7 @@ where sid=:SID and serial#=:SERIAL]]></sql>
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																						</data>
+					null																																																																																																				</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1118,20 +1117,6 @@ ORDER BY
   server_group,
   server_set,
   server#]]></sql>
-			<binds>
-				<bind id="SID">
-					<prompt><![CDATA[SID]]></prompt>
-					<tooltip><![CDATA[SID]]></tooltip>
-					<value><![CDATA[NULL_VALUE]]></value>
-					<bracket><![CDATA[null]]></bracket>
-				</bind>
-				<bind id="INST_ID">
-					<prompt><![CDATA[INST_ID]]></prompt>
-					<tooltip><![CDATA[INST_ID]]></tooltip>
-					<value><![CDATA[NULL_VALUE]]></value>
-					<bracket><![CDATA[null]]></bracket>
-				</bind>
-			</binds>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
 				<docproperty title="" author="" subject="" keywords="" />
@@ -1144,7 +1129,7 @@ ORDER BY
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null										</data>
+					null																																								</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1180,16 +1165,49 @@ ORDER BY
   nvl(round(TEMPSEG_SIZE/1024/1024,3),0) TEMPSEG_SIZE_MB
 FROM
   gv$sql_workarea_active where inst_id=:INST_ID and SID=:SID]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					null																																			</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<security enable="false" useopenpassword="false" openpassword="null" encryption="EXCLUDE_METADATA">
+					<permission enable="false" permissionpassword="null" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="false" />
+				</security>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
+	</display>
+	<display id="null" type="" style="Table" enable="true">
+		<name><![CDATA[Environment]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[null]]></drillclass>
+		<CustomValues>
+			<TYPE>horizontal</TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[select name,value,isdefault from GV$SES_OPTIMIZER_ENV where sid=:SID and inst_id=:INST_ID order by name]]></sql>
 			<binds>
-				<bind id="INST_ID">
-					<prompt><![CDATA[INST_ID]]></prompt>
-					<tooltip><![CDATA[INST_ID]]></tooltip>
-					<value><![CDATA[NULL_VALUE]]></value>
-					<bracket><![CDATA[null]]></bracket>
-				</bind>
 				<bind id="SID">
 					<prompt><![CDATA[SID]]></prompt>
 					<tooltip><![CDATA[SID]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+					<bracket><![CDATA[null]]></bracket>
+				</bind>
+				<bind id="INST_ID">
+					<prompt><![CDATA[INST_ID]]></prompt>
+					<tooltip><![CDATA[INST_ID]]></tooltip>
 					<value><![CDATA[NULL_VALUE]]></value>
 					<bracket><![CDATA[null]]></bracket>
 				</bind>
