@@ -103,12 +103,30 @@ AND d.blocking_sid     IS NULL
   ||d.blocking_sid)
 UNION ALL
 SELECT
-  *
+      inst_id,
+      to_char(sid),
+      serial,
+      status,
+      username,
+      process,
+      module,
+      machine,
+      logon_time,
+      event,
+      state,
+      seconds,
+      time_remaining,
+      pga_used_mb,
+      pga_alloc_mb,
+      pga_max_mb,
+      type,
+      service_name,
+      server
 FROM
   (
     SELECT
       inst_id,
-      TO_CHAR(sid),
+      sid,
       serial,
       status,
       username,
@@ -131,20 +149,10 @@ FROM
     WHERE
       blocking_sid        = -1
     AND blocking_instance = -1
-    ORDER BY
-      type DESC,
-      status ASC,
-      d.sid ASC,
-      inst_id ASC
-  )
-UNION ALL
-SELECT
-  *
-FROM
-  (
+	UNION ALL
     SELECT
       inst_id,
-      TO_CHAR(sid),
+      sid,
       serial,
       status,
       username,
@@ -166,13 +174,9 @@ FROM
       d
     WHERE
       blocking_sid IS NULL
-    AND blocked    IS NULL
-    ORDER BY
-      type DESC,
-      status ASC,
-      d.sid ASC,
-      inst_id ASC
-  )
+    AND blocked    IS NULL  
+  ORDER BY type DESC,status ASC,sid ASC,inst_id ASC    
+)
 ]]></sql>
 	</query>
 		<pdf version="VERSION_1_7" compression="CONTENT">
