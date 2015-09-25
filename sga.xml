@@ -6,20 +6,47 @@
 	<tooltip><![CDATA[]]></tooltip>
 	<drillclass><![CDATA[null]]></drillclass>
 	<CustomValues>
-		<LEGEND>true</LEGEND>
-		<STYLE>Default</STYLE>
-		<THREED>true</THREED>
+		<Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
+		<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
 		<GRID>true</GRID>
+		<STYLE>Default</STYLE>
+		<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+		<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+		<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+		<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+		<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
 		<GRADIENT>true</GRADIENT>
+		<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+		<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+		<LEGEND>true</LEGEND>
+		<THREED>false</THREED>
+		<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+		<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+		<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+		<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
 		<TYPE>PIE_MULTI</TYPE>
+		<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+		<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+		<GRID_WIDTH>THINNER</GRID_WIDTH>
+		<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+		<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
 	</CustomValues>
 	<query>
-		<sql><![CDATA[select 'SGA' "SGA",pool "NAME",sum(bytes)/1024/1024 "SIZE_MB" 
+		<sql><![CDATA[select 
+  'SGA' "SGA",
+  pool "NAME",
+  sum(bytes)/1024/1024 "SIZE_MB" 
 from v$sgastat 
-where pool is not null and name<>'KGH: NO ACCESS'
+where 
+  pool is not null 
+  and 
+  name<>'KGH: NO ACCESS'
 group by 'SGA',pool
 union all 
-select 'SGA',name,sum(bytes)/1024/1024 "SIZE_MB" 
+select 
+  'SGA',
+  name,
+  sum(bytes)/1024/1024 "SIZE_MB" 
 from v$sgastat
 where pool is null
 group by 'SGA',name]]></sql>
@@ -35,7 +62,85 @@ group by 'SGA',name]]></sql>
 			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 			<header enable="false" generatedate="false">
 				<data>
-				null																																																																												</data>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				null																																																																																																																																																																																																																																																																																																																												</data>
 			</header>
 			<footer enable="false" generatedate="false">
 				<data value="null" />
@@ -51,15 +156,51 @@ group by 'SGA',name]]></sql>
 		<tooltip><![CDATA[]]></tooltip>
 		<drillclass><![CDATA[null]]></drillclass>
 		<CustomValues>
-			<LEGEND>true</LEGEND>
-			<STYLE>Default</STYLE>
-			<THREED>true</THREED>
+			<Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
+			<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
 			<GRID>true</GRID>
+			<STYLE>Default</STYLE>
+			<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+			<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+			<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+			<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+			<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
 			<GRADIENT>true</GRADIENT>
+			<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+			<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+			<LEGEND>true</LEGEND>
+			<THREED>false</THREED>
+			<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+			<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+			<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+			<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
 			<TYPE>PIE_MULTI</TYPE>
+			<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+			<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+			<GRID_WIDTH>THINNER</GRID_WIDTH>
+			<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+			<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
 		</CustomValues>
 		<query>
-			<sql><![CDATA[select pool,name,round(bytes/1024/1024,3) "SIZE_MB" from v$sgastat where bytes>=1024*1024 and pool=:NAME and name<>'KGH: NO ACCESS']]></sql>
+			<sql><![CDATA[select 
+  pool,
+  name,
+  round(bytes/1024/1024,3) "SIZE_MB" 
+from v$sgastat 
+where 
+  bytes>=1024*1024 
+  and 
+  pool=:NAME 
+  and 
+  name<>'KGH: NO ACCESS']]></sql>
+			<binds>
+				<bind id="NAME">
+					<prompt><![CDATA[NAME]]></prompt>
+					<tooltip><![CDATA[NAME]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+					<bracket><![CDATA[null]]></bracket>
+				</bind>
+			</binds>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
 				<docproperty title="" author="" subject="" keywords="" />
@@ -72,7 +213,85 @@ group by 'SGA',name]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																															</data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																																																																																																																																																																																																																																																																																											</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -89,18 +308,46 @@ group by 'SGA',name]]></sql>
 		<tooltip><![CDATA[]]></tooltip>
 		<drillclass><![CDATA[null]]></drillclass>
 		<CustomValues>
-			<LEGEND>true</LEGEND>
-			<STYLE>Default</STYLE>
-			<THREED>true</THREED>
+			<Y1AXIS_SCALE_INCREMENT>20.0</Y1AXIS_SCALE_INCREMENT>
+			<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
 			<GRID>true</GRID>
+			<STYLE>Default</STYLE>
+			<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+			<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+			<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+			<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+			<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
 			<GRADIENT>true</GRADIENT>
+			<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+			<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+			<LEGEND>true</LEGEND>
+			<THREED>true</THREED>
+			<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+			<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+			<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+			<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
 			<TYPE>PIE_MULTI</TYPE>
+			<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+			<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+			<GRID_WIDTH>THINNER</GRID_WIDTH>
+			<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+			<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
 		</CustomValues>
 		<query>
-			<sql><![CDATA[select 'BUFFER_CACHE' "BUFFERS",
-decode(status,'free','FREE','xcur','EXCLUSIVE','scur','SHARED','cr','CONSISTENT READ',
-'read','READ FROM DISK','mrec','MEDIA RECOVERY','irec','INSTANCE RECOVERY',NULL) "STATUS"
-,count(1) "BUFFERS" from v$bh group by status]]></sql>
+			<sql><![CDATA[select 'BLOCK' "BLOCK",
+  decode(status,
+    'free','FREE',
+    'xcur','EXCLUSIVE',
+    'scur','SHARED',
+    'cr','CONSISTENT READ',
+    'read','READ FROM DISK',
+    'mrec','MEDIA RECOVERY',
+    'irec','INSTANCE RECOVERY',
+    NULL
+  ) "STATUS",
+  count(1) "BLOCKS" 
+from v$bh 
+group by status]]></sql>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
 				<docproperty title="" author="" subject="" keywords="" />
@@ -113,7 +360,85 @@ decode(status,'free','FREE','xcur','EXCLUSIVE','scur','SHARED','cr','CONSISTENT 
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																															</data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																																																																																																																																																																																																																																																																																											</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -130,35 +455,56 @@ decode(status,'free','FREE','xcur','EXCLUSIVE','scur','SHARED','cr','CONSISTENT 
 		<tooltip><![CDATA[]]></tooltip>
 		<drillclass><![CDATA[null]]></drillclass>
 		<CustomValues>
-			<LEGEND>true</LEGEND>
-			<STYLE>Default</STYLE>
-			<THREED>true</THREED>
+			<Y1AXIS_SCALE_INCREMENT>20.0</Y1AXIS_SCALE_INCREMENT>
+			<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
 			<GRID>true</GRID>
+			<STYLE>Default</STYLE>
+			<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+			<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+			<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+			<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+			<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
 			<GRADIENT>true</GRADIENT>
-			<TYPE>BAR_VERT_CLUST</TYPE>
+			<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+			<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+			<LEGEND>true</LEGEND>
+			<THREED>true</THREED>
+			<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+			<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+			<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+			<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
+			<TYPE>PIE</TYPE>
+			<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+			<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+			<GRID_WIDTH>THINNER</GRID_WIDTH>
+			<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+			<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
 		</CustomValues>
 		<query>
 			<sql><![CDATA[select 
+'BLOCK' "BLOCK",
 case 
   when dirty  = 'Y' then 'DIRTY'
   when temp   = 'Y' then 'TEMP'
   when ping   = 'Y' then 'PING'
   when stale  = 'Y' then 'STALE'
   when direct = 'Y' then 'DIRECT'
-  else NULL
-end "ATTR1",
-case 
-  when dirty  = 'Y' then 'DIRTY'
-  when temp   = 'Y' then 'TEMP'
-  when ping   = 'Y' then 'PING'
-  when stale  = 'Y' then 'STALE'
-  when direct = 'Y' then 'DIRECT'
-  else NULL
-end "ATTR2",
+  when new    = 'Y' then 'NEW'
+  else                   '---'
+end "ATTR",
 count(1) "COUNT"
-from v$bh where dirty<>'N' or  temp<>'N' or ping<>'N' or stale<>'N' or direct<>'N'
-group by 'BUFFER', 
-case when dirty='Y' then 'DIRTY' when temp='Y' then 'TEMP' when ping='Y' then 'PING' when stale='Y' then 'STALE' when direct='Y' then 'DIRECT' else NULL end]]></sql>
+from v$bh
+--where dirty='Y' or temp='Y' or ping='Y' or stale='Y' or direct='Y'
+group by 'BLOCK',
+case 
+  when dirty  ='Y' then 'DIRTY' 
+  when temp   ='Y' then 'TEMP' 
+  when ping   ='Y' then 'PING' 
+  when stale  ='Y' then 'STALE' 
+  when direct ='Y' then 'DIRECT' 
+  when new    ='Y' then 'NEW' 
+  else                  '---' 
+end]]></sql>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
 				<docproperty title="" author="" subject="" keywords="" />
@@ -171,7 +517,85 @@ case when dirty='Y' then 'DIRTY' when temp='Y' then 'TEMP' when ping='Y' then 'P
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																															</data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																																																																																																																																																																																																																																																																																											</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -188,16 +612,39 @@ case when dirty='Y' then 'DIRTY' when temp='Y' then 'TEMP' when ping='Y' then 'P
 		<tooltip><![CDATA[]]></tooltip>
 		<drillclass><![CDATA[null]]></drillclass>
 		<CustomValues>
-			<LEGEND>true</LEGEND>
-			<STYLE>Default</STYLE>
-			<THREED>true</THREED>
+			<Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
+			<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
 			<GRID>true</GRID>
+			<STYLE>Default</STYLE>
+			<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+			<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+			<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+			<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+			<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
 			<GRADIENT>true</GRADIENT>
+			<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+			<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+			<LEGEND>true</LEGEND>
+			<THREED>true</THREED>
+			<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+			<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+			<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+			<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
 			<TYPE>PIE_MULTI</TYPE>
+			<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+			<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+			<GRID_WIDTH>THINNER</GRID_WIDTH>
+			<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+			<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
 		</CustomValues>
 		<query>
-			<sql><![CDATA[select 'DATA_FILE' "DATAFILE",b.name,a.blocks from 
-(select file#,count(status) blocks from v$bh where status<>'free' group by file#) a 
+			<sql><![CDATA[select 'DATA_FILE' "DATAFILE",b.name,a.blocks from (
+  select 
+    file#,count(status) blocks 
+  from v$bh 
+  where status<>'free' 
+  group by file#
+) a 
 left join v$datafile b using(file#)]]></sql>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
@@ -211,7 +658,85 @@ left join v$datafile b using(file#)]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																															</data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																																																																																																																																																																																																																																																																																											</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -228,15 +753,49 @@ left join v$datafile b using(file#)]]></sql>
 		<tooltip><![CDATA[]]></tooltip>
 		<drillclass><![CDATA[null]]></drillclass>
 		<CustomValues>
-			<LEGEND>true</LEGEND>
-			<STYLE>Default</STYLE>
-			<THREED>true</THREED>
-			<GRID>true</GRID>
+			<PLOT_HGRID_WIDTH>THINNER</PLOT_HGRID_WIDTH>
+			<Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
+			<Y2AXIS_SCALE_MAXIMUM>80.0</Y2AXIS_SCALE_MAXIMUM>
+			<Y1AXIS_LINE_WIDTH>THINNEST</Y1AXIS_LINE_WIDTH>
+			<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
+			<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+			<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
 			<GRADIENT>true</GRADIENT>
+			<XAXIS_LINE_WIDTH>THINNEST</XAXIS_LINE_WIDTH>
+			<LEGEND>true</LEGEND>
+			<Y1AXIS_SCALE_MAXIMUM>60.0</Y1AXIS_SCALE_MAXIMUM>
+			<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+			<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+			<Y1AXIS_LOGARITHMIC_BASE>BASE_10</Y1AXIS_LOGARITHMIC_BASE>
 			<TYPE>BAR_VERT_CLUST</TYPE>
+			<GRID_WIDTH>THINNER</GRID_WIDTH>
+			<PLOT_DATALABELS_BAR_POSITION>ABOVE</PLOT_DATALABELS_BAR_POSITION>
+			<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
+			<XAXIS_TICK_LABEL_SKIP_MODE>AUTOMATIC</XAXIS_TICK_LABEL_SKIP_MODE>
+			<Y2AXIS_LOGARITHMIC_BASE>BASE_10</Y2AXIS_LOGARITHMIC_BASE>
+			<GRID>true</GRID>
+			<STYLE>Default</STYLE>
+			<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+			<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+			<Y2AXIS_SCALE_MINIMUM>10.0</Y2AXIS_SCALE_MINIMUM>
+			<THREED>true</THREED>
+			<Y2AXIS_LINE_WIDTH>THINNEST</Y2AXIS_LINE_WIDTH>
+			<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+			<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
+			<PLOT_VGRID_WIDTH>THINNER</PLOT_VGRID_WIDTH>
+			<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+			<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
 		</CustomValues>
 		<query>
-			<sql><![CDATA[select * from (select b.owner||'.'||b.object_name||nvl2(b.subobject_name,'.'||b.subobject_name,'') object1,b.owner||'.'||b.object_name||nvl2(b.subobject_name,'.'||b.subobject_name,'') object2,a.tch touch_count from x$bh a, dba_objects b where a.obj=b.object_id and a.tch > 1 order by 3 desc) where rownum<=100]]></sql>
+			<sql><![CDATA[select * from (
+  select 
+    b.owner||'.'||b.object_name||nvl2(b.subobject_name,'.'||b.subobject_name,'') object1,
+    b.owner||'.'||b.object_name||nvl2(b.subobject_name,'.'||b.subobject_name,'') object2,
+    a.tch touch_count 
+  from x$bh a, dba_objects b 
+  where a.obj=b.object_id and a.tch > 1 
+  order by 3 desc
+) where rownum<=100]]></sql>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
 				<docproperty title="" author="" subject="" keywords="" />
@@ -249,7 +808,85 @@ left join v$datafile b using(file#)]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null																																																																																															</data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																																																																																																																																																																																																																																																																																											</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -269,29 +906,12 @@ left join v$datafile b using(file#)]]></sql>
 			<TYPE>horizontal</TYPE>
 		</CustomValues>
 		<query>
-			<sql><![CDATA[select  owner,name,db_link,namespace,type,status,kept,
-sharable_mem,loads,executions,locks,locked_total,pins,pinned_total,invalidations,
-timestamp,lock_mode,pin_mode,hash_value
+			<sql><![CDATA[select  
+  owner,name,db_link,namespace,type,status,kept,sharable_mem,loads,executions,locks,locked_total,pins,pinned_total,invalidations,timestamp,lock_mode,pin_mode,hash_value
 from v$db_object_cache
 where namespace not like 'SQL AREA%'
 order by 1,6,4,5,2]]></sql>
 		</query>
-<item  reload="true"  reloadparent="false" removeFromParent="false" toolbar="false" >
-<title>Mark hot</title>
-<prompt type="confirm" ><label>Mark object as hot in shared pool?</label></prompt>
-<sql>
-<![CDATA[begin dbms_shared_pool.markhot('#HASH_VALUE#', 1,true); end;]]>
-</sql>
-<help></help>
-</item>
-<item  reload="true"  reloadparent="false" removeFromParent="false" toolbar="false" >
-<title>Unmark hot</title>
-<prompt type="confirm" ><label>Mark this object as not hot in shared pool?</label></prompt>
-<sql>
-<![CDATA[begin dbms_shared_pool.unmarkhot('#OWNER#','#NAME#', 1,true); end;]]>
-</sql>
-<help></help>
-</item>			
 			<pdf version="VERSION_1_7" compression="CONTENT">
 				<docproperty title="" author="" subject="" keywords="" />
 				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
@@ -303,7 +923,67 @@ order by 1,6,4,5,2]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null					</data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																																																																																																																																																																																																	</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -323,9 +1003,28 @@ order by 1,6,4,5,2]]></sql>
 			<TYPE>horizontal</TYPE>
 		</CustomValues>
 		<query>
-			<sql><![CDATA[select a.owner||'.'||a.object_name objct,object_type,b.blocks_cached,blocks_total from all_objects a
-inner join (select objd data_object_id,count(1) blocks_cached from v$bh  where status='xcur' group by objd) b using(data_object_id)
-left join (select owner,segment_name,sum(blocks) blocks_total from dba_segments group by owner,segment_name) c on (a.owner=c.owner and a.object_name=c.segment_name)
+			<sql><![CDATA[select 
+  a.owner||'.'||a.object_name objct,
+  object_type,
+  b.blocks_cached,
+  blocks_total 
+from all_objects a
+inner join (
+  select 
+    objd data_object_id,
+    count(1) blocks_cached 
+  from v$bh  
+  /*where status='xcur'*/ 
+  group by objd
+) b using(data_object_id)
+left join (
+  select 
+    owner,
+    segment_name,
+    sum(blocks) blocks_total 
+  from dba_segments 
+  group by owner,segment_name
+) c on (a.owner=c.owner and a.object_name=c.segment_name)
 order by blocks_cached desc]]></sql>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
@@ -339,7 +1038,67 @@ order by blocks_cached desc]]></sql>
 				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null					</data>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					null																																																																																																																																																																																																																																																																																																																	</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />

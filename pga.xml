@@ -6,12 +6,30 @@
 	<tooltip><![CDATA[]]></tooltip>
 	<drillclass><![CDATA[null]]></drillclass>
 	<CustomValues>
-		<LEGEND>true</LEGEND>
-		<STYLE>Default</STYLE>
-		<THREED>true</THREED>
+		<Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
+		<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
 		<GRID>true</GRID>
+		<STYLE>Default</STYLE>
+		<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+		<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+		<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+		<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+		<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
 		<GRADIENT>true</GRADIENT>
+		<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+		<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+		<LEGEND>true</LEGEND>
+		<THREED>true</THREED>
+		<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+		<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+		<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+		<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
 		<TYPE>PIE_MULTI</TYPE>
+		<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+		<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+		<GRID_WIDTH>THINNER</GRID_WIDTH>
+		<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+		<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
 	</CustomValues>
 	<query>
 		<sql><![CDATA[select 'PGA','PGA_USED_MEM' pga_used_mem,round(sum(pga_used_mem)/1024/1024,3) "PGA_USED_MEM_MB" 
@@ -34,7 +52,188 @@ from v$process]]></sql>
 			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 			<header enable="false" generatedate="false">
 				<data>
-				null				</data>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
 			</header>
 			<footer enable="false" generatedate="false">
 				<data value="null" />
