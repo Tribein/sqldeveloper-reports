@@ -1,38 +1,52 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <displays>
-<display id="1e36eadd-013c-1000-8001-ac1087dd7d56" type="" style="Chart" enable="true">
-	<name><![CDATA[SGA]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[null]]></drillclass>
-	<CustomValues>
-		<Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
-		<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
-		<GRID>true</GRID>
-		<STYLE>Default</STYLE>
-		<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
-		<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
-		<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
-		<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
-		<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
-		<GRADIENT>true</GRADIENT>
-		<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
-		<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
-		<LEGEND>true</LEGEND>
-		<THREED>false</THREED>
-		<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
-		<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
-		<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
-		<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
-		<TYPE>PIE_MULTI</TYPE>
-		<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
-		<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
-		<GRID_WIDTH>THINNER</GRID_WIDTH>
-		<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
-		<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
-	</CustomValues>
-	<query>
-		<sql><![CDATA[select 
+  <display id="1e36eadd-013c-1000-8001-ac1087dd7d56" type=""
+  style="Chart" enable="true">
+    <name>
+      <![CDATA[SGA]]>
+</name>
+    <description>
+      <![CDATA[]]>
+</description>
+    <tooltip>
+      <![CDATA[]]>
+</tooltip>
+    <drillclass>
+      <![CDATA[null]]>
+</drillclass>
+    <CustomValues>
+      <Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
+      <Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
+      <GRID>true</GRID>
+      <STYLE>Default</STYLE>
+      <TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+      <LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+      <XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+      <LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+      <PLOT_DATALABELS_SLICE_TYPE>
+      PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
+      <GRADIENT>true</GRADIENT>
+      <PLOT_DATALABELS_SLICE_POSITION>
+      OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+      <Y2AXIS_TICK_LABEL_ROTATE>
+      HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+      <LEGEND>true</LEGEND>
+      <THREED>false</THREED>
+      <XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+      <Y1AXIS_TICK_LABEL_ROTATE>
+      HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+      <XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+      <Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
+      <TYPE>PIE_MULTI</TYPE>
+      <PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+      <Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+      <GRID_WIDTH>THINNER</GRID_WIDTH>
+      <SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+      <FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
+    </CustomValues>
+    <query>
+      <sql>
+        <![CDATA[select 
   'SGA' "SGA",
   pool "NAME",
   sum(bytes)/1024/1024 "SIZE_MB" 
@@ -49,139 +63,88 @@ select
   sum(bytes)/1024/1024 "SIZE_MB" 
 from v$sgastat
 where pool is null
-group by 'SGA',name]]></sql>
-	</query>
-		<pdf version="VERSION_1_7" compression="CONTENT">
-			<docproperty title="" author="" subject="" keywords="" />
-			<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-			<column>
-				<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-				<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-				<blob blob="NONE" zip="false" />
-			</column>
-			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-			<header enable="false" generatedate="false">
-				<data>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				null</data>
-			</header>
-			<footer enable="false" generatedate="false">
-				<data value="null" />
-			</footer>
-			<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-				<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-			</security>
-			<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-		</pdf>
-	<display id="null" type="" style="Chart" enable="true">
-		<name><![CDATA[SGA]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
-			<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
-			<GRID>true</GRID>
-			<STYLE>Default</STYLE>
-			<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
-			<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
-			<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
-			<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
-			<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
-			<GRADIENT>true</GRADIENT>
-			<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
-			<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
-			<LEGEND>true</LEGEND>
-			<THREED>false</THREED>
-			<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
-			<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
-			<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
-			<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
-			<TYPE>PIE_MULTI</TYPE>
-			<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
-			<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
-			<GRID_WIDTH>THINNER</GRID_WIDTH>
-			<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
-			<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[select 
+group by 'SGA',name]]>
+</sql>
+    </query>
+    <pdf version="VERSION_1_7" compression="CONTENT">
+      <docproperty title="" author="" subject="" keywords="" />
+      <cell toppadding="2" bottompadding="2" leftpadding="2"
+      rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+      wrap="true" />
+      <column>
+        <heading font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+        <footing font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" rowshading="-1" labeling="NONE" />
+        <blob blob="NONE" zip="false" />
+      </column>
+      <table font="Times New Roman" size="10" style="NORMAL"
+      color="-16777216" userowshading="false" oddrowshading="-1"
+      evenrowshading="-1" showborders="true" spacingbefore="12"
+      spacingafter="12" horizontalalign="LEFT" />
+      <header enable="false" generatedate="false">
+        <data>null</data>
+      </header>
+      <footer enable="false" generatedate="false">
+        <data value="null" />
+      </footer>
+      <security enable="false" useopenpassword="false"
+      openpassword="" encryption="EXCLUDE_METADATA">
+        <permission enable="false" permissionpassword=""
+        allowcopying="true" allowprinting="true"
+        allowupdating="false" allowaccessdevices="true" />
+      </security>
+      <pagesetup papersize="LETTER" orientation="1"
+      measurement="in" margintop="1.0" marginbottom="1.0"
+      marginleft="1.0" marginright="1.0" />
+    </pdf>
+    <display id="null" type="" style="Chart" enable="true">
+      <name>
+        <![CDATA[SGA]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
+        <Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
+        <GRID>true</GRID>
+        <STYLE>Default</STYLE>
+        <TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+        <LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+        <XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+        <LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+        <PLOT_DATALABELS_SLICE_TYPE>
+        PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
+        <GRADIENT>true</GRADIENT>
+        <PLOT_DATALABELS_SLICE_POSITION>
+        OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+        <Y2AXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+        <LEGEND>true</LEGEND>
+        <THREED>false</THREED>
+        <XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+        <Y1AXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+        <XAXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+        <Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
+        <TYPE>PIE_MULTI</TYPE>
+        <PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+        <Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+        <GRID_WIDTH>THINNER</GRID_WIDTH>
+        <SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+        <FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[select 
   pool,
   name,
   round(bytes/1024/1024,3) "SIZE_MB" 
@@ -191,149 +154,106 @@ where
   and 
   pool=:NAME 
   and 
-  name<>'KGH: NO ACCESS']]></sql>
-			<binds>
-				<bind id="NAME">
-					<prompt><![CDATA[NAME]]></prompt>
-					<tooltip><![CDATA[NAME]]></tooltip>
-					<value><![CDATA[NULL_VALUE]]></value>
-					<bracket><![CDATA[null]]></bracket>
-				</bind>
-			</binds>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					null																																																																																																																																																																																																																																																																																																																																																																																																											</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Chart" enable="true">
-		<name><![CDATA[BUFFERS_STATE]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<Y1AXIS_SCALE_INCREMENT>20.0</Y1AXIS_SCALE_INCREMENT>
-			<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
-			<GRID>true</GRID>
-			<STYLE>Default</STYLE>
-			<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
-			<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
-			<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
-			<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
-			<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
-			<GRADIENT>true</GRADIENT>
-			<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
-			<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
-			<LEGEND>true</LEGEND>
-			<THREED>true</THREED>
-			<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
-			<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
-			<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
-			<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
-			<TYPE>PIE_MULTI</TYPE>
-			<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
-			<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
-			<GRID_WIDTH>THINNER</GRID_WIDTH>
-			<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
-			<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[select 'BLOCK' "BLOCK",
+  name<>'KGH: NO ACCESS']]>
+</sql>
+        <binds>
+          <bind id="NAME">
+            <prompt>
+              <![CDATA[NAME]]>
+</prompt>
+            <tooltip>
+              <![CDATA[NAME]]>
+</tooltip>
+            <value>
+              <![CDATA[NULL_VALUE]]>
+</value>
+            <bracket>
+              <![CDATA[null]]>
+</bracket>
+          </bind>
+        </binds>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Chart" enable="true">
+      <name>
+        <![CDATA[BUFFERS_STATE]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <Y1AXIS_SCALE_INCREMENT>20.0</Y1AXIS_SCALE_INCREMENT>
+        <Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
+        <GRID>true</GRID>
+        <STYLE>Default</STYLE>
+        <TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+        <LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+        <XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+        <LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+        <PLOT_DATALABELS_SLICE_TYPE>
+        PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
+        <GRADIENT>true</GRADIENT>
+        <PLOT_DATALABELS_SLICE_POSITION>
+        OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+        <Y2AXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+        <LEGEND>true</LEGEND>
+        <THREED>true</THREED>
+        <XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+        <Y1AXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+        <XAXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+        <Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
+        <TYPE>PIE_MULTI</TYPE>
+        <PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+        <Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+        <GRID_WIDTH>THINNER</GRID_WIDTH>
+        <SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+        <FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[select 'BLOCK' "BLOCK",
   decode(status,
     'free','FREE',
     'xcur','EXCLUSIVE',
@@ -346,141 +266,90 @@ where
   ) "STATUS",
   count(1) "BLOCKS" 
 from v$bh 
-group by status]]></sql>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					null																																																																																																																																																																																																																																																																																																																																																																																																											</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Chart" enable="true">
-		<name><![CDATA[BUFFERS_ATTR]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<Y1AXIS_SCALE_INCREMENT>20.0</Y1AXIS_SCALE_INCREMENT>
-			<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
-			<GRID>true</GRID>
-			<STYLE>Default</STYLE>
-			<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
-			<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
-			<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
-			<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
-			<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
-			<GRADIENT>true</GRADIENT>
-			<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
-			<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
-			<LEGEND>true</LEGEND>
-			<THREED>true</THREED>
-			<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
-			<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
-			<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
-			<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
-			<TYPE>PIE</TYPE>
-			<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
-			<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
-			<GRID_WIDTH>THINNER</GRID_WIDTH>
-			<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
-			<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[select 
+group by status]]>
+</sql>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Chart" enable="true">
+      <name>
+        <![CDATA[BUFFERS_ATTR]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <Y1AXIS_SCALE_INCREMENT>20.0</Y1AXIS_SCALE_INCREMENT>
+        <Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
+        <GRID>true</GRID>
+        <STYLE>Default</STYLE>
+        <TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+        <LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+        <XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+        <LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+        <PLOT_DATALABELS_SLICE_TYPE>
+        PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
+        <GRADIENT>true</GRADIENT>
+        <PLOT_DATALABELS_SLICE_POSITION>
+        OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+        <Y2AXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+        <LEGEND>true</LEGEND>
+        <THREED>true</THREED>
+        <XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+        <Y1AXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+        <XAXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+        <Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
+        <TYPE>PIE</TYPE>
+        <PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+        <Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+        <GRID_WIDTH>THINNER</GRID_WIDTH>
+        <SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+        <FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[select 
 'BLOCK' "BLOCK",
 case 
   when dirty  = 'Y' then 'DIRTY'
@@ -503,290 +372,188 @@ case
   when direct ='Y' then 'DIRECT' 
   when new    ='Y' then 'NEW' 
   else                  '---' 
-end]]></sql>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					null																																																																																																																																																																																																																																																																																																																																																																																																											</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Chart" enable="true">
-		<name><![CDATA[BUFFERS_DATAFILES]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
-			<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
-			<GRID>true</GRID>
-			<STYLE>Default</STYLE>
-			<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
-			<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
-			<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
-			<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
-			<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
-			<GRADIENT>true</GRADIENT>
-			<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
-			<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
-			<LEGEND>true</LEGEND>
-			<THREED>true</THREED>
-			<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
-			<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
-			<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
-			<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
-			<TYPE>PIE_MULTI</TYPE>
-			<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
-			<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
-			<GRID_WIDTH>THINNER</GRID_WIDTH>
-			<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
-			<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[select 'DATA_FILE' "DATAFILE",b.name,a.blocks from (
+end]]>
+</sql>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Chart" enable="true">
+      <name>
+        <![CDATA[BUFFERS_DATAFILES]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
+        <Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
+        <GRID>true</GRID>
+        <STYLE>Default</STYLE>
+        <TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+        <LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+        <XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+        <LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+        <PLOT_DATALABELS_SLICE_TYPE>
+        PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
+        <GRADIENT>true</GRADIENT>
+        <PLOT_DATALABELS_SLICE_POSITION>
+        OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+        <Y2AXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+        <LEGEND>true</LEGEND>
+        <THREED>true</THREED>
+        <XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+        <Y1AXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+        <XAXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+        <Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
+        <TYPE>PIE_MULTI</TYPE>
+        <PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+        <Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+        <GRID_WIDTH>THINNER</GRID_WIDTH>
+        <SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+        <FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[select 'DATA_FILE' "DATAFILE",b.name,a.blocks from (
   select 
     file#,count(status) blocks 
   from v$bh 
   where status<>'free' 
   group by file#
 ) a 
-left join v$datafile b using(file#)]]></sql>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					null																																																																																																																																																																																																																																																																																																																																																																																																											</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Chart" enable="true">
-		<name><![CDATA[HOT_OBJECTS]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<PLOT_HGRID_WIDTH>THINNER</PLOT_HGRID_WIDTH>
-			<Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
-			<Y2AXIS_SCALE_MAXIMUM>80.0</Y2AXIS_SCALE_MAXIMUM>
-			<Y1AXIS_LINE_WIDTH>THINNEST</Y1AXIS_LINE_WIDTH>
-			<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
-			<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
-			<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
-			<GRADIENT>true</GRADIENT>
-			<XAXIS_LINE_WIDTH>THINNEST</XAXIS_LINE_WIDTH>
-			<LEGEND>true</LEGEND>
-			<Y1AXIS_SCALE_MAXIMUM>60.0</Y1AXIS_SCALE_MAXIMUM>
-			<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
-			<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
-			<Y1AXIS_LOGARITHMIC_BASE>BASE_10</Y1AXIS_LOGARITHMIC_BASE>
-			<TYPE>BAR_VERT_CLUST</TYPE>
-			<GRID_WIDTH>THINNER</GRID_WIDTH>
-			<PLOT_DATALABELS_BAR_POSITION>ABOVE</PLOT_DATALABELS_BAR_POSITION>
-			<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
-			<XAXIS_TICK_LABEL_SKIP_MODE>AUTOMATIC</XAXIS_TICK_LABEL_SKIP_MODE>
-			<Y2AXIS_LOGARITHMIC_BASE>BASE_10</Y2AXIS_LOGARITHMIC_BASE>
-			<GRID>true</GRID>
-			<STYLE>Default</STYLE>
-			<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
-			<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
-			<Y2AXIS_SCALE_MINIMUM>10.0</Y2AXIS_SCALE_MINIMUM>
-			<THREED>true</THREED>
-			<Y2AXIS_LINE_WIDTH>THINNEST</Y2AXIS_LINE_WIDTH>
-			<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
-			<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
-			<PLOT_VGRID_WIDTH>THINNER</PLOT_VGRID_WIDTH>
-			<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
-			<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[select * from (
+left join v$datafile b using(file#)]]>
+</sql>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Chart" enable="true">
+      <name>
+        <![CDATA[HOT_OBJECTS]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <PLOT_HGRID_WIDTH>THINNER</PLOT_HGRID_WIDTH>
+        <Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
+        <Y2AXIS_SCALE_MAXIMUM>80.0</Y2AXIS_SCALE_MAXIMUM>
+        <Y1AXIS_LINE_WIDTH>THINNEST</Y1AXIS_LINE_WIDTH>
+        <Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
+        <LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+        <LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+        <GRADIENT>true</GRADIENT>
+        <XAXIS_LINE_WIDTH>THINNEST</XAXIS_LINE_WIDTH>
+        <LEGEND>true</LEGEND>
+        <Y1AXIS_SCALE_MAXIMUM>60.0</Y1AXIS_SCALE_MAXIMUM>
+        <XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+        <XAXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+        <Y1AXIS_LOGARITHMIC_BASE>BASE_10</Y1AXIS_LOGARITHMIC_BASE>
+        <TYPE>BAR_VERT_CLUST</TYPE>
+        <GRID_WIDTH>THINNER</GRID_WIDTH>
+        <PLOT_DATALABELS_BAR_POSITION>
+        ABOVE</PLOT_DATALABELS_BAR_POSITION>
+        <FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
+        <XAXIS_TICK_LABEL_SKIP_MODE>
+        AUTOMATIC</XAXIS_TICK_LABEL_SKIP_MODE>
+        <Y2AXIS_LOGARITHMIC_BASE>BASE_10</Y2AXIS_LOGARITHMIC_BASE>
+        <GRID>true</GRID>
+        <STYLE>Default</STYLE>
+        <TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+        <Y2AXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+        <Y2AXIS_SCALE_MINIMUM>10.0</Y2AXIS_SCALE_MINIMUM>
+        <THREED>true</THREED>
+        <Y2AXIS_LINE_WIDTH>THINNEST</Y2AXIS_LINE_WIDTH>
+        <Y1AXIS_TICK_LABEL_ROTATE>
+        HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+        <Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
+        <PLOT_VGRID_WIDTH>THINNER</PLOT_VGRID_WIDTH>
+        <Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+        <SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[select * from (
   select 
     b.owner||'.'||b.object_name||nvl2(b.subobject_name,'.'||b.subobject_name,'') object1,
     b.owner||'.'||b.object_name||nvl2(b.subobject_name,'.'||b.subobject_name,'') object2,
@@ -794,215 +561,121 @@ left join v$datafile b using(file#)]]></sql>
   from x$bh a, dba_objects b 
   where a.obj=b.object_id and a.tch > 1 
   order by 3 desc
-) where rownum<=100]]></sql>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					null																																																																																																																																																																																																																																																																																																																																																																																																											</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Table" enable="true">
-		<name><![CDATA[OBJECTS_CACHE]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<TYPE>horizontal</TYPE>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[select  
+) where rownum<=100]]>
+</sql>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Table" enable="true">
+      <name>
+        <![CDATA[OBJECTS_CACHE]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <TYPE>horizontal</TYPE>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[select  
   owner,name,db_link,namespace,type,status,kept,sharable_mem,loads,executions,locks,locked_total,pins,pinned_total,invalidations,timestamp,lock_mode,pin_mode,hash_value
 from v$db_object_cache
 where namespace not like 'SQL AREA%'
-order by 1,6,4,5,2]]></sql>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					null																																																																																																																																																																																																																																																																																																																	</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Table" enable="true">
-		<name><![CDATA[SEGMENTS_CACHE]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<TYPE>horizontal</TYPE>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[select 
+order by 1,6,4,5,2]]>
+</sql>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Table" enable="true">
+      <name>
+        <![CDATA[SEGMENTS_CACHE]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <TYPE>horizontal</TYPE>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[select 
   a.owner||'.'||a.object_name objct,
   object_type,
   b.blocks_cached,
@@ -1024,89 +697,42 @@ left join (
   from dba_segments 
   group by owner,segment_name
 ) c on (a.owner=c.owner and a.object_name=c.segment_name)
-order by blocks_cached desc]]></sql>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					null																																																																																																																																																																																																																																																																																																																	</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-</display>
+order by blocks_cached desc]]>
+</sql>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+  </display>
 </displays>

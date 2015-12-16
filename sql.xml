@@ -1,15 +1,25 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <displays>
-<display id="f69bec48-013c-1000-8001-ac1087dde89d" type="" style="Table" enable="true">
-	<name><![CDATA[SQL]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[null]]></drillclass>
-	<CustomValues>
-		<TYPE>horizontal</TYPE>
-	</CustomValues>
-	<query>
-		<sql><![CDATA[select inst_id,
+  <display id="f69bec48-013c-1000-8001-ac1087dde89d" type=""
+  style="Table" enable="true">
+    <name>
+      <![CDATA[SQL]]>
+</name>
+    <description>
+      <![CDATA[]]>
+</description>
+    <tooltip>
+      <![CDATA[]]>
+</tooltip>
+    <drillclass>
+      <![CDATA[null]]>
+</drillclass>
+    <CustomValues>
+      <TYPE>horizontal</TYPE>
+    </CustomValues>
+    <query>
+      <sql>
+        <![CDATA[select inst_id,
   sql_id,
   plan_hash_value,
   sql_fulltext,
@@ -34,46 +44,70 @@
   rows_processed
   last_active_time
 from GV$SQLSTATS
-where sql_id = :SQL_ID]]></sql>
-		<binds>
-			<bind id="SQL_ID">
-				<prompt><![CDATA[SQLID]]></prompt>
-				<value><![CDATA[5jgdrpj28m1zv]]></value>
-			</bind>
-		</binds>
-	</query>
-		<pdf version="VERSION_1_7" compression="CONTENT">
-			<docproperty title="" author="" subject="" keywords="" />
-			<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-			<column>
-				<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-				<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-				<blob blob="NONE" zip="false" />
-			</column>
-			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-			<header enable="false" generatedate="false">
-				<data>
-
-				null																																																																																																																																																																																																																																																																																																																																																																																																																																				</data>
-			</header>
-			<footer enable="false" generatedate="false">
-				<data value="null" />
-			</footer>
-			<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-				<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-			</security>
-			<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-		</pdf>
-	<display id="null" type="" style="Table" enable="true">
-		<name><![CDATA[CHILDREN]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<TYPE>horizontal</TYPE>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[select inst_id,
+where sql_id = :SQL_ID]]>
+</sql>
+      <binds>
+        <bind id="SQL_ID">
+          <prompt>
+            <![CDATA[SQLID]]>
+</prompt>
+          <value>
+            <![CDATA[5jgdrpj28m1zv]]>
+</value>
+        </bind>
+      </binds>
+    </query>
+    <pdf version="VERSION_1_7" compression="CONTENT">
+      <docproperty title="" author="" subject="" keywords="" />
+      <cell toppadding="2" bottompadding="2" leftpadding="2"
+      rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+      wrap="true" />
+      <column>
+        <heading font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+        <footing font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" rowshading="-1" labeling="NONE" />
+        <blob blob="NONE" zip="false" />
+      </column>
+      <table font="Times New Roman" size="10" style="NORMAL"
+      color="-16777216" userowshading="false" oddrowshading="-1"
+      evenrowshading="-1" showborders="true" spacingbefore="12"
+      spacingafter="12" horizontalalign="LEFT" />
+      <header enable="false" generatedate="false">
+        <data>null</data>
+      </header>
+      <footer enable="false" generatedate="false">
+        <data value="null" />
+      </footer>
+      <security enable="false" useopenpassword="false"
+      openpassword="" encryption="EXCLUDE_METADATA">
+        <permission enable="false" permissionpassword=""
+        allowcopying="true" allowprinting="true"
+        allowupdating="false" allowaccessdevices="true" />
+      </security>
+      <pagesetup papersize="LETTER" orientation="1"
+      measurement="in" margintop="1.0" marginbottom="1.0"
+      marginleft="1.0" marginright="1.0" />
+    </pdf>
+    <display id="null" type="" style="Table" enable="true">
+      <name>
+        <![CDATA[CHILDREN]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <TYPE>horizontal</TYPE>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[select inst_id,
   child_number,
   plan_hash_value,
   kept_versions,
@@ -119,48 +153,75 @@ where sql_id = :SQL_ID]]></sql>
   address||', '||hash_value cursor_id
 from gv$sql
 where sql_id=:SQL_ID
-order by child_number,inst_id]]></sql>
-			<binds>
-				<bind id="SQL_ID">
-					<prompt><![CDATA[SQL_ID]]></prompt>
-					<tooltip><![CDATA[SQL_ID]]></tooltip>
-					<value><![CDATA[NULL_VALUE]]></value>
-				</bind>
-			</binds>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Table" enable="true">
-		<name><![CDATA[PLAN]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<TYPE>horizontal</TYPE>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[SELECT inst_id,child_number,plan_hash_value,
+order by child_number,inst_id]]>
+</sql>
+        <binds>
+          <bind id="SQL_ID">
+            <prompt>
+              <![CDATA[SQL_ID]]>
+</prompt>
+            <tooltip>
+              <![CDATA[SQL_ID]]>
+</tooltip>
+            <value>
+              <![CDATA[NULL_VALUE]]>
+</value>
+          </bind>
+        </binds>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Table" enable="true">
+      <name>
+        <![CDATA[PLAN]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <TYPE>horizontal</TYPE>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[SELECT inst_id,child_number,plan_hash_value,
   LPAD('  ',4*(DEPTH-1))
   ||operation
   ||' '
@@ -189,41 +250,62 @@ FROM gv$sql_plan
 WHERE sql_id = :SQL_ID
 ORDER BY plan_hash_value,
   child_address,
-  id]]></sql>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Table" enable="true">
-		<name><![CDATA[BINDS]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<TYPE>horizontal</TYPE>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[SELECT inst_id,
+  id]]>
+</sql>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Table" enable="true">
+      <name>
+        <![CDATA[BINDS]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <TYPE>horizontal</TYPE>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[SELECT inst_id,
   child_number,
   hash_value,
   position,
@@ -235,41 +317,62 @@ FROM gv$sql_bind_capture
 WHERE last_captured IS NOT NULL
 AND sql_id           =:SQL_ID
 ORDER BY last_captured desc,
-  position asc]]></sql>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Table" enable="true">
-		<name><![CDATA[SESSIONS_OPEN]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<TYPE>horizontal</TYPE>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[select a.inst_id,
+  position asc]]>
+</sql>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Table" enable="true">
+      <name>
+        <![CDATA[SESSIONS_OPEN]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <TYPE>horizontal</TYPE>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[select a.inst_id,
   a.sid,
   a.serial# serial,
   a.status,
@@ -304,48 +407,75 @@ on (a.sid=c.blocking_session)
 inner join
   (select distinct sid,inst_id from gv$open_cursor where sql_id=:SQL_ID
   ) d
-on (a.sid=d.sid and a.inst_id=b.inst_id)]]></sql>
-			<binds>
-				<bind id="SQL_ID">
-					<prompt><![CDATA[SQL_ID]]></prompt>
-					<tooltip><![CDATA[SQL_ID]]></tooltip>
-					<value><![CDATA[NULL_VALUE]]></value>
-				</bind>
-			</binds>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-
-					null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Table" enable="true">
-		<name><![CDATA[SHARING]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<TYPE>horizontal</TYPE>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[SELECT
+on (a.sid=d.sid and a.inst_id=b.inst_id)]]>
+</sql>
+        <binds>
+          <bind id="SQL_ID">
+            <prompt>
+              <![CDATA[SQL_ID]]>
+</prompt>
+            <tooltip>
+              <![CDATA[SQL_ID]]>
+</tooltip>
+            <value>
+              <![CDATA[NULL_VALUE]]>
+</value>
+          </bind>
+        </binds>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Table" enable="true">
+      <name>
+        <![CDATA[SHARING]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <TYPE>horizontal</TYPE>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[SELECT
   *
 FROM
   (
@@ -510,53 +640,80 @@ FROM
   LOCK_USER_SCHEMA_FAILED,REMOTE_MAPPING_MISMATCH,LOAD_RUNTIME_HEAP_FAILED,
   HASH_MATCH_FAILED,PURGED_CURSOR,BIND_LENGTH_UPGRADEABLE,USE_FEEDBACK_STATS))
 WHERE
-  TIMES_NOT_SHARED > 0]]></sql>
-			<binds>
-				<bind id="SQL_ID">
-					<prompt><![CDATA[SQL_ID]]></prompt>
-					<tooltip><![CDATA[SQL_ID]]></tooltip>
-					<value><![CDATA[NULL_VALUE]]></value>
-				</bind>
-			</binds>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Algerian" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Algerian" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Algerian" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-
-					null																																																																																																														</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="null" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="null" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Chart" enable="true">
-		<name><![CDATA[ACTIVITY]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<LEGEND>false</LEGEND>
-			<STYLE>Default</STYLE>
-			<THREED>true</THREED>
-			<GRID>true</GRID>
-			<GRADIENT>true</GRADIENT>
-			<TYPE>BAR_VERT_STACK</TYPE>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[SELECT
+  TIMES_NOT_SHARED > 0]]>
+</sql>
+        <binds>
+          <bind id="SQL_ID">
+            <prompt>
+              <![CDATA[SQL_ID]]>
+</prompt>
+            <tooltip>
+              <![CDATA[SQL_ID]]>
+</tooltip>
+            <value>
+              <![CDATA[NULL_VALUE]]>
+</value>
+          </bind>
+        </binds>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Algerian" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Algerian" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Algerian" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="null" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword="null"
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Chart" enable="true">
+      <name>
+        <![CDATA[ACTIVITY]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <LEGEND>false</LEGEND>
+        <STYLE>Default</STYLE>
+        <THREED>true</THREED>
+        <GRID>true</GRID>
+        <GRADIENT>true</GRADIENT>
+        <TYPE>BAR_VERT_STACK</TYPE>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[SELECT
   TO_CHAR(sample_time,'HH24MISS') "TIME",
   nvl(event,'CPU'),
   COUNT(1) cntr
@@ -569,47 +726,75 @@ GROUP BY
   TO_CHAR(SAMPLE_TIME,'HH24MISS'),
   EVENT
 ORDER BY
-  1 ASC]]></sql>
-			<binds>
-				<bind id="SQL_ID">
-					<prompt><![CDATA[SQL_ID]]></prompt>
-					<tooltip><![CDATA[SQL_ID]]></tooltip>
-					<value><![CDATA[NULL_VALUE]]></value>
-				</bind>
-			</binds>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					null					</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Table" enable="true">
-		<name><![CDATA[SESSIONS_EXECUTING]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[null]]></drillclass>
-		<CustomValues>
-			<TYPE>horizontal</TYPE>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[select a.inst_id,
+  1 ASC]]>
+</sql>
+        <binds>
+          <bind id="SQL_ID">
+            <prompt>
+              <![CDATA[SQL_ID]]>
+</prompt>
+            <tooltip>
+              <![CDATA[SQL_ID]]>
+</tooltip>
+            <value>
+              <![CDATA[NULL_VALUE]]>
+</value>
+          </bind>
+        </binds>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Table" enable="true">
+      <name>
+        <![CDATA[SESSIONS_EXECUTING]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <TYPE>horizontal</TYPE>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[select a.inst_id,
   a.sid,
   a.serial# serial,
   a.status,
@@ -641,60 +826,88 @@ left join
   group by blocking_session
   ) c
 on (a.sid=c.blocking_session)
-where a.sql_id = :SQL_ID]]></sql>
-			<binds>
-				<bind id="SQL_ID">
-					<prompt><![CDATA[SQL_ID]]></prompt>
-					<tooltip><![CDATA[SQL_ID]]></tooltip>
-					<value><![CDATA[NULL_VALUE]]></value>
-				</bind>
-			</binds>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
-					null					</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-					<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-				</security>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-<item  reload="true"  reloadparent="false" removeFromParent="false" toolbar="false" >
-<title>Keep cursor</title>
-<prompt type="confirm" ><label>Keep this cursor in shared pool?</label></prompt>
-<sql>
-<![CDATA[declare cursorid varchar2(32); begin select address||','||hash_value into cursorid from gv$sqlarea where sql_id=:SQL_ID and inst_id=:INST_ID; dbms_shared_pool.keep(cursorid,'C'); end;]]>
+where a.sql_id = :SQL_ID]]>
 </sql>
-<help></help>
-</item>
-<item  reload="true"  reloadparent="false" removeFromParent="false" toolbar="false" >
-<title>Unkeep cursor</title>
-<prompt type="confirm" ><label>Mark cursor for unkeep in shared pool?</label></prompt>
-<sql>
-<![CDATA[declare cursorid varchar2(32); begin select address||','||hash_value into cursorid from gv$sqlarea where sql_id=:SQL_ID and inst_id=:INST_ID; dbms_shared_pool.unkeep(cursorid ,'C'); end;]]>
+        <binds>
+          <bind id="SQL_ID">
+            <prompt>
+              <![CDATA[SQL_ID]]>
+</prompt>
+            <tooltip>
+              <![CDATA[SQL_ID]]>
+</tooltip>
+            <value>
+              <![CDATA[NULL_VALUE]]>
+</value>
+          </bind>
+        </binds>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="Times New Roman" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword=""
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <item reload="true" reloadparent="false"
+    removeFromParent="false" toolbar="false">
+      <title>Keep cursor</title>
+      <prompt type="confirm">
+        <label>Keep this cursor in shared pool?</label>
+      </prompt>
+      <sql>
+        <![CDATA[declare cursorid varchar2(32); begin select address||','||hash_value into cursorid from gv$sqlarea where sql_id=:SQL_ID and inst_id=:INST_ID; dbms_shared_pool.keep(cursorid,'C'); end;]]>
 </sql>
-<help></help>
-</item>
-<item  reload="true"  reloadparent="false" removeFromParent="false" toolbar="false" >
-<title>Purge cursor</title>
-<prompt type="confirm" ><label>Purge this cursor from shared pool?</label></prompt>
-<sql>
-<![CDATA[declare cursorid varchar2(32); begin select address||','||hash_value into cursorid from gv$sqlarea where sql_id=:SQL_ID and inst_id=:INST_ID; dbms_shared_pool.purge(cursorid, 'C',1); end;]]>
+      <help></help>
+    </item>
+    <item reload="true" reloadparent="false"
+    removeFromParent="false" toolbar="false">
+      <title>Unkeep cursor</title>
+      <prompt type="confirm">
+        <label>Mark cursor for unkeep in shared pool?</label>
+      </prompt>
+      <sql>
+        <![CDATA[declare cursorid varchar2(32); begin select address||','||hash_value into cursorid from gv$sqlarea where sql_id=:SQL_ID and inst_id=:INST_ID; dbms_shared_pool.unkeep(cursorid ,'C'); end;]]>
 </sql>
-<help></help>
-</item>
-</display>
+      <help></help>
+    </item>
+    <item reload="true" reloadparent="false"
+    removeFromParent="false" toolbar="false">
+      <title>Purge cursor</title>
+      <prompt type="confirm">
+        <label>Purge this cursor from shared pool?</label>
+      </prompt>
+      <sql>
+        <![CDATA[declare cursorid varchar2(32); begin select address||','||hash_value into cursorid from gv$sqlarea where sql_id=:SQL_ID and inst_id=:INST_ID; dbms_shared_pool.purge(cursorid, 'C',1); end;]]>
+</sql>
+      <help></help>
+    </item>
+  </display>
 </displays>

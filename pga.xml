@@ -1,247 +1,92 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <displays>
-<display id="29d052e1-013c-1000-8003-ac1087ddd66e" type="" style="Chart" enable="true">
-	<name><![CDATA[PGA]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[null]]></drillclass>
-	<CustomValues>
-		<Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
-		<Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
-		<GRID>true</GRID>
-		<STYLE>Default</STYLE>
-		<TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
-		<LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
-		<XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
-		<LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
-		<PLOT_DATALABELS_SLICE_TYPE>PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
-		<GRADIENT>true</GRADIENT>
-		<PLOT_DATALABELS_SLICE_POSITION>OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
-		<Y2AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
-		<LEGEND>true</LEGEND>
-		<THREED>true</THREED>
-		<XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
-		<Y1AXIS_TICK_LABEL_ROTATE>HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
-		<XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
-		<Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
-		<TYPE>PIE_MULTI</TYPE>
-		<PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
-		<Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
-		<GRID_WIDTH>THINNER</GRID_WIDTH>
-		<SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
-		<FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
-	</CustomValues>
-	<query>
-		<sql><![CDATA[select 'PGA','PGA_USED_MEM' pga_used_mem,round(sum(pga_used_mem)/1024/1024,3) "PGA_USED_MEM_MB" 
+  <display id="29d052e1-013c-1000-8003-ac1087ddd66e" type=""
+  style="Chart" enable="true">
+    <name>
+      <![CDATA[PGA]]>
+</name>
+    <description>
+      <![CDATA[]]>
+</description>
+    <tooltip>
+      <![CDATA[]]>
+</tooltip>
+    <drillclass>
+      <![CDATA[null]]>
+</drillclass>
+    <CustomValues>
+      <Y1AXIS_SCALE_INCREMENT>10.0</Y1AXIS_SCALE_INCREMENT>
+      <Y1AXIS_TITLE_ALIGNMENT>CENTER</Y1AXIS_TITLE_ALIGNMENT>
+      <GRID>true</GRID>
+      <STYLE>Default</STYLE>
+      <TITLE_ALIGNMENT>LEFT</TITLE_ALIGNMENT>
+      <LEGEND_LOCATION>AUTOMATIC</LEGEND_LOCATION>
+      <XAXIS_SCALE_INCREMENT>20.0</XAXIS_SCALE_INCREMENT>
+      <LEGEND_ALIGNMENT>LEFT</LEGEND_ALIGNMENT>
+      <PLOT_DATALABELS_SLICE_TYPE>
+      PERCENT_VALUE</PLOT_DATALABELS_SLICE_TYPE>
+      <GRADIENT>true</GRADIENT>
+      <PLOT_DATALABELS_SLICE_POSITION>
+      OUTSIDE_SLICE_LINE</PLOT_DATALABELS_SLICE_POSITION>
+      <Y2AXIS_TICK_LABEL_ROTATE>
+      HORIZONTAL</Y2AXIS_TICK_LABEL_ROTATE>
+      <LEGEND>true</LEGEND>
+      <THREED>true</THREED>
+      <XAXIS_TITLE_ALIGNMENT>CENTER</XAXIS_TITLE_ALIGNMENT>
+      <Y1AXIS_TICK_LABEL_ROTATE>
+      HORIZONTAL</Y1AXIS_TICK_LABEL_ROTATE>
+      <XAXIS_TICK_LABEL_ROTATE>HORIZONTAL</XAXIS_TICK_LABEL_ROTATE>
+      <Y2AXIS_SCALE_INCREMENT>20.0</Y2AXIS_SCALE_INCREMENT>
+      <TYPE>PIE_MULTI</TYPE>
+      <PLOT_DATATIPS_PERCENT>true</PLOT_DATATIPS_PERCENT>
+      <Y2AXIS_TITLE_ALIGNMENT>CENTER</Y2AXIS_TITLE_ALIGNMENT>
+      <GRID_WIDTH>THINNER</GRID_WIDTH>
+      <SUBTITLE_ALIGNMENT>LEFT</SUBTITLE_ALIGNMENT>
+      <FOOTNOTE_ALIGNMENT>LEFT</FOOTNOTE_ALIGNMENT>
+    </CustomValues>
+    <query>
+      <sql>
+        <![CDATA[select 'PGA','PGA_USED_MEM' pga_used_mem,round(sum(pga_used_mem)/1024/1024,3) "PGA_USED_MEM_MB" 
 from v$process
 union all
 select 'PGA','PGA_FREEABLE_MEM' pga_freeable_mem,round(sum(pga_freeable_mem)/1024/1024,3) "PGA_USED_MEM_MB" 
 from v$process 
 union all
 select 'PGA','PGA_UNFREEABLE_MEM' pga_unfreeable_mem, round(sum(pga_alloc_mem-pga_used_mem-pga_freeable_mem)/1024/1024,3) "PGA_UNFREEABLE_MEM" 
-from v$process]]></sql>
-	</query>
-		<pdf version="VERSION_1_7" compression="CONTENT">
-			<docproperty title="" author="" subject="" keywords="" />
-			<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-			<column>
-				<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-				<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-				<blob blob="NONE" zip="false" />
-			</column>
-			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-			<header enable="false" generatedate="false">
-				<data>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
-			</header>
-			<footer enable="false" generatedate="false">
-				<data value="null" />
-			</footer>
-			<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
-				<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
-			</security>
-			<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-		</pdf>
-</display>
+from v$process]]>
+</sql>
+    </query>
+    <pdf version="VERSION_1_7" compression="CONTENT">
+      <docproperty title="" author="" subject="" keywords="" />
+      <cell toppadding="2" bottompadding="2" leftpadding="2"
+      rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+      wrap="true" />
+      <column>
+        <heading font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+        <footing font="Times New Roman" size="10" style="NORMAL"
+        color="-16777216" rowshading="-1" labeling="NONE" />
+        <blob blob="NONE" zip="false" />
+      </column>
+      <table font="Times New Roman" size="10" style="NORMAL"
+      color="-16777216" userowshading="false" oddrowshading="-1"
+      evenrowshading="-1" showborders="true" spacingbefore="12"
+      spacingafter="12" horizontalalign="LEFT" />
+      <header enable="false" generatedate="false">
+        <data>null</data>
+      </header>
+      <footer enable="false" generatedate="false">
+        <data value="null" />
+      </footer>
+      <security enable="false" useopenpassword="false"
+      openpassword="" encryption="EXCLUDE_METADATA">
+        <permission enable="false" permissionpassword=""
+        allowcopying="true" allowprinting="true"
+        allowupdating="false" allowaccessdevices="true" />
+      </security>
+      <pagesetup papersize="LETTER" orientation="1"
+      measurement="in" margintop="1.0" marginbottom="1.0"
+      marginleft="1.0" marginright="1.0" />
+    </pdf>
+  </display>
 </displays>
