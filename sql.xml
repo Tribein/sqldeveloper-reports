@@ -52,8 +52,11 @@ where sql_id = :SQL_ID]]>
             <![CDATA[SQLID]]>
 </prompt>
           <value>
-            <![CDATA[5jgdrpj28m1zv]]>
+            <![CDATA[4kcy4nz0y1jzd]]>
 </value>
+          <bracket>
+            <![CDATA[null]]>
+</bracket>
         </bind>
       </binds>
     </query>
@@ -166,6 +169,9 @@ order by child_number,inst_id]]>
             <value>
               <![CDATA[NULL_VALUE]]>
 </value>
+            <bracket>
+              <![CDATA[null]]>
+</bracket>
           </bind>
         </binds>
       </query>
@@ -409,19 +415,6 @@ inner join
   ) d
 on (a.sid=d.sid and a.inst_id=b.inst_id)]]>
 </sql>
-        <binds>
-          <bind id="SQL_ID">
-            <prompt>
-              <![CDATA[SQL_ID]]>
-</prompt>
-            <tooltip>
-              <![CDATA[SQL_ID]]>
-</tooltip>
-            <value>
-              <![CDATA[NULL_VALUE]]>
-</value>
-          </bind>
-        </binds>
       </query>
       <pdf version="VERSION_1_7" compression="CONTENT">
         <docproperty title="" author="" subject="" keywords="" />
@@ -642,19 +635,6 @@ FROM
 WHERE
   TIMES_NOT_SHARED > 0]]>
 </sql>
-        <binds>
-          <bind id="SQL_ID">
-            <prompt>
-              <![CDATA[SQL_ID]]>
-</prompt>
-            <tooltip>
-              <![CDATA[SQL_ID]]>
-</tooltip>
-            <value>
-              <![CDATA[NULL_VALUE]]>
-</value>
-          </bind>
-        </binds>
       </query>
       <pdf version="VERSION_1_7" compression="CONTENT">
         <docproperty title="" author="" subject="" keywords="" />
@@ -705,11 +685,11 @@ WHERE
 </drillclass>
       <CustomValues>
         <LEGEND>false</LEGEND>
-        <STYLE>Default</STYLE>
         <THREED>true</THREED>
         <GRID>true</GRID>
-        <GRADIENT>true</GRADIENT>
+        <STYLE>Default</STYLE>
         <TYPE>BAR_VERT_STACK</TYPE>
+        <GRADIENT>true</GRADIENT>
       </CustomValues>
       <query>
         <sql>
@@ -739,6 +719,9 @@ ORDER BY
             <value>
               <![CDATA[NULL_VALUE]]>
 </value>
+            <bracket>
+              <![CDATA[null]]>
+</bracket>
           </bind>
         </binds>
       </query>
@@ -828,19 +811,6 @@ left join
 on (a.sid=c.blocking_session)
 where a.sql_id = :SQL_ID]]>
 </sql>
-        <binds>
-          <bind id="SQL_ID">
-            <prompt>
-              <![CDATA[SQL_ID]]>
-</prompt>
-            <tooltip>
-              <![CDATA[SQL_ID]]>
-</tooltip>
-            <value>
-              <![CDATA[NULL_VALUE]]>
-</value>
-          </bind>
-        </binds>
       </query>
       <pdf version="VERSION_1_7" compression="CONTENT">
         <docproperty title="" author="" subject="" keywords="" />
@@ -870,6 +840,90 @@ where a.sql_id = :SQL_ID]]>
           <permission enable="false" permissionpassword=""
           allowcopying="true" allowprinting="true"
           allowupdating="false" allowaccessdevices="true" />
+        </security>
+        <pagesetup papersize="LETTER" orientation="1"
+        measurement="in" margintop="1.0" marginbottom="1.0"
+        marginleft="1.0" marginright="1.0" />
+      </pdf>
+    </display>
+    <display id="null" type="" style="Table" enable="true">
+      <name>
+        <![CDATA[ENVIRONMENT]]>
+</name>
+      <description>
+        <![CDATA[]]>
+</description>
+      <tooltip>
+        <![CDATA[]]>
+</tooltip>
+      <drillclass>
+        <![CDATA[null]]>
+</drillclass>
+      <CustomValues>
+        <TYPE>horizontal</TYPE>
+      </CustomValues>
+      <query>
+        <sql>
+          <![CDATA[SELECT
+  inst_id,
+  child_number,
+  hash_value,
+  name,
+  value,
+  isdefault
+FROM
+  GV$SQL_OPTIMIZER_ENV
+WHERE
+  sql_id=:SQL_ID
+ORDER BY
+  child_number,
+  id]]>
+</sql>
+        <binds>
+          <bind id="SQL_ID">
+            <prompt>
+              <![CDATA[SQL_ID]]>
+</prompt>
+            <tooltip>
+              <![CDATA[SQL_ID]]>
+</tooltip>
+            <value>
+              <![CDATA[NULL_VALUE]]>
+</value>
+            <bracket>
+              <![CDATA[null]]>
+</bracket>
+          </bind>
+        </binds>
+      </query>
+      <pdf version="VERSION_1_7" compression="CONTENT">
+        <docproperty title="" author="" subject="" keywords="" />
+        <cell toppadding="2" bottompadding="2" leftpadding="2"
+        rightpadding="2" horizontalalign="LEFT" verticalalign="TOP"
+        wrap="true" />
+        <column>
+          <heading font="null" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1"
+          labeling="FIRST_PAGE" />
+          <footing font="null" size="10" style="NORMAL"
+          color="-16777216" rowshading="-1" labeling="NONE" />
+          <blob blob="NONE" zip="false" />
+        </column>
+        <table font="null" size="10" style="NORMAL"
+        color="-16777216" userowshading="false" oddrowshading="-1"
+        evenrowshading="-1" showborders="true" spacingbefore="12"
+        spacingafter="12" horizontalalign="LEFT" />
+        <header enable="false" generatedate="false">
+          <data>null</data>
+        </header>
+        <footer enable="false" generatedate="false">
+          <data value="null" />
+        </footer>
+        <security enable="false" useopenpassword="false"
+        openpassword="null" encryption="EXCLUDE_METADATA">
+          <permission enable="false" permissionpassword="null"
+          allowcopying="true" allowprinting="true"
+          allowupdating="false" allowaccessdevices="false" />
         </security>
         <pagesetup papersize="LETTER" orientation="1"
         measurement="in" margintop="1.0" marginbottom="1.0"
