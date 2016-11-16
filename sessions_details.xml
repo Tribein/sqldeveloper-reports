@@ -94,8 +94,8 @@ SELECT
   server
 FROM
   d
-  START WITH d.blocked IS NOT NULL
-AND d.blocking_sid     IS NULL
+  START WITH (d.blocked IS NOT NULL or d.blocked = -1)
+ AND d.blocking_sid     IS NULL
   CONNECT BY prior trim(d.inst_id
   ||' '
   ||d.sid)=trim(d.blocking_instance
