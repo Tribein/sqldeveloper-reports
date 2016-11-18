@@ -13,39 +13,38 @@ type statrec is record (statid v$sysstat.statistic#%type,name v$sysstat.name%typ
 type stattab is table of statrec;
 tempstattab stattab;
 mystattab stattab;
-type idxtab is table of pls_integer;
-myidxtab idxtab := idxtab();
 tmprec statrec;
-statsid number := :SID ;
+statsid number  := :SID ;
 begin
 --dbms_output.enable(1000000);
 DBMS_SESSION.FREE_UNUSED_USER_MEMORY;
 dbms_output.put_line('<PRE>');
-select statistic#,name,nvl(value,0) bulk collect into mystattab from v$sesstat join v$statname using (statistic#) where sid=statsid  order by statistic#;
-dbms_lock.sleep(nvl(:SECONDS_TO_WAIT,5));
-select statistic#,name,value bulk collect into tempstattab from v$sesstat join v$statname using (statistic#) where sid=statsid order by statistic#;
+
+select statistic#+1, name, 0 "VALUE" bulk collect into mystattab from v$statname;
+
+select statistic#+1,null,nvl(value,0) bulk collect into tempstattab from v$sesstat join v$statname using (statistic#) where sid=statsid  order by statistic#;
 for i in tempstattab.first..tempstattab.last loop
-if mystattab(i).statid = tempstattab(i).statid and tempstattab(i).value<>0 and tempstattab(i).value<>mystattab(i).value then
-mystattab(i).value :=  tempstattab(i).value - mystattab(i).value;
-myidxtab.extend;
-myidxtab(myidxtab.last):=i;
-else mystattab.delete(i);
-end if;
+  if tempstattab(i).value is not null and tempstattab(i).value<>0 then
+    mystattab(tempstattab(i).statid).value := tempstattab(i).value;
+  end if;
 end loop;
+dbms_lock.sleep(nvl(:SECONDS_TO_WAIT,5));
+select statistic#+1,null,value bulk collect into tempstattab from v$sesstat join v$statname using (statistic#) where sid=statsid order by statistic#;
+for i in tempstattab.first..tempstattab.last loop
+  if mystattab(tempstattab(i).statid).value <> tempstattab(i).value then
+    mystattab(tempstattab(i).statid).value :=  tempstattab(i).value - mystattab(tempstattab(i).statid).value;
+  else 
+    mystattab(tempstattab(i).statid).value := 0; --mystattab.delete(i);
+  end if;
+end loop;
+--
 --sorting mystattab
-for j in myidxtab.first..myidxtab.last loop
-for h in myidxtab.first..myidxtab.last loop
-if h>myidxtab.first and mystattab(myidxtab(h)).value > mystattab(myidxtab(myidxtab.prior(h))).value 
-then
-tmprec := mystattab(myidxtab(h));
-mystattab(myidxtab(h)):=mystattab(myidxtab(myidxtab.prior(h)));
-mystattab(myidxtab(myidxtab.prior(h))) := tmprec;
-end if;
-end loop;
-end loop;
 --done sorting
-for k in myidxtab.first..myidxtab.last loop
-dbms_output.put_line(rpad(mystattab(myidxtab(k)).name,64,'.')||mystattab(myidxtab(k)).value);
+
+for i in mystattab.first..mystattab.last loop
+  if mystattab(i).value<>0 then
+    dbms_output.put_line(rpad(mystattab(i).name,64,'.')||mystattab(i).value);
+  end if;
 end loop;
 dbms_output.put_line('</PRE>');
 DBMS_SESSION.FREE_UNUSED_USER_MEMORY;
@@ -54,7 +53,7 @@ end;]]></sql>
 			<bind id="SID">
 				<prompt><![CDATA[SID]]></prompt>
 				<tooltip><![CDATA[SID]]></tooltip>
-				<value><![CDATA[8]]></value>
+				<value><![CDATA[1061]]></value>
 				<bracket><![CDATA[null]]></bracket>
 			</bind>
 			<bind id="SECONDS_TO_WAIT">
