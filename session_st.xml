@@ -67,7 +67,7 @@ end;]]></sql>
 			<bind id="SID">
 				<prompt><![CDATA[SID]]></prompt>
 				<tooltip><![CDATA[SID]]></tooltip>
-				<value><![CDATA[2929]]></value>
+				<value><![CDATA[NULL_VALUE]]></value>
 				<bracket><![CDATA[null]]></bracket>
 			</bind>
 			<bind id="SECONDS_TO_WAIT">
