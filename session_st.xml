@@ -13,6 +13,8 @@ type statrec is record (statid v$sysstat.statistic#%type,name v$sysstat.name%typ
 type stattab is table of statrec;
 tempstattab stattab;
 mystattab stattab;
+type idxtab is table of pls_integer;
+myidxtab idxtab := idxtab();
 tmprec statrec;
 statsid number  := :SID ;
 begin
@@ -33,12 +35,24 @@ select statistic#+1,null,value bulk collect into tempstattab from v$sesstat join
 for i in tempstattab.first..tempstattab.last loop
   if mystattab(tempstattab(i).statid).value <> tempstattab(i).value then
     mystattab(tempstattab(i).statid).value :=  tempstattab(i).value - mystattab(tempstattab(i).statid).value;
+    myidxtab.extend;
+    myidxtab(myidxtab.last) := tempstattab(i).statid;
   else 
     mystattab(tempstattab(i).statid).value := 0; --mystattab.delete(i);
   end if;
 end loop;
 --
 --sorting mystattab
+for j in myidxtab.first..myidxtab.last loop
+  for h in myidxtab.first..myidxtab.last loop
+    if h>myidxtab.first and mystattab(myidxtab(h)).value > mystattab(myidxtab(myidxtab.prior(h))).value 
+    then
+      tmprec := mystattab(myidxtab(h));
+      mystattab(myidxtab(h)):=mystattab(myidxtab(myidxtab.prior(h)));
+      mystattab(myidxtab(myidxtab.prior(h))) := tmprec;
+    end if;
+  end loop;
+end loop;
 --done sorting
 
 for i in mystattab.first..mystattab.last loop
@@ -53,7 +67,7 @@ end;]]></sql>
 			<bind id="SID">
 				<prompt><![CDATA[SID]]></prompt>
 				<tooltip><![CDATA[SID]]></tooltip>
-				<value><![CDATA[1061]]></value>
+				<value><![CDATA[2929]]></value>
 				<bracket><![CDATA[null]]></bracket>
 			</bind>
 			<bind id="SECONDS_TO_WAIT">
@@ -79,7 +93,8 @@ end;]]></sql>
 				
 				
 				
-				null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								</data>
+				
+				null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												</data>
 			</header>
 			<footer enable="false" generatedate="false">
 				<data value="null" />
