@@ -52,7 +52,7 @@ where sql_id = :SQL_ID]]>
 <![CDATA[SQLID]]>
 </prompt>
 <value>
-<![CDATA[8rru7ammj8j8v]]>
+<![CDATA[NULL_VALUE]]>
 </value>
 <bracket>
 <![CDATA[null]]>

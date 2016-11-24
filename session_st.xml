@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<displays>
+<display id="66812f76-013c-1000-800b-ac1087dd036a" type="" style="plsql-dbms_output" enable="true">
+	<name><![CDATA[SESSION_STATISTIC]]></name>
+	<description><![CDATA[]]></description>
+	<tooltip><![CDATA[]]></tooltip>
+	<drillclass><![CDATA[null]]></drillclass>
+	<CustomValues>
+	</CustomValues>
+	<query>
+		<sql><![CDATA[declare 
+type statrec is record (statid v$sysstat.statistic#%type,name v$sysstat.name%type,value v$sysstat.value%type); 
+type stattab is table of statrec;
+tempstattab stattab;
+mystattab stattab;
+type idxtab is table of pls_integer;
+myidxtab idxtab := idxtab();
+tmprec statrec;
+statsid number  := :SID ;
+begin
+--dbms_output.enable(1000000);
+DBMS_SESSION.FREE_UNUSED_USER_MEMORY;
+dbms_output.put_line('<PRE>');
+
+select statistic#+1, name, 0 "VALUE" bulk collect into mystattab from v$statname;
+
+select statistic#+1,null,nvl(value,0) bulk collect into tempstattab from v$sesstat join v$statname using (statistic#) where sid=statsid  order by statistic#;
+for i in tempstattab.first..tempstattab.last loop
+  if tempstattab(i).value is not null and tempstattab(i).value<>0 then
+    mystattab(tempstattab(i).statid).value := tempstattab(i).value;
+  end if;
+end loop;
+dbms_lock.sleep(nvl(:SECONDS_TO_WAIT,5));
+select statistic#+1,null,value bulk collect into tempstattab from v$sesstat join v$statname using (statistic#) where sid=statsid order by statistic#;
+for i in tempstattab.first..tempstattab.last loop
+  if mystattab(tempstattab(i).statid).value <> tempstattab(i).value then
+    mystattab(tempstattab(i).statid).value :=  tempstattab(i).value - mystattab(tempstattab(i).statid).value;
+    myidxtab.extend;
+    myidxtab(myidxtab.last) := tempstattab(i).statid;
+  else 
+    mystattab(tempstattab(i).statid).value := 0; --mystattab.delete(i);
+  end if;
+end loop;
+--
+--sorting mystattab
+for j in myidxtab.first..myidxtab.last loop
+  for h in myidxtab.first..myidxtab.last loop
+    if h>myidxtab.first and mystattab(myidxtab(h)).value > mystattab(myidxtab(myidxtab.prior(h))).value 
+    then
+      tmprec := mystattab(myidxtab(h));
+      mystattab(myidxtab(h)):=mystattab(myidxtab(myidxtab.prior(h)));
+      mystattab(myidxtab(myidxtab.prior(h))) := tmprec;
+    end if;
+  end loop;
+end loop;
+--done sorting
+
+for i in mystattab.first..mystattab.last loop
+  if mystattab(i).value<>0 then
+    dbms_output.put_line(rpad(mystattab(i).name,64,'.')||mystattab(i).value);
+  end if;
+end loop;
+dbms_output.put_line('</PRE>');
+DBMS_SESSION.FREE_UNUSED_USER_MEMORY;
+end;]]></sql>
+		<binds>
+			<bind id="SID">
+				<prompt><![CDATA[SID]]></prompt>
+				<tooltip><![CDATA[SID]]></tooltip>
+				<value><![CDATA[NULL_VALUE]]></value>
+				<bracket><![CDATA[null]]></bracket>
+			</bind>
+			<bind id="SECONDS_TO_WAIT">
+				<prompt><![CDATA[SECONDS_TO_WAIT]]></prompt>
+				<tooltip><![CDATA[SECONDS_TO_WAIT]]></tooltip>
+				<value><![CDATA[NULL_VALUE]]></value>
+				<bracket><![CDATA[null]]></bracket>
+			</bind>
+		</binds>
+	</query>
+		<pdf version="VERSION_1_7" compression="CONTENT">
+			<docproperty title="" author="" subject="" keywords="" />
+			<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+			<column>
+				<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+				<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+				<blob blob="NONE" zip="false" />
+			</column>
+			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+			<header enable="false" generatedate="false">
+				<data>
+				
+				
+				
+				
+				
+				null																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												</data>
+			</header>
+			<footer enable="false" generatedate="false">
+				<data value="null" />
+			</footer>
+			<security enable="false" useopenpassword="false" openpassword="" encryption="EXCLUDE_METADATA">
+				<permission enable="false" permissionpassword="" allowcopying="true" allowprinting="true" allowupdating="false" allowaccessdevices="true" />
+			</security>
+			<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+		</pdf>
+</display>
+</displays>
