@@ -497,7 +497,9 @@ order by 3 asc
       <prompt type="confirm" />
       <sql>
         <![CDATA[BEGIN
-        execute immediate 'alter database datafile '||:FILE_ID||' autoextend off';
+        execute immediate 'alter database '
+        ||(case upper(:CONTENTS) when 'TEMPORARY' then 'tempfile' else 'datafile' end)
+        ||' '||:FILE_ID||' autoextend off';
 END;]]>
 </sql>
       <help />
@@ -510,7 +512,9 @@ END;]]>
       </prompt>
       <sql>
         <![CDATA[BEGIN
-        execute immediate 'alter database datafile '||:FILE_ID||' autoextend on next 128m maxsize unlimited';
+        execute immediate 'alter database '
+        ||(case upper(:CONTENTS) when 'TEMPORARY' then 'tempfile' else 'datafile' end)
+        ||' '||:FILE_ID||' autoextend on next 128m maxsize unlimited';
 END;]]>
 </sql>
       <help />
@@ -523,9 +527,17 @@ END;]]>
       </prompt>
       <sql>
         <![CDATA[BEGIN
-        for i in (select file_id from dba_data_files where tablespace_name=:TABLESPACE_NAME) 
-        loop
-                execute immediate 'alter database datafile '||i.file_id||' autoextend off';
+        for i in (
+                select file_id from (
+                        select tablespace_name,file_id from dba_data_files  
+                        union all 
+                        select tablespace_name,file_id from dba_temp_files
+                ) 
+                where tablespace_name=:TABLESPACE_NAME
+        ) loop
+                execute immediate 'alter database '
+                ||(case upper(:CONTENTS) when 'TEMPORARY' then 'tempfile' else 'datafile' end)
+                ||' '||i.file_id||' autoextend off';
         end loop;
 END;]]>
 </sql>
@@ -539,9 +551,17 @@ END;]]>
       </prompt>
       <sql>
         <![CDATA[BEGIN
-        for i in (select file_id from dba_data_files where tablespace_name=:TABLESPACE_NAME) 
-        loop
-                execute immediate 'alter database datafile '||i.file_id||' autoextend on next 128m maxsize unlimited';
+        for i in (
+                select file_id from (
+                        select tablespace_name,file_id from dba_data_files  
+                        union all 
+                        select tablespace_name,file_id from dba_temp_files
+                ) 
+                where tablespace_name=:TABLESPACE_NAME
+        ) loop
+                execute immediate 'alter database '
+                ||(case upper(:CONTENTS) when 'TEMPORARY' then 'tempfile' else 'datafile' end)
+                ||' '||i.file_id||' autoextend on next 128m maxsize unlimited';
         end loop;
 END;]]>
 </sql>
