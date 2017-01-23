@@ -19,6 +19,7 @@
       a.status,
       COALESCE(a.username,b.pname,'N/A') username,
       NVL(b.pname,'N/A') process,
+	  b.spid ospid,
       NVL(module,'N/A') module,
       NVL(a.machine,'N/A') machine,
       a.service_name,
@@ -38,9 +39,7 @@
       'WAITED SHORT TIME',a.time_since_last_wait_micro,a.wait_time_micro)/
       1000000,3) seconds,
       DECODE(a.state,'WAITED KNOWN TIME','ON CPU','WAITED SHORT TIME','ON CPU',
-      a.event) "EVENT",
-      DECODE(a.time_remaining_micro,-1,-1,ROUND(a.time_remaining_micro/1000000,
-      3)) time_remaining
+      a.event) "EVENT"
     FROM
       gv$session a
     LEFT JOIN gv$process b
@@ -79,13 +78,13 @@ SELECT
   status,
   username,
   process,
+  ospid,
   module,
   machine,
   logon_time,
   event,
   state,
   seconds,
-  time_remaining,
   pga_used_mb,
   pga_alloc_mb,
   pga_max_mb,
@@ -94,8 +93,8 @@ SELECT
   server
 FROM
   d
-  START WITH (d.blocked IS NOT NULL or d.blocked = -1)
- AND d.blocking_sid     IS NULL
+  START WITH d.blocked IS NOT NULL
+AND (d.blocking_sid     IS NULL or d.blocking_sid = -1)
   CONNECT BY prior trim(d.inst_id
   ||' '
   ||d.sid)=trim(d.blocking_instance
@@ -109,13 +108,13 @@ SELECT
       status,
       username,
       process,
+	  ospid,
       module,
       machine,
       logon_time,
       event,
       state,
       seconds,
-      time_remaining,
       pga_used_mb,
       pga_alloc_mb,
       pga_max_mb,
@@ -131,13 +130,13 @@ FROM
       status,
       username,
       process,
+	  ospid,
       module,
       machine,
       logon_time,
       event,
       state,
       seconds,
-      time_remaining,
       pga_used_mb,
       pga_alloc_mb,
       pga_max_mb,
@@ -157,13 +156,13 @@ FROM
       status,
       username,
       process,
+	  ospid,
       module,
       machine,
       logon_time,
       event,
       state,
       seconds,
-      time_remaining,
       pga_used_mb,
       pga_alloc_mb,
       pga_max_mb,
