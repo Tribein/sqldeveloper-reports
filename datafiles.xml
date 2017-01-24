@@ -176,7 +176,7 @@ WHERE file#=:FILE_ID]]>
   to_char ( round ( (a.blocks       * a.block_size)/1024/1024), '999G999G999G999') "CURRENT_MB",
   to_char ( round ( (a.blocks * a.block_size - nvl (c.hwm, 1) * a.block_size)/1024/1024) , '999G999G999G999') "SAVE_MB",
   to_char ( round ( d.bytes /1024/1024), '999G999G999G999') "FREE_MB",
-  'alter database datafile '||a.file#||' resize '|| to_char ( greatest (8,round ( (nvl (c.hwm, 1) * a.block_size + a.block_size) / 1024 / 1024) + 1))||'M;' "SQL"
+  'alter database datafile '||a.file#||' resize '|| to_char ( greatest (8,round ( (nvl (c.hwm, 1) * a.block_size + a.block_size) / 1024 / 1024) + 8))||'M;' "SQL"
 from v$datafile a
 left join v$tablespace b on (a.ts# = b.ts#)
 left join (select file_id, max(block_id + blocks - 1) hwm  from dba_extents where file_id=:FILE_ID group by file_id) c on (c.file_id = a.file#)
