@@ -72,7 +72,7 @@ where to_char(sample_time,'HH24:MI:SS')=:TS
 select to_char(sample_time,'YYYYMMDD HH24:MI:SS') ts,INST_ID,RPAD('  ',4*level,'  ')||session_id sid,session_SERIAL#,
 username,nvl(MODULE,program) progrm,MACHINE,
 session_state,round(time_waited/1000) time_waited_milli,nvl(event,'on cpu') evnt,seq#,
-p1text,p1,p2text,p2,p3text,p3,sql_id,top_level_sql_id,sql_opname,waitobj
+p1text,p1,p2text,p2,p3text,p3,sql_id,top_level_sql_id,sql_opname,waitobj,blocking_session,blocking_inst_id
 from a
 start with inst_id||' '||session_id||','||session_serial#=:BLOCKER
 connect by nocycle prior trim(inst_id||' '||session_id||','||session_serial#)=trim(blocking_inst_id||' '||blocking_session||','||blocking_session_serial#)]]></sql>
