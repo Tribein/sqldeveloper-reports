@@ -62,7 +62,9 @@ order by 1 asc]]></sql>
 		<query>
 			<sql><![CDATA[with a as (
 select sample_time,session_id,session_SERIAL#,blocking_session,blocking_session_serial#,
-username,MODULE,program,MACHINE,session_state,time_waited,event,current_obj#,seq#,p1text,p1,p2text,p2,p3text,p3 from dba_hist_active_sess_history
+username,MODULE,program,MACHINE,session_state,time_waited,event,current_obj#,seq#,p1text,p1,p2text,p2,p3text,p3,
+decode(l.object_name,null,'UNKNOWN',l.object_type||' '||l.owner||'.'||l.object_name) waitobj
+from dba_hist_active_sess_history
 left join (select user_id,username from dba_users) using (user_id)
 where sample_time between trunc(sysdate) and sysdate and to_char(sample_time,'HH24:MI:SS')=:TS
 )
