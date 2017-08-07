@@ -69,7 +69,7 @@ where sample_time between trunc(sysdate) and sysdate and to_char(sample_time,'HH
 select to_char(sample_time,'YYYYMMDD HH24:MI:SS') ts,RPAD('  ',4*level,'  ')||session_id sid,session_SERIAL#,
 username,nvl(MODULE,program) progrm,MACHINE,
 session_state,round(time_waited/1000) time_waited_milli,nvl(event,'on cpu') evnt,current_obj#,seq#,
-p1text,p1,p2text,p2,p3text,p3
+p1text,p1,p2text,p2,p3text,p3,waitobj,blocking_session
 from a
 start with session_id||','||session_serial#=:BLOCKER
 connect by nocycle prior trim(session_id||','||session_serial#)=trim(blocking_session||','||blocking_session_serial#)]]></sql>
