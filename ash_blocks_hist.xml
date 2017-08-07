@@ -64,8 +64,9 @@ order by 1 asc]]></sql>
 select sample_time,session_id,session_SERIAL#,blocking_session,blocking_session_serial#,
 username,MODULE,program,MACHINE,session_state,time_waited,event,current_obj#,seq#,p1text,p1,p2text,p2,p3text,p3,
 decode(object_name,null,'UNKNOWN',object_type||' '||owner||'.'||object_name) waitobj
-from dba_hist_active_sess_history
-left join (select user_id,username from dba_users) using (user_id)
+from dba_hist_active_sess_history a
+left join (select user_id,username from dba_users) b using (user_id)
+left join dba_objects c on (c.object_id=a.current_obj)
 where sample_time between trunc(sysdate) and sysdate and to_char(sample_time,'HH24:MI:SS')=:TS
 )
 select to_char(sample_time,'YYYYMMDD HH24:MI:SS') ts,RPAD('  ',4*level,'  ')||session_id sid,session_SERIAL#,
