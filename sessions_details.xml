@@ -23,7 +23,8 @@
 			<header enable="false" generatedate="false">
 				<data>
 				
-				                          null								</data>
+				
+				                          null												</data>
 			</header>
 			<footer enable="false" generatedate="false">
 				<data value="null" />
@@ -67,7 +68,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -98,7 +100,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -129,7 +132,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -160,7 +164,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -191,7 +196,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -222,7 +228,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -253,7 +260,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -284,7 +292,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -315,7 +324,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -346,7 +356,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -377,7 +388,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -408,7 +420,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -438,7 +451,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -469,7 +483,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -478,7 +493,7 @@
 			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-		<name><![CDATA[Locked]]></name>
+		<name><![CDATA[Locks]]></name>
 		<description><![CDATA[]]></description>
 		<tooltip><![CDATA[]]></tooltip>
 		<drillclass><![CDATA[]]></drillclass>
@@ -500,38 +515,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
-				</header>
-				<footer enable="false" generatedate="false">
-					<data value="null" />
-				</footer>
-				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-			</pdf>
-	</display>
-	<display id="null" type="" style="Table" enable="true">
-		<name><![CDATA[Locks]]></name>
-		<description><![CDATA[]]></description>
-		<tooltip><![CDATA[]]></tooltip>
-		<drillclass><![CDATA[]]></drillclass>
-		<CustomValues>
-			<TYPE><![CDATA[horizontal]]></TYPE>
-		</CustomValues>
-		<query>
-			<sql><![CDATA[select  inst_id,type,description,  case lmode when 0 then 'NONE' when 1 then 'NULL' when 2 then 'ROW-S' when 3 then 'ROW-X' when 4 then 'SHARE' when 5 then 'S/ROW-X' when 6 then 'EXCLUSIVE' else 'UKNOWN' end lock_mode, ctime time_sec, case block when 0 then 'REQUESTING/NONBLOCKING' WHEN 1 then 'EXCLUSIVE' when 2 then 'GLOBAL' else 'UNKNOWN' end block, case request when 0 then 'NONE' when 1 then 'NULL' when 2 then 'ROW-S' when 3 then 'ROW-X' when 4 then 'SHARE' when 5 then 'S/ROW-X' when 6 then 'EXCLUSIVE' else 'UKNOWN' end request from gv$lock left join v$lock_type lt using (type) where sid=:SID and inst_id=:INST_ID order by block, ctime desc, request]]></sql>
-		</query>
-			<pdf version="VERSION_1_7" compression="CONTENT">
-				<docproperty title="" author="" subject="" keywords="" />
-				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-				<column>
-					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-					<blob blob="NONE" zip="false" />
-				</column>
-				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-				<header enable="false" generatedate="false">
-					<data>
 					
-					                          null										</data>
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -562,7 +547,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -593,7 +579,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -624,7 +611,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -655,7 +643,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -686,7 +675,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                          null										</data>
+					
+					                          null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -717,7 +707,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					                    null										</data>
+					
+					                    null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -748,7 +739,8 @@
 				<header enable="false" generatedate="false">
 					<data>
 					
-					 null										</data>
+					
+					 null															</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -891,14 +883,6 @@ BEGIN
     dbms_output.put_line('</PRE>');
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;]]></sql>
-			<binds>
-				<bind id="SID">
-					<prompt><![CDATA[SID]]></prompt>
-					<tooltip><![CDATA[SID]]></tooltip>
-					<value><![CDATA[NULL_VALUE]]></value>
-					<bracket><![CDATA[null]]></bracket>
-				</bind>
-			</binds>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
 				<docproperty title="null" author="null" subject="null" keywords="null" />
@@ -911,7 +895,8 @@ END;]]></sql>
 				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
 				<header enable="false" generatedate="false">
 					<data>
-					null					</data>
+					
+					null										</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -919,61 +904,5 @@ END;]]></sql>
 				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
 			</pdf>
 	</display>
-      <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
-        <title>Start trace session</title>
-        <prompt type="confirm">
-          <label>Start tracing session?</label>
-        </prompt>
-        <sql><![CDATA[begin dbms_monitor.session_trace_enable(#SID#, #SERIAL#, TRUE, TRUE); end;]]></sql>
-        <help>Begin tracing the selected session.</help>
-      </item>
-      <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
-        <title>Kill Session</title>
-        <prompt type="confirm">
-          <label>Kill Session?</label>
-        </prompt>
-        <sql><![CDATA[begin execute immediate 'alter system disconnect session '''||trim('#SID#')||','||trim('#SERIAL#')||',@'||trim('#INST_ID#')||''' immediate'; end;]]></sql>
-        <help>Kill the selected session.</help>
-      </item>
-      <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
-        <title>Stop trace session</title>
-        <prompt type="confirm">
-          <label>Stop tracing session?</label>
-        </prompt>
-        <sql><![CDATA[begin dbms_monitor.session_trace_disable(#SID#, #SERIAL#); end;]]></sql>
-        <help>Finish tracing the selected session.</help>
-      </item>
-      <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
-        <title>Kill Sessions by USERNAME</title>
-        <prompt type="confirm">
-          <label>Kill Sessions?</label>
-        </prompt>
-        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE username=:USERNAME   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||',@'||a.inst_id||''' immediate'; EXCEPTION WHEN OTHERS THEN  NULL; END;   END LOOP; END;]]></sql>
-        <help>Kill sessions by username.</help>
-      </item>
-      <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
-        <title>Kill Sessions by MODULE</title>
-        <prompt type="confirm">
-          <label>Kill Sessions?</label>
-        </prompt>
-        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE module=:MODULE   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||',@'||a.inst_id||''' immediate'; EXCEPTION WHEN OTHERS THEN NULL; END;   END LOOP; END;]]></sql>
-        <help>Kill sessions by module.</help>
-      </item>
-      <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
-        <title>Kill Sessions by MACHINE</title>
-        <prompt type="confirm">
-          <label>Kill Sessions?</label>
-        </prompt>
-        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE machine=:MACHINE   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||',@'||a.inst_id||''' immediate'; EXCEPTION WHEN OTHERS THEN  NULL; END;   END LOOP; END;]]></sql>
-        <help>Kill sessions by MACHINE.</help>
-      </item>
-      <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
-        <title>Kill Sessions by EVENT</title>
-        <prompt type="confirm">
-          <label>Kill Sessions?</label>
-        </prompt>
-        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE event=:EVENT   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||',@'||a.inst_id||''' immediate'; EXCEPTION WHEN OTHERS THEN  NULL; END;   END LOOP; END;]]></sql>
-        <help>Kill sessions by EVENT.</help>
-      </item>	
 </display>
 </displays>
