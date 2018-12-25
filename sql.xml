@@ -43,7 +43,7 @@ style="Table" enable="true">
   round(elapsed_time         /1000) ela,
   rows_processed
   last_active_time
-from GV$SQLSTATS
+from GV$SQLAREA
 where sql_id = :SQL_ID]]>
 </sql>
 <binds>
