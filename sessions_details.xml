@@ -6,697 +6,1424 @@
 	<tooltip><![CDATA[Sessions]]></tooltip>
 	<drillclass><![CDATA[]]></drillclass>
 	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
+		<TYPE><![CDATA[horizontal]]></TYPE>
 	</CustomValues>
 	<query>
-	<sql><![CDATA[WITH   d AS   (     SELECT       a.inst_id,       a.sid,       a.serial# serial,       a.status,       COALESCE(a.username,b.pname,'N/A') username,       NVL(b.pname,'N/A') process,   b.spid ospid,       NVL(module,'N/A') module,       NVL(a.machine,'N/A') machine,       a.service_name,       a.server,       DECODE(a.blocking_session_status,'UNKNOWN',-1,a.blocking_session)       blocking_sid,       DECODE(a.blocking_session_status,'UNKNOWN',-1,a.blocking_instance)       blocking_instance,       c.blocked,       a.type,       ROUND(b.pga_used_mem /1024/1024,3) pga_used_mb,       ROUND(b.pga_alloc_mem/1024/1024,3) pga_alloc_mb,       ROUND(b.pga_max_mem  /1024/1024,3) pga_max_mb,       TO_CHAR(a.logon_time,'YYYY-MM-DD HH24:MI:SS') logon_time,       a.state,       ROUND(DECODE(a.state,'WAITED KNOWN TIME',a.time_since_last_wait_micro,       'WAITED SHORT TIME',a.time_since_last_wait_micro,a.wait_time_micro)/       1000000,3) seconds,       DECODE(a.state,'WAITED KNOWN TIME','ON CPU','WAITED SHORT TIME','ON CPU',       a.event) "EVENT"     FROM       gv$session a     LEFT JOIN gv$process b     ON       (         a.paddr    =b.addr       AND a.inst_id=b.inst_id       )     LEFT JOIN       (         SELECT           blocking_instance,           blocking_session,           COUNT(sid) blocked         FROM           gv$session         WHERE           blocking_session IS NOT NULL         GROUP BY           blocking_instance,           blocking_session       )       c     ON       (         a.sid      =c.blocking_session       AND a.inst_id=c.blocking_instance       )     ORDER BY       blocked DESC nulls last   ) SELECT   inst_id,   DECODE(level,1,TO_CHAR(sid),lpad(sid,2*level+LENGTH(TO_CHAR(sid)),' ')) sid,   serial,   status,   username,   process,   ospid,   module,   machine,   logon_time,   event,   state,   seconds,   pga_used_mb,   pga_alloc_mb,   pga_max_mb,   type,   service_name,   server FROM   d   START WITH d.blocked IS NOT NULL AND (d.blocking_sid     IS NULL or d.blocking_sid = -1)   CONNECT BY prior trim(d.inst_id   ||' '   ||d.sid)=trim(d.blocking_instance   ||' '   ||d.blocking_sid) UNION ALL SELECT       inst_id,       to_char(sid),       serial,       status,       username,       process,   ospid,       module,       machine,       logon_time,       event,       state,       seconds,       pga_used_mb,       pga_alloc_mb,       pga_max_mb,       type,       service_name,       server FROM   (     SELECT       inst_id,       sid,       serial,       status,       username,       process,   ospid,       module,       machine,       logon_time,       event,       state,       seconds,       pga_used_mb,       pga_alloc_mb,       pga_max_mb,       type,       service_name,       server     FROM       d     WHERE       blocking_sid        = -1     AND blocking_instance = -1 UNION ALL     SELECT       inst_id,       sid,       serial,       status,       username,       process,   ospid,       module,       machine,       logon_time,       event,       state,       seconds,       pga_used_mb,       pga_alloc_mb,       pga_max_mb,       type,       service_name,       server     FROM       d     WHERE       blocking_sid IS NULL     AND blocked    IS NULL     ORDER BY type DESC,status ASC,sid ASC,inst_id ASC     )]]></sql>
+		<sql><![CDATA[WITH d AS (
+    SELECT
+        a.sid,
+        a.serial# serial,
+        a.status,
+        coalesce(a.username,b.pname,'N/A') username,
+        nvl(b.pname,'N/A') process,
+        b.spid ospid,
+        nvl(module,'N/A') module,
+        nvl(a.machine,'N/A') machine,
+        a.service_name,
+        a.server,
+        DECODE(a.blocking_session_status,'UNKNOWN',-1,a.blocking_session) blocking_sid,
+        DECODE(a.blocking_session_status,'UNKNOWN',-1,a.blocking_instance) blocking_instance,
+        c.blocked,
+        a.type,
+        round(b.pga_used_mem / 1024 / 1024,3) pga_used_mb,
+        round(b.pga_alloc_mem / 1024 / 1024,3) pga_alloc_mb,
+        round(b.pga_max_mem / 1024 / 1024,3) pga_max_mb,
+        TO_CHAR(a.logon_time,'YYYY-MM-DD HH24:MI:SS') logon_time,
+        a.state,
+        round(
+            DECODE(
+                a.state,
+                'WAITED KNOWN TIME',a.time_since_last_wait_micro,
+                'WAITED SHORT TIME',a.time_since_last_wait_micro,
+                a.wait_time_micro
+            ) / 1000000
+            ,3
+        ) seconds,
+        DECODE(a.state,'WAITED KNOWN TIME','ON CPU','WAITED SHORT TIME','ON CPU',a.event) "EVENT"
+    FROM
+        v$session a
+        LEFT JOIN v$process b ON ( a.paddr = b.addr )
+        LEFT JOIN (
+            SELECT
+                blocking_session,
+                COUNT(sid) blocked
+            FROM
+                v$session
+            WHERE
+                blocking_session IS NOT NULL
+            GROUP BY
+                blocking_session
+        ) c ON ( a.sid = c.blocking_session )
+    ORDER BY
+        blocked DESC NULLS LAST
+) SELECT
+    DECODE(level,1,TO_CHAR(sid),lpad(sid,2 * level + length(TO_CHAR(sid) ),' ') ) sid,
+    serial,
+    status,
+    username,
+    process,
+    ospid,
+    module,
+    machine,
+    logon_time,
+    event,
+    state,
+    seconds,
+    pga_used_mb,
+    pga_alloc_mb,
+    pga_max_mb,
+    type,
+    service_name,
+    server
+  FROM
+    d
+START WITH d.blocked IS NOT NULL
+           AND (
+    d.blocking_sid IS NULL
+    OR d.blocking_sid =-1
+) CONNECT BY
+    PRIOR d.sid = d.blocking_sid
+UNION ALL
+SELECT
+    TO_CHAR(sid),
+    serial,
+    status,
+    username,
+    process,
+    ospid,
+    module,
+    machine,
+    logon_time,
+    event,
+    state,
+    seconds,
+    pga_used_mb,
+    pga_alloc_mb,
+    pga_max_mb,
+    type,
+    service_name,
+    server
+FROM
+    (
+        SELECT
+            sid,
+            serial,
+            status,
+            username,
+            process,
+            ospid,
+            module,
+            machine,
+            logon_time,
+            event,
+            state,
+            seconds,
+            pga_used_mb,
+            pga_alloc_mb,
+            pga_max_mb,
+            type,
+            service_name,
+            server
+        FROM
+            d
+        WHERE
+            blocking_sid =-1
+        UNION ALL
+        SELECT
+            sid,
+            serial,
+            status,
+            username,
+            process,
+            ospid,
+            module,
+            machine,
+            logon_time,
+            event,
+            state,
+            seconds,
+            pga_used_mb,
+            pga_alloc_mb,
+            pga_max_mb,
+            type,
+            service_name,
+            server
+        FROM
+            d
+        WHERE
+            blocking_sid IS NULL
+            AND blocked IS NULL
+        ORDER BY
+            type DESC,
+            status ASC,
+            sid ASC
+    )]]></sql>
 	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<pdf version="VERSION_1_7" compression="CONTENT">
+			<docproperty title="" author="" subject="" keywords="" />
+			<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+			<column>
+				<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+				<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+				<blob blob="NONE" zip="false" />
+			</column>
+			<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+			<header enable="false" generatedate="false">
+				<data>
+				
+				
+				
+				
+				
+	                          null																					</data>
+			</header>
+			<footer enable="false" generatedate="false">
+				<data value="null" />
+			</footer>
+			<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+		</pdf>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Waits]]></name>
-	<description><![CDATA[Session Waits]]></description>
-	<tooltip><![CDATA[Session Waits]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select seq#,   decode(state,'WAITED SHORT TIME','ON CPU','WAITED KNOWN TIME','ON CPU',event) "EVENT",   decode(state,'WAITED SHORT TIME',0,'WAITED KNOWN TIME',0,p1) "P1",   decode(state,'WAITED SHORT TIME','--','WAITED KNOWN TIME','--',p1text) "P1TEXT",   decode(state,'WAITED SHORT TIME',0,'WAITED KNOWN TIME',0,p2) "P2",   decode(state,'WAITED SHORT TIME','--','WAITED KNOWN TIME','--',p2text) "P2TEXT",   decode(state,'WAITED SHORT TIME',0,'WAITED KNOWN TIME',0,p3) "P3",   decode(state,'WAITED SHORT TIME','--','WAITED KNOWN TIME','--',p3text) "P3TEXT",   round(decode(state,'WAITED SHORT TIME',time_since_last_wait_micro,'WAITED KNOWN TIME',time_since_last_wait_micro,wait_time_micro)/1000000,3) "WAIT_TIME",   time_since_last_wait_micro from gv$session_wait where sid  = :SID and inst_id= :INST_ID union all select seq#,   event,   p1,   p1text,   p2,   p2text,   p3,   p3text,   round(wait_time_micro/1000000,3),   time_since_last_wait_micro from gv$session_wait_history where sid   = :SID and inst_id = :INST_ID --order by 1 asc,3 asc,2 asc]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Waits]]></name>
+		<description><![CDATA[Session Waits]]></description>
+		<tooltip><![CDATA[Session Waits]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    seq#,
+    DECODE(state,'WAITED SHORT TIME','ON CPU','WAITED KNOWN TIME','ON CPU',event) "EVENT",
+    DECODE(state,'WAITED SHORT TIME',0,'WAITED KNOWN TIME',0,p1) "P1",
+    DECODE(state,'WAITED SHORT TIME','--','WAITED KNOWN TIME','--',p1text) "P1TEXT",
+    DECODE(state,'WAITED SHORT TIME',0,'WAITED KNOWN TIME',0,p2) "P2",
+    DECODE(state,'WAITED SHORT TIME','--','WAITED KNOWN TIME','--',p2text) "P2TEXT",
+    DECODE(state,'WAITED SHORT TIME',0,'WAITED KNOWN TIME',0,p3) "P3",
+    DECODE(state,'WAITED SHORT TIME','--','WAITED KNOWN TIME','--',p3text) "P3TEXT",
+    round(
+        DECODE(
+            state,
+            'WAITED SHORT TIME',time_since_last_wait_micro,
+            'WAITED KNOWN TIME',time_since_last_wait_micro,wait_time_micro
+        ) / 1000000
+        ,3
+    ) "WAIT_TIME",
+    time_since_last_wait_micro
+FROM
+    v$session_wait
+WHERE
+    sid =:SID
+UNION ALL
+SELECT
+    seq#,
+    event,
+    p1,
+    p1text,
+    p2,
+    p2text,
+    p3,
+    p3text,
+    round(wait_time_micro / 1000000,3),
+    time_since_last_wait_micro
+FROM
+    v$session_wait_history
+WHERE
+    sid =:SID]]></sql>
+			<binds>
+				<bind id="SID">
+					<prompt><![CDATA[SID]]></prompt>
+					<tooltip><![CDATA[SID]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+					<bracket><![CDATA[null]]></bracket>
+				</bind>
+			</binds>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Event]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select total_waits,   event,   round(time_waited_micro/1000,3) total_time_wait_milli,   round(time_waited_micro/total_waits/1000,3) avg_time_wait_milli,   total_timeouts from gv$session_event where wait_class#                  <>6 and time_waited_micro              <>0 and round(time_waited_micro/1000,3) > 0 and sid                             =:SID and inst_id                         =:INST_ID order by time_waited_micro desc, total_timeouts desc]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Event]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    total_waits,
+    event,
+    round(time_waited_micro / 1000,3) total_time_wait_milli,
+    round(time_waited_micro / total_waits / 1000,3) avg_time_wait_milli,
+    total_timeouts
+FROM
+    v$session_event
+WHERE
+    wait_class# <> 6
+    AND time_waited_micro <> 0
+    AND round(time_waited_micro / 1000,3) > 0
+    AND sid =:SID
+ORDER BY
+    time_waited_micro DESC,
+    total_timeouts DESC]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Stats]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select name, value, decode(bitand(class,1),1,' USER ',null)|| decode(bitand(class,2),2,' REDO ',null)|| decode(bitand(class,4),4,' ENQUEUE ',null)|| decode(bitand(class,8),8,' CACHE ',null)|| decode(bitand(class,16),16,' OS ',null)|| decode(bitand(class,32),32,' RAC ',null)|| decode(bitand(class,64),64,' SQL ',null)|| decode(bitand(class,128),128,' DEBUG ',null) statclass from gv$sesstat  left join v$statname using (statistic#)  where sid=:SID and inst_id=:INST_ID and value<>0 order by 2 desc]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Stats]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    name,
+    value,
+    DECODE(bitand(class,1),1,' USER ',NULL)
+    || DECODE(bitand(class,2),2,' REDO ',NULL)
+    || DECODE(bitand(class,4),4,' ENQUEUE ',NULL)
+    || DECODE(bitand(class,8),8,' CACHE ',NULL)
+    || DECODE(bitand(class,16),16,' OS ',NULL)
+    || DECODE(bitand(class,32),32,' RAC ',NULL)
+    || DECODE(bitand(class,64),64,' SQL ',NULL)
+    || DECODE(bitand(class,128),128,' DEBUG ',NULL) statclass
+FROM
+    v$sesstat left
+    JOIN v$statname USING ( statistic# )
+WHERE
+    sid =:SID
+    AND value <> 0
+ORDER BY 2 DESC]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Application]]></name>
-	<description><![CDATA[Application Info    ]]></description>
-	<tooltip><![CDATA[Application Info]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select    decode(a.command,NULL,'N/A',(select command_name from v$sqlcommand where command_type=a.command)) cmd,   a.last_call_et state_time,   a.program,   b.spid OSPID,   nvl(a.process,'N/A') RMPID,   a.resource_consumer_group,   a.action,   decode(a.plsql_entry_object_id,NULL,'SQL',(select object_type||' '||owner||'.'||object_name||decode(procedure_name,null,'','.'||procedure_name) from dba_procedures where object_id=a.plsql_entry_object_id and rownum<2)) plsql_entry_object,   decode(a.plsql_object_id,NULL,'SQL',(select object_type||' '||owner||'.'||object_name||decode(procedure_name,null,'','.'||procedure_name) from dba_procedures where object_id=a.plsql_object_id and rownum <2)) plsql_object,   (select object_type||' '||owner||'.'||object_name||decode(procedure_name,null,'','.'||procedure_name) from dba_procedures where object_id=a.plsql_entry_object_id and subprogram_id=a.plsql_entry_subprogram_id) plsql_entry_subprogram_id,   (select object_type||' '||owner||'.'||object_name||decode(procedure_name,null,'','.'||procedure_name) from dba_procedures where object_id=a.plsql_object_id and subprogram_id=a.plsql_subprogram_id) plsql_subprogram_id,   a.sql_trace,   a.sql_trace_waits,   a.sql_trace_binds,   a.pddl_status parallel_ddl,   a.pdml_status parallel_dml,   a.pq_status parallel_query,   b.tracefile from gv$session a left join gv$process b on (a.paddr  =b.addr and a.inst_id=b.inst_id) where a.sid   = :SID and a.inst_id = :INST_ID]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Application]]></name>
+		<description><![CDATA[Application Info    ]]></description>
+		<tooltip><![CDATA[Application Info]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[with proc as (
+        SELECT
+            object_type
+            || ' '
+            || owner
+            || '.'
+            || object_name
+            || DECODE(procedure_name,NULL,'','.' || procedure_name) procname,
+            object_id,
+            subprogram_id
+        FROM
+            dba_procedures
+)
+SELECT
+    a.sid,a.serial#,
+    a.last_call_et state_time,
+    b.spid ospid,
+    nvl(a.process,'N/A') rmpid,
+    a.resource_consumer_group,
+    a.action,
+    DECODE(a.plsql_entry_object_id,NULL,'SQL', p1.procname ) plsql_entry_object,
+    DECODE(a.plsql_object_id,NULL,'SQL', p2.procname) plsql_object,
+    p3.procname plsql_entry_subprogram_id,
+    p4.procname plsql_subprogram_id,
+    a.sql_trace,
+    a.sql_trace_waits,
+    a.sql_trace_binds,
+    a.pddl_status parallel_ddl,
+    a.pdml_status parallel_dml,
+    a.pq_status parallel_query,
+    b.tracefile
+FROM
+    v$session a
+    LEFT JOIN v$process b ON ( a.paddr = b.addr)
+    left join proc p1 on (a.plsql_entry_object_id=p1.object_id and a.plsql_entry_object_id is not null and p1.subprogram_id=0)
+    left join proc p2 on (a.plsql_object_id=p2.object_id and a.plsql_object_id is not null and p2.subprogram_id=0)
+    left join proc p3 on (a.plsql_entry_subprogram_id=p3.subprogram_id and a.plsql_entry_object_id=p3.object_id and a.plsql_entry_subprogram_id is not null)
+    left join proc p4 on (a.plsql_subprogram_id=p4.subprogram_id and a.plsql_entry_object_id=p4.object_id and a.plsql_subprogram_id is not null)
+WHERE
+    a.sid =:SID]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Temp Usage]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select b.tablespace,   b.segtype,   round (sum( nvl(b.blocks,0) * c.value / 1024 / 1024 ), 2 ) size_mb from gv$session a left join gv$sort_usage b on (a.saddr  = b.session_addr and a.inst_id=b.inst_id) left join gv$parameter c on(c.name       = 'db_block_size') where a.sid     = :SID and a.inst_id   = :INST_ID and B.SEGFILE# is not null group by b.tablespace,b.segtype order by 3 desc,1,2]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Temp Usage]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    b.tablespace,
+    b.segtype,
+    round(SUM(nvl(b.blocks,0) * c.value / 1024 / 1024),2) size_mb
+FROM
+    v$session a
+    LEFT JOIN v$sort_usage b ON ( a.saddr = b.session_addr )
+    LEFT JOIN v$parameter c ON ( c.name = 'db_block_size' )
+WHERE
+    a.sid =:SID
+    AND b.segfile# IS NOT NULL
+GROUP BY
+    b.tablespace,
+    b.segtype
+ORDER BY
+    3 DESC, 1 asc, 2]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Undo Usage]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select b.xidusn,   sum(b.used_urec) records,   sum(round(b.used_ublk*c.value/1024/1024,3)) mb from gv$session a left join gv$transaction b on (a.saddr  = b.ses_addr and a.inst_id=b.inst_id) left join gv$parameter c ON (c.NAME       ='db_block_size') WHERE A.SID      = :SID  and a.inst_id    = :INST_ID and b.used_urec is not null group by b.xidusn order by 3 desc]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Undo Usage]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    b.xidusn,
+    SUM(b.used_urec) records,
+    SUM(round(b.used_ublk * c.value / 1024 / 1024,3) ) mb
+FROM
+    v$session a
+    LEFT JOIN gv$transaction b ON ( a.saddr = b.ses_addr )
+    LEFT JOIN gv$parameter c ON ( c.name = 'db_block_size' )
+WHERE
+    a.sid =:SID
+    AND b.used_urec IS NOT NULL
+GROUP BY
+    b.xidusn
+ORDER BY 3 DESC]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Transaction]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select inst_id,   start_time start_time,   status,   name,   space,   recursive,   noundo,   ptx parallel,   used_ublk undo_blocks,   used_urec undo_records,   log_io,   phy_io from gv$transaction where ses_addr =   (select saddr from gv$session where inst_id=:INST_ID and sid=:SID)]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Transaction]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    start_time start_time,
+    status,
+    name,
+    space,
+    recursive,
+    noundo,
+    ptx parallel,
+    used_ublk undo_blocks,
+    used_urec undo_records,
+    log_io,
+    phy_io
+FROM
+    v$transaction
+WHERE ses_addr = (SELECT saddr FROM v$session WHERE sid =:SID )]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[LongOps]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select 'SQLDEV:GAUGE:0:100:75:95:'||round(100*sofar/totalwork) "STATUS",   message,sql_id,sql_plan_line_id,   sql_plan_operation || ' ' || sql_plan_options sql_op,   to_char(sofar,'FM999G999G999G999G999') so_far,   to_char(totalwork,'FM999G999G999G999G999') total,   TO_CHAR(start_time,'YYYY-MM-DD HH24:MI:SS') start_time,   time_remaining from gv$session_longops  where sid       = :SID and serial#     = :SERIAL and inst_id     = :INST_ID and totalwork != 0 order by sofar/totalwork asc]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[LongOps]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    'SQLDEV:GAUGE:0:100:75:95:'
+    || round(100 * sofar / totalwork) "STATUS",
+    message,
+    sql_id,
+    sql_plan_line_id,
+    sql_plan_operation
+    || ' '
+    || sql_plan_options sql_op,
+    TO_CHAR(sofar,'FM999G999G999G999G999') so_far,
+    TO_CHAR(totalwork,'FM999G999G999G999G999') total,
+    TO_CHAR(start_time,'YYYY-MM-DD HH24:MI:SS') start_time,
+    time_remaining
+FROM
+    v$session_longops
+WHERE
+    sid =:SID
+    AND serial# =:SERIAL
+    AND totalwork != 0
+ORDER BY
+    sofar / totalwork ASC]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Active SQL Text]]></name>
-	<description><![CDATA[The Current or last SQL for the selected session]]></description>
-	<tooltip><![CDATA[The Current or last SQL for the selected session]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select s.sql_exec_id,to_char(s.sql_exec_start,'DD-MM-YYYY HH24:MI:SS') sql_exec_start,q.sql_id,s.sql_hash_value,s.sql_child_number,replace(q.sql_fulltext,chr(0)) sql_text from gv$session s left join gv$sql q on (s.sql_address    = q.address and s.sql_hash_value = q.hash_value) where s.sid     = :SID and s.inst_id = :INST_ID and rownum    =1]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Active SQL Text]]></name>
+		<description><![CDATA[The Current or last SQL for the selected session]]></description>
+		<tooltip><![CDATA[The Current or last SQL for the selected session]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    s.sql_exec_id,
+    TO_CHAR(s.sql_exec_start,'DD-MM-YYYY HH24:MI:SS') sql_exec_start,
+    q.sql_id,
+    s.sql_hash_value,
+    s.sql_child_number,
+    replace(q.sql_fulltext,CHR(0) ) sql_text
+FROM
+    v$session s
+    LEFT JOIN v$sql q ON ( s.sql_address = q.address AND s.sql_hash_value = q.hash_value )
+WHERE
+    s.sid =:SID
+    AND ROWNUM = 1]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Previous SQL Text]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[SELECT s.prev_exec_id,to_char(s.prev_exec_start,'DD-MM-YYYY HH24:MI:SS') prev_exec_start,q.sql_id prev_sql_id,s.prev_hash_value,s.prev_child_number,REPLACE(q.sql_fulltext,chr(0)) prev_sql_text FROM gv$session s LEFT JOIN gv$sql q ON( s.prev_sql_id = q.sql_id ) where s.sid       = :SID AND s.inst_id     = :INST_ID AND rownum        =1]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Previous SQL Text]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    s.prev_exec_id,
+    TO_CHAR(s.prev_exec_start,'DD-MM-YYYY HH24:MI:SS') prev_exec_start,
+    q.sql_id prev_sql_id,
+    s.prev_hash_value,
+    s.prev_child_number,
+    replace(q.sql_fulltext,CHR(0) ) prev_sql_text
+FROM
+    v$session s
+    LEFT JOIN v$sqlarea q ON ( s.prev_sql_id = q.sql_id )
+WHERE
+    s.sid =:SID]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[SQL Plan]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select inst_id,sql_id,   child_number,   plan_hash_value,   lpad('  ',4*(depth-1))   ||operation   ||' '   ||options   ||' '   ||object_name   ||' '   ||other_tag   ||' '   ||decode(id, 0, 'Cost = '   ||position) "Query Plan",   lpad(   case     when cardinality > 1000000     then to_char(trunc(cardinality/1000000))       || 'M'     when cardinality > 1000     then to_char(trunc(cardinality/1000))       || 'K'     else cardinality       || ' '   end , 6 , ' ' ) as "Rows",   nvl(cpu_cost,0) "CPU_COST",   nvl(io_cost,0) "I/O_COST",   time,   nvl(round(temp_space/1024/1024,3),0) "TEMP_MB",   nvl(round(bytes     /1024/1024,3),0) "MB" from gv$sql_plan sp where sp.sql_id =   (select coalesce(sql_id,prev_sql_id)   from gv$session   where sid  = :SID   and inst_id= :INST_ID   ) order by sp.plan_hash_value,   sp.child_address,   sp.id]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[SQL Plan]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    sql_id,
+    child_number,
+    plan_hash_value,
+    lpad('  ',4 * (depth - 1) )
+    || operation
+    || ' '
+    || options
+    || ' '
+    || object_name
+    || ' '
+    || other_tag
+    || ' '
+    || DECODE(id,0,'Cost = ' || position) "Query Plan",
+    lpad(
+        CASE
+            WHEN cardinality > 1000000 THEN TO_CHAR(trunc(cardinality / 1000000) )
+                                            || 'M'
+            WHEN cardinality > 1000    THEN TO_CHAR(trunc(cardinality / 1000) )
+                                         || 'K'
+            ELSE cardinality || ' '
+        END,6,' ') AS "Rows",
+    nvl(cpu_cost,0) "CPU_COST",
+    nvl(io_cost,0) "I/O_COST",
+    time,
+    nvl(round(temp_space / 1024 / 1024,3),0) "TEMP_MB",
+    nvl(round(bytes / 1024 / 1024,3),0) "MB"
+FROM
+    v$sql_plan sp
+WHERE
+    sp.sql_id = (
+        SELECT
+            coalesce(sql_id,prev_sql_id)
+        FROM
+            v$session
+        WHERE
+            sid =:SID
+    )
+ORDER BY
+    sp.plan_hash_value,
+    sp.child_address,
+    sp.id]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Cached Cursors]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select sql_id,   a.sql_text,   a.cursor_type,   b.executions,   b.sorts,   b.loaded_versions,   b.loads,   b.first_load_time,   b.fetches,   b.invalidations,   b.parse_calls,   b.disk_reads,   b.direct_writes,   b.buffer_gets,   b.physical_read_bytes,   round(b.user_io_wait_time    /1000000,3) user_io_wait_time,   round(b.application_wait_time/1000000,3) application_wait_time,   b.plsql_exec_time,   b.java_exec_time,   b.rows_processed,   b.optimizer_mode,   b.optimizer_cost,   round(b.cpu_time    /1000000,3) cpu_time,   round(b.elapsed_time/1000000,3) elapsed_time,   b.is_bind_sensitive,   b.is_bind_aware from gv$open_cursor a left join gv$sqlarea b using (sql_id,inst_id) where a.sid=:SID and inst_id=:INST_ID]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Cached Cursors]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    sql_id,
+    a.sql_text,
+    a.cursor_type,
+    b.executions,
+    b.sorts,
+    b.loaded_versions,
+    b.loads,
+    b.first_load_time,
+    b.fetches,
+    b.invalidations,
+    b.parse_calls,
+    b.disk_reads,
+    b.direct_writes,
+    b.buffer_gets,
+    b.physical_read_bytes,
+    round(b.user_io_wait_time / 1000000,3) user_io_wait_time,
+    round(b.application_wait_time / 1000000,3) application_wait_time,
+    b.plsql_exec_time,
+    b.java_exec_time,
+    b.rows_processed,
+    b.optimizer_mode,
+    b.optimizer_cost,
+    round(b.cpu_time / 1000000,3) cpu_time,
+    round(b.elapsed_time / 1000000,3) elapsed_time,
+    b.is_bind_sensitive,
+    b.is_bind_aware
+FROM
+    v$open_cursor a
+    LEFT JOIN v$sqlarea b USING ( sql_id )
+WHERE
+    a.sid =:SID]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Code" enable="true">
-	<name><![CDATA[SQL Monitor]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select dbms_sqltune.report_sql_monitor(   session_id     => :SID,   session_serial => :SERIAL,   inst_id        => :INST_ID,   type           => 'TEXT',   report_level   => 'ALL' ) as report from dual]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[SQL Monitor]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    dbms_sqltune.report_sql_monitor(
+        session_id =>:SID,
+        session_serial =>:SERIAL,
+        type => 'TEXT',
+        report_level => 'ALL'
+    ) AS report
+FROM
+    dual]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[SQL Bind Variables]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select gv$sql_bind_capture.sql_id,position,   datatype_string,   value_string value,   to_char(last_captured,'HH24:MI:SS') time_captured from gv$sql_bind_capture where last_captured is not null and sql_id           =   (select coalesce(sql_id,prev_sql_id)   from gv$session   where sid  =:SID   and inst_id=:INST_ID   ) order by gv$sql_bind_capture.sql_id,last_captured,   position]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[SQL Bind Variables]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    v$sql_bind_capture.sql_id,
+    position,
+    datatype_string,
+    value_string value,
+    TO_CHAR(last_captured,'HH24:MI:SS') time_captured
+FROM
+    v$sql_bind_capture
+WHERE
+    last_captured IS NOT NULL
+    AND sql_id = (
+        SELECT
+            coalesce(sql_id,prev_sql_id)
+        FROM
+            v$session
+        WHERE
+            sid =:SID
+    )
+ORDER BY
+    v$sql_bind_capture.sql_id,
+    last_captured,
+    position]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Arial" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Arial" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Locks]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[SELECT 'WAITING FOR' idx,owner, object_name||nvl2(subobject_name,'.'||subobject_name,'') object_name,object_type,   name "FILE NAME/SID/SQLID",TO_CHAR(row_wait_row#) "WAIT_ROW/STATUS", TO_CHAR(dbms_rowid.rowid_create ( 1, row_wait_obj#, row_wait_file#, row_wait_block#, row_wait_row# )) "ROWID/LOCKED_MODE" from gv$session left join all_objects on (row_wait_obj# = object_id) left join v$datafile on (row_wait_file#=file#) where inst_id = :INST_ID and sid = :SID and object_name is not null union all SELECT 'LOCKED OBJECTS' idx,owner,object_name,object_type,NULL,NULL,   DECODE(locked_mode,0,'NONE',1,'NULL',2,'ROW-S',3,'ROW-X',4,'SHARE',5,'S/ROW-X',6,'EXCLUSIVE','UKNOWN') locked_mode FROM gv$locked_object LEFT JOIN dba_objects USING (object_id) WHERE session_id = :SID AND inst_id = :INST_ID union all SELECT 'LOCKS BY HANDLE' idx,user_name,kglnaobj,null,to_char(sid),kgllkctp,   trim(DECODE(kgllkmod,0,'NONE',1,'NULL',2,'ROW-S',3,'ROW-X',4,'SHARE',5,'S/ROW-X',6,'EXCLUSIVE','UKNOWN') || DECODE(kgllkexc,0,'',1,' EXCLUSIVE','')) locked_mode FROM x$kgllk LEFT JOIN gv$session ON (kgllkuse=saddr) WHERE kgllkhdl=(SELECT p1raw FROM gv$session WHERE sid = :SID AND inst_id = :INST_ID) union all SELECT 'ALL LOCKS' idx,user_name,kglnaobj,object_type,kgllksqlid,kgllkctp,   DECODE(kgllkmod,0,'NONE',1,'NULL',2,'ROW-S',3,'ROW-X',4,'SHARE',5,'S/ROW-X',6,'EXCLUSIVE','UKNOWN')||DECODE(kgllkexc,0,' ',1,' EXCLUSIVE',' ') locked_mode FROM x$kgllk LEFT JOIN dba_objects on (user_name = owner and kglnaobj = object_name) WHERE kgllkuse=(SELECT saddr FROM gv$session WHERE sid=:SID AND inst_id=:INST_ID)]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Locks]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    'WAITING FOR' idx,
+    owner,
+    object_name
+    || nvl2(subobject_name,'.' || subobject_name,'') object_name,
+    object_type,
+    name "FILE NAME/SID/SQLID",
+    TO_CHAR(row_wait_row#) "WAIT_ROW/STATUS",
+    TO_CHAR(dbms_rowid.rowid_create(1,row_wait_obj#,row_wait_file#,row_wait_block#,row_wait_row#) ) "ROWID/LOCKED_MODE"
+FROM
+    v$session left
+    JOIN all_objects ON ( row_wait_obj# = object_id )
+    LEFT JOIN v$datafile ON ( row_wait_file# = file# )
+WHERE
+    sid =:SID
+    AND object_name IS NOT NULL
+UNION ALL
+SELECT
+    'LOCKED OBJECTS' idx,
+    owner,
+    object_name,
+    object_type,
+    NULL,
+    NULL,
+    DECODE(locked_mode,0,'NONE',1,'NULL',2,'ROW-S',3,'ROW-X',4,'SHARE',5,'S/ROW-X',6,'EXCLUSIVE','UKNOWN') locked_mode
+FROM
+    v$locked_object left
+    JOIN dba_objects USING ( object_id )
+WHERE
+    session_id =:SID
+UNION ALL
+SELECT
+    'LOCKS BY HANDLE' idx,
+    user_name,
+    kglnaobj,
+    NULL,
+    TO_CHAR(sid),
+    kgllkctp,
+    TRIM(DECODE(kgllkmod,0,'NONE',1,'NULL',2,'ROW-S',3,'ROW-X',4,'SHARE',5,'S/ROW-X',6,'EXCLUSIVE','UKNOWN')
+           || DECODE(kgllkexc,0,'',1,' EXCLUSIVE','') ) locked_mode
+FROM
+    x$kgllk left
+    JOIN v$session ON ( kgllkuse = saddr )
+WHERE
+    kgllkhdl = (
+        SELECT
+            p1raw
+        FROM
+            v$session
+        WHERE
+            sid =:SID
+    )
+UNION ALL
+SELECT
+    'ALL LOCKS' idx,
+    user_name,
+    kglnaobj,
+    object_type,
+    kgllksqlid,
+    kgllkctp,
+    DECODE(kgllkmod,0,'NONE',1,'NULL',2,'ROW-S',3,'ROW-X',4,'SHARE',5,'S/ROW-X',6,'EXCLUSIVE','UKNOWN')
+    || DECODE(kgllkexc,0,' ',1,' EXCLUSIVE',' ') locked_mode
+FROM
+    x$kgllk left
+    JOIN dba_objects ON ( user_name = owner AND kglnaobj = object_name )
+WHERE
+    kgllkuse = (
+        SELECT
+            saddr
+        FROM
+            v$session
+        WHERE
+            sid =:SID
+    )]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="Times New Roman" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="Times New Roman" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[IO]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[SELECT block_gets,   consistent_gets,   physical_reads,   block_changes,   consistent_changes,   optimized_physical_reads FROM gv$sess_io WHERE inst_id=:INST_ID AND sid      =:SID]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="null" author="null" subject="null" keywords="null" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[IO]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    block_gets,
+    consistent_gets,
+    physical_reads,
+    block_changes,
+    consistent_changes,
+    optimized_physical_reads
+FROM
+    v$sess_io
+WHERE
+    sid =:SID]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="null" author="null" subject="null" keywords="null" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Memory]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select category, round(allocated/1024/1024) ALLOCATED_MB, round(used/1024/1024) USED_MB, round(max_allocated/1024/1024) MAX_ALLOCATED_MB from gv$process_memory  where (inst_id,pid,serial#) in (select inst_id,pid,serial# from v$process where addr=(select paddr from v$session where inst_id=:INST_ID and sid=:SID)) order by 2 desc]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="null" author="null" subject="null" keywords="null" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Memory]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    category,
+    round(allocated / 1024 / 1024) allocated_mb,
+    round(used / 1024 / 1024) used_mb,
+    round(max_allocated / 1024 / 1024) max_allocated_mb
+FROM
+    v$process_memory
+WHERE
+    ( pid,serial# ) IN (
+        SELECT
+            pid,
+            serial#
+        FROM
+            v$process
+        WHERE
+            addr = (
+                SELECT
+                    paddr
+                FROM
+                    v$session
+                WHERE
+                    sid =:SID
+            )
+    )
+ORDER BY
+    2 DESC]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="null" author="null" subject="null" keywords="null" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Connection]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select  authentication_type, network_service_banner, client_charset, client_connection, client_oci_library, client_version, client_driver, client_lobattr  from v$session_connect_info where sid=:SID and serial#=:SERIAL]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="null" author="null" subject="null" keywords="null" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Connection]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    authentication_type,
+    network_service_banner,
+    client_charset,
+    client_connection,
+    client_oci_library,
+    client_version,
+    client_driver,
+    client_lobattr
+FROM
+    v$session_connect_info
+WHERE
+    sid =:SID]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="null" author="null" subject="null" keywords="null" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[PX]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[SELECT   qcinst_id,   qcsid,   qcserial#,   sid,   serial# p_id,   server_group,   server_set,   server#,   degree,   req_degree FROM   gv$px_session WHERE   (     qcsid      =:SID   AND qcinst_id=:INST_ID   ) OR   (     (qcsid,qcinst_id) IN     (       SELECT         qcsid,         qcinst_id       FROM         gv$px_session       WHERE         sid      =:SID       AND inst_id=:INST_ID     )   ) ORDER BY   server_group,   server_set,   server#]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[PX]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    qcsid,
+    qcserial#,
+    sid,
+    serial# p_id,
+    server_group,
+    server_set,
+    server#,
+    degree,
+    req_degree
+FROM
+    v$px_session
+WHERE
+    qcsid =:SID
+    OR ( 
+        qcsid IN ( 
+            SELECT qcsid
+            FROM v$px_session
+            WHERE sid =:SID
+        ) 
+    )
+ORDER BY
+    server_group,
+    server_set,
+    server#]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Workarea]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[SELECT   inst_id,   SQL_ID ,   SQL_EXEC_START,   OPERATION_TYPE ,   QCINST_ID ,   QCSID ,   round(ACTIVE_TIME/100,2) ACTIVE_TIME,   round(WORK_AREA_SIZE/1024/1024,3) WORK_AREA_SIZE_MB,   round(EXPECTED_SIZE/1024/1024,3) EXPECTED_SIZE_MB,   round(ACTUAL_MEM_USED/1024/1024,3) ACTUAL_MEM_USED_MB,   round(MAX_MEM_USED/1024/1024,3) MAX_MEM_USED_MB,   NUMBER_PASSES ,   nvl(round(TEMPSEG_SIZE/1024/1024,3),0) TEMPSEG_SIZE_MB FROM   gv$sql_workarea_active where inst_id=:INST_ID and SID=:SID]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                          null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Workarea]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[SELECT
+    sql_id,
+    sql_exec_start,
+    operation_type,
+    qcsid,
+    round(active_time / 100,2) active_time,
+    round(work_area_size / 1024 / 1024,3) work_area_size_mb,
+    round(expected_size / 1024 / 1024,3) expected_size_mb,
+    round(actual_mem_used / 1024 / 1024,3) actual_mem_used_mb,
+    round(max_mem_used / 1024 / 1024,3) max_mem_used_mb,
+    number_passes,
+    nvl(round(tempseg_size / 1024 / 1024,3),0) tempseg_size_mb
+FROM
+    v$sql_workarea_active
+WHERE
+    sid =:SID]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                          null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Environment]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select name,value,isdefault from GV$SES_OPTIMIZER_ENV where sid=:SID and inst_id=:INST_ID order by name]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="" author="" subject="" keywords="" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	                    null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Environment]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[select name,value,isdefault 
+from V$SES_OPTIMIZER_ENV 
+where sid=:SID 
+order by name]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="" author="" subject="" keywords="" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	                    null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="Table" enable="true">
-	<name><![CDATA[Trace Events]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	<TYPE><![CDATA[horizontal]]></TYPE>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[select event,component,op,seq#,function,operation,section,dump,data from x$trace where sid=:SID order by time desc,seq# desc,event]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="null" author="null" subject="null" keywords="null" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	 null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		<name><![CDATA[Trace Events]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+			<TYPE><![CDATA[horizontal]]></TYPE>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[select event,component,op,seq#,function,operation,section,dump,data from x$trace where sid=:SID order by time desc,seq# desc,event]]></sql>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="null" author="null" subject="null" keywords="null" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	 null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
 	<display id="null" type="" style="plsql-dbms_output" enable="true">
-	<name><![CDATA[Row Data]]></name>
-	<description><![CDATA[]]></description>
-	<tooltip><![CDATA[]]></tooltip>
-	<drillclass><![CDATA[]]></drillclass>
-	<CustomValues>
-	</CustomValues>
-	<query>
-	<sql><![CDATA[DECLARE
+		<name><![CDATA[Row Data]]></name>
+		<description><![CDATA[]]></description>
+		<tooltip><![CDATA[]]></tooltip>
+		<drillclass><![CDATA[]]></drillclass>
+		<CustomValues>
+		</CustomValues>
+		<query>
+			<sql><![CDATA[DECLARE
     l_cur             SYS_REFCURSOR;
     vrowid            ROWID;
     vobjid            NUMBER;
@@ -823,25 +1550,30 @@ BEGIN
     dbms_output.put_line('</PRE>');
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;]]></sql>
-	</query>
-	<pdf version="VERSION_1_7" compression="CONTENT">
-	<docproperty title="null" author="null" subject="null" keywords="null" />
-	<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
-	<column>
-	<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
-	<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
-	<blob blob="NONE" zip="false" />
-	</column>
-	<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
-	<header enable="false" generatedate="false">
-	<data>
-	null	</data>
-	</header>
-	<footer enable="false" generatedate="false">
-	<data value="null" />
-	</footer>
-	<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
-	</pdf>
+		</query>
+			<pdf version="VERSION_1_7" compression="CONTENT">
+				<docproperty title="null" author="null" subject="null" keywords="null" />
+				<cell toppadding="2" bottompadding="2" leftpadding="2" rightpadding="2" horizontalalign="LEFT" verticalalign="TOP" wrap="true" />
+				<column>
+					<heading font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="FIRST_PAGE" />
+					<footing font="null" size="10" style="NORMAL" color="-16777216" rowshading="-1" labeling="NONE" />
+					<blob blob="NONE" zip="false" />
+				</column>
+				<table font="null" size="10" style="NORMAL" color="-16777216" userowshading="false" oddrowshading="-1" evenrowshading="-1" showborders="true" spacingbefore="12" spacingafter="12" horizontalalign="LEFT" />
+				<header enable="false" generatedate="false">
+					<data>
+					
+					
+					
+					
+					
+	null																										</data>
+				</header>
+				<footer enable="false" generatedate="false">
+					<data value="null" />
+				</footer>
+				<pagesetup papersize="LETTER" orientation="1" measurement="in" margintop="1.0" marginbottom="1.0" marginleft="1.0" marginright="1.0" />
+			</pdf>
 	</display>
       <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
         <title>Start trace session</title>
@@ -856,7 +1588,7 @@ END;]]></sql>
         <prompt type="confirm">
           <label>Kill Session?</label>
         </prompt>
-        <sql><![CDATA[begin execute immediate 'alter system disconnect session '''||trim('#SID#')||','||trim('#SERIAL#')||',@'||trim('#INST_ID#')||''' immediate'; end;]]></sql>
+        <sql><![CDATA[begin execute immediate 'alter system disconnect session '''||trim('#SID#')||','||trim('#SERIAL#')||''' immediate'; end;]]></sql>
         <help>Kill the selected session.</help>
       </item>
       <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
@@ -872,7 +1604,7 @@ END;]]></sql>
         <prompt type="confirm">
           <label>Kill Sessions?</label>
         </prompt>
-        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE username=:USERNAME   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||',@'||a.inst_id||''' immediate'; EXCEPTION WHEN OTHERS THEN  NULL; END;   END LOOP; END;]]></sql>
+        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE username=:USERNAME   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||''' immediate'; EXCEPTION WHEN OTHERS THEN  NULL; END;   END LOOP; END;]]></sql>
         <help>Kill sessions by username.</help>
       </item>
       <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
@@ -880,7 +1612,7 @@ END;]]></sql>
         <prompt type="confirm">
           <label>Kill Sessions?</label>
         </prompt>
-        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE module=:MODULE   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||',@'||a.inst_id||''' immediate'; EXCEPTION WHEN OTHERS THEN NULL; END;   END LOOP; END;]]></sql>
+        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE module=:MODULE   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||''' immediate'; EXCEPTION WHEN OTHERS THEN NULL; END;   END LOOP; END;]]></sql>
         <help>Kill sessions by module.</help>
       </item>
       <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
@@ -888,7 +1620,7 @@ END;]]></sql>
         <prompt type="confirm">
           <label>Kill Sessions?</label>
         </prompt>
-        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE machine=:MACHINE   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||',@'||a.inst_id||''' immediate'; EXCEPTION WHEN OTHERS THEN  NULL; END;   END LOOP; END;]]></sql>
+        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE machine=:MACHINE   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||''' immediate'; EXCEPTION WHEN OTHERS THEN  NULL; END;   END LOOP; END;]]></sql>
         <help>Kill sessions by MACHINE.</help>
       </item>
       <item reload="true" reloadparent="false" removeFromParent="false" toolbar="false">
@@ -896,8 +1628,8 @@ END;]]></sql>
         <prompt type="confirm">
           <label>Kill Sessions?</label>
         </prompt>
-        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE event=:EVENT   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||',@'||a.inst_id||''' immediate'; EXCEPTION WHEN OTHERS THEN  NULL; END;   END LOOP; END;]]></sql>
+        <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE event=:EVENT   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||''' immediate'; EXCEPTION WHEN OTHERS THEN  NULL; END;   END LOOP; END;]]></sql>
         <help>Kill sessions by EVENT.</help>
-      </item>
+      </item>    
 </display>
 </displays>
