@@ -175,7 +175,10 @@ FROM
 				
 				
 				
-	                          null																					</data>
+				
+				
+				
+	                          null																																	</data>
 			</header>
 			<footer enable="false" generatedate="false">
 				<data value="null" />
@@ -254,7 +257,10 @@ WHERE
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -304,7 +310,10 @@ ORDER BY
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -356,7 +365,10 @@ ORDER BY 2 DESC]]></sql>
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -403,10 +415,14 @@ SELECT
     a.pddl_status parallel_ddl,
     a.pdml_status parallel_dml,
     a.pq_status parallel_query,
+    c.cache_lobs,
+    c.nocache_lobs,
+    c.abstract_lobs,
     b.tracefile
 FROM
     v$session a
     LEFT JOIN v$process b ON ( a.paddr = b.addr)
+    left join v$temporary_lobs c on (a.sid=c.sid)
     left join proc p1 on (a.plsql_entry_object_id=p1.object_id and a.plsql_entry_object_id is not null and p1.subprogram_id=0)
     left join proc p2 on (a.plsql_object_id=p2.object_id and a.plsql_object_id is not null and p2.subprogram_id=0)
     left join proc p3 on (a.plsql_entry_subprogram_id=p3.subprogram_id and a.plsql_entry_object_id=p3.object_id and a.plsql_entry_subprogram_id is not null)
@@ -430,7 +446,10 @@ WHERE
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -480,7 +499,10 @@ ORDER BY
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -528,7 +550,10 @@ ORDER BY 3 DESC]]></sql>
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -577,7 +602,10 @@ WHERE ses_addr = (SELECT saddr FROM v$session WHERE sid =:SID )]]></sql>
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -632,7 +660,10 @@ ORDER BY
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -650,7 +681,7 @@ ORDER BY
 		</CustomValues>
 		<query>
 			<sql><![CDATA[SELECT
-    s.sql_exec_id,
+    s.sql_exec_id-16777216,
     TO_CHAR(s.sql_exec_start,'DD-MM-YYYY HH24:MI:SS') sql_exec_start,
     q.sql_id,
     s.sql_hash_value,
@@ -662,6 +693,14 @@ FROM
 WHERE
     s.sid =:SID
     AND ROWNUM = 1]]></sql>
+			<binds>
+				<bind id="SID">
+					<prompt><![CDATA[SID]]></prompt>
+					<tooltip><![CDATA[SID]]></tooltip>
+					<value><![CDATA[NULL_VALUE]]></value>
+					<bracket><![CDATA[null]]></bracket>
+				</bind>
+			</binds>
 		</query>
 			<pdf version="VERSION_1_7" compression="CONTENT">
 				<docproperty title="" author="" subject="" keywords="" />
@@ -679,7 +718,10 @@ WHERE
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -725,7 +767,10 @@ WHERE
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -801,7 +846,10 @@ ORDER BY
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -867,7 +915,10 @@ WHERE
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -909,7 +960,10 @@ FROM
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -965,7 +1019,10 @@ ORDER BY
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1073,7 +1130,10 @@ WHERE
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1118,7 +1178,10 @@ WHERE
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1178,7 +1241,10 @@ ORDER BY
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1225,7 +1291,10 @@ WHERE
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1284,7 +1353,10 @@ ORDER BY
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1334,7 +1406,10 @@ WHERE
 					
 					
 					
-	                          null																										</data>
+					
+					
+					
+	                          null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1372,7 +1447,10 @@ order by name]]></sql>
 					
 					
 					
-	                    null																										</data>
+					
+					
+					
+	                    null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1407,7 +1485,10 @@ order by name]]></sql>
 					
 					
 					
-	 null																										</data>
+					
+					
+					
+	 null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1567,7 +1648,10 @@ END;]]></sql>
 					
 					
 					
-	null																										</data>
+					
+					
+					
+	null																																									</data>
 				</header>
 				<footer enable="false" generatedate="false">
 					<data value="null" />
@@ -1630,6 +1714,6 @@ END;]]></sql>
         </prompt>
         <sql><![CDATA[BEGIN   FOR a IN   (SELECT sid,     serial#,     inst_id   FROM gv$session   WHERE event=:EVENT   AND username <>'SYS'   )   LOOP     BEGIN     EXECUTE immediate 'alter system disconnect session '''||a.sid||','||a.serial#||''' immediate'; EXCEPTION WHEN OTHERS THEN  NULL; END;   END LOOP; END;]]></sql>
         <help>Kill sessions by EVENT.</help>
-      </item>    
+      </item>        
 </display>
 </displays>
