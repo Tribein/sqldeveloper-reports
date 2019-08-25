@@ -514,7 +514,7 @@ END;]]>
         <![CDATA[BEGIN
         execute immediate 'alter database '
         ||(case upper(:CONTENTS) when 'TEMPORARY' then 'tempfile' else 'datafile' end)
-        ||' '||:FILE_ID||' autoextend on next 128m maxsize unlimited';
+        ||' '||:FILE_ID||' autoextend on next 1g maxsize unlimited';
 END;]]>
 </sql>
       <help />
